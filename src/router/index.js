@@ -1,17 +1,12 @@
+import Vue from 'vue'
 import Router from 'vue-router'
+import { asyncRouterMap } from '@/config/router.config'
 
-const baseOptions = {
+Vue.use(Router)
+
+export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  scrollBehavior: () => ({ y: 0 })
-}
-
-export function getEmptyRouter() {
-  const options = { ...baseOptions }
-  return new Router(options)
-}
-
-export function getRouter(routes) {
-  const options = { ...baseOptions, routes }
-  return new Router(options)
-}
+  scrollBehavior: () => ({ y: 0 }),
+  routes:asyncRouterMap
+})
