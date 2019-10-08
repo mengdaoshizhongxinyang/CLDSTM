@@ -21,7 +21,7 @@ const options = {
         }
     },
     devServer: {
-        port: 8080
+        port: 8100
     },
     productionSourceMap: false,
     transpileDependencies: []

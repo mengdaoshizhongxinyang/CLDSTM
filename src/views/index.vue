@@ -26,11 +26,10 @@
 <script>
 import * as device from "@/../public/device.min.js";
 import * as bundle from "@/../public/bundle.js";
-import test from "text-loader";
 import VueMD from "vue-markdown";
 import * as three from "three";
 import config from "@/../public/config.js";
-import testCon from "./test.md";
+
 
 console.log(config);
 if (config.signboard === true) {
@@ -44,7 +43,7 @@ export default {
   data() {
     return {
       openKeys: [],
-      content: testCon,
+      content: '',
       url: "@/../public/static/test.md",
       leftTree: config.file
     };
