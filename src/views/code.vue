@@ -3,73 +3,92 @@
     <div style="width:20%;height:100%"></div>
     <div class="code">
       <div style="width:200px;height:200px;border:1px #000 solid">
-        <a-tree
-          draggable
-          :treeData="gData"
-          @dragenter="onDragEnter"
-          @drop="onDrop"
-        />
+        <a-tree draggable :treeData="gData" @dragenter="onDragEnter" @drop="onDrop" />
       </div>
       <div style="margin-left:calc(50% - 188px);width:375px;height:667px;border:1px #000 solid"></div>
-      <VueDraggableResizable class="mobile" :resizable="false" :w="375" :h="667"></VueDraggableResizable>
+      <!-- <VueDraggableResizable class="mobile" :resizable="false" :w="375" :h="667"></VueDraggableResizable> -->
     </div>
-    <div style="width:20%;height:100%"></div>
+    <div style="width:20%;height:100%">
+      <iconList></iconList>
+      <ul class="components-list">
+        <li @dblclick="addTree()">input<a-input></a-input></li>
+        <li @dblclick="addTree"><a-button>button</a-button></li>
+      </ul>
+    </div>
+    <!-- <a-modal v-drap :visible="visiable" >
+      <template v-slot:title>
+        <div v-drap>
+          fasfasfsa
+        </div>
+      </template>
+    </a-modal> -->
   </div>
 </template>
 
 <script>
 import VueDraggableResizable from "@/components/vue-draggable-resizable.vue";
+import iconList from "@/components/iconSelect/iconList.vue";
 import mount from "./mount";
 export default {
   components: {
-    VueDraggableResizable
+    VueDraggableResizable,
+    iconList
   },
-  data(){
-      return{
-          gData:[{title:'1',key:1},{title:'2',key:2}]
-      }
+  data() {
+    return {
+      gData: [],
+      visiable: true,
+      dataSource:['plus','del']
+    };
   },
   methods: {
-    onDragEnter (info) {
-    // expandedKeys 需要受控时设置
-    // this.expandedKeys = info.expandedKeys
+    onSelect(value) {
+      console.log('onSelect', value);
     },
-    onDrop (info) {
-      const dropKey = info.node.eventKey
-      const dragKey = info.dragNode.eventKey
-      const dropPos = info.node.pos.split('-')
-      const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1])
+    addTree(e) {
+      console.log(e);
+    },
+    onDragEnter(info) {
+      // expandedKeys 需要受控时设置
+      // this.expandedKeys = info.expandedKeys
+    },
+    onDrop(info) {
+      const dropKey = info.node.eventKey;
+      const dragKey = info.dragNode.eventKey;
+      const dropPos = info.node.pos.split("-");
+      const dropPosition =
+        info.dropPosition - Number(dropPos[dropPos.length - 1]);
       const loop = (data, key, callback) => {
         data.forEach((item, index, arr) => {
           if (item.key === key) {
-            return callback(item, index, arr)
+            return callback(item, index, arr);
           }
           if (item.children) {
-            return loop(item.children, key, callback)
+            return loop(item.children, key, callback);
           }
-        })
-      }
-      const data = [...this.gData]
+        });
+      };
+      const data = [...this.gData];
 
       // Find dragObject
-      let dragObj
+      let dragObj;
       loop(data, dragKey, (item, index, arr) => {
-        arr.splice(index, 1)
-        dragObj = item
-      })
+        arr.splice(index, 1);
+        dragObj = item;
+      });
       if (!info.dropToGap) {
         // Drop on the content
-        loop(data, dropKey, (item) => {
+        loop(data, dropKey, item => {
           item.children = item.children || [];
           // where to insert 示例添加到尾部，可以是随意位置
           item.children.push(dragObj);
         });
       } else if (
-        (info.node.children || []).length > 0 // Has children
-        && info.node.expanded // Is expanded
-        && dropPosition === 1 // On the bottom gap
+        (info.node.children || []).length > 0 && // Has children
+        info.node.expanded && // Is expanded
+        dropPosition === 1 // On the bottom gap
       ) {
-        loop(data, dropKey, (item) => {
+        loop(data, dropKey, item => {
           item.children = item.children || [];
           // where to insert 示例添加到尾部，可以是随意位置
           item.children.unshift(dragObj);
@@ -87,9 +106,9 @@ export default {
           ar.splice(i + 1, 0, dragObj);
         }
       }
-      this.gData = data
-    },
-  },
+      this.gData = data;
+    }
+  }
 };
 </script>
 

@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
+import Directives from '@/utils/directives.js';
+Vue.use(Directives)
 Vue.config.productionTip = false
 Vue.use(Antd)
 new Vue({
