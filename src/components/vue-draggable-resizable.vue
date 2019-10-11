@@ -825,8 +825,7 @@ export default {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: #EEE;
-  border: 1px solid #333;
+  border:0px solid #333;
 }
 .handle-tl {
   top: -10px;
@@ -835,9 +834,8 @@ export default {
 }
 .handle-tm {
   top: -10px;
-  left: 50%;
   height: 10px;
-  margin-left: -5px;
+  width:100%;
   cursor: n-resize;
 }
 .handle-tr {
@@ -846,14 +844,12 @@ export default {
   cursor: ne-resize;
 }
 .handle-ml {
-  top: 50%;
-  margin-top: -5px;
+  height:100%;
   left: -10px;
   cursor: w-resize;
 }
 .handle-mr {
-  top: 50%;
-  margin-top: -5px;
+  height:100%;
   right: -10px;
   cursor: e-resize;
 }
@@ -864,8 +860,7 @@ export default {
 }
 .handle-bm {
   bottom: -10px;
-  left: 50%;
-  margin-left: -5px;
+  width:100%;
   cursor: s-resize;
 }
 .handle-br {

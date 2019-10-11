@@ -11,11 +11,11 @@ const handle = function (_attr,_slots) {
             value: ''
         },
         defaultValue: {
-            type: 'string',
+            type: 'text',
             value: ''
         },
         disabled: {
-            type: 'string',
+            type: 'text',
             value: ''
         },
         prefix: {
@@ -45,9 +45,9 @@ const handle = function (_attr,_slots) {
     Object.assign(slots, _slots)
     Object.assign(attributes, _attr)
     let stringAttr = getStringTypeAttr(attributes)
-    let template = `<mu-card 
+    let template = `<a-input 
         ${stringAttr}>
-        ${subContent || '&nbsp;'}
-    </mu-card>`
+    </a-input>`
+    return {template,attributes,slots}
 }
 export default handle

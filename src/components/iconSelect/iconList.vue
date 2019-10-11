@@ -7,6 +7,8 @@
     @focus="handleFocus"
     @blur="handleBlur"
     @change="handleChange"
+    :value="value"
+    @select="onSelect"
   >
     <a-select-opt-group v-for="(item,i) in list" :key="i" :label="item.title">
       <a-select-option v-for="(it,j) in item.icons" :value="it" :key="j">{{it}}<a-icon :type="it"></a-icon></a-select-option>
@@ -16,6 +18,9 @@
 <script>
 import icon from "./icon.js";
 export default {
+  props:{
+    value:String
+  },
   data() {
     return {
       list: icon
@@ -31,6 +36,9 @@ export default {
     handleFocus() {
       console.log("focus");
     },
+    onSelect(e){
+      this.$emit("change", e);
+    }
 
   }
 };

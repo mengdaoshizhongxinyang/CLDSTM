@@ -1,7 +1,13 @@
 const options = {
     publicPath: './',
     configureWebpack: {
+        resolve: {
+            alias:{
+                'vue$': 'vue/dist/vue.esm.js'
+            }
+        }
     },
+
     chainWebpack: (config) => {
         config.module.rule('md')
             .test(/\.md/)
@@ -10,7 +16,6 @@ const options = {
             .options({
                 raw: true
             })
-
     },
     css: {
         loaderOptions: {

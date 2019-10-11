@@ -1,18 +1,33 @@
 <template>
   <div class="main-body">
-    <div style="width:20%;height:100%"></div>
-    <div class="code">
-      <div style="width:200px;height:200px;border:1px #000 solid">
-        <a-tree draggable :treeData="gData" @dragenter="onDragEnter" @drop="onDrop" />
+    <VueDraggableResizable class="mobile" :drag-handle="'.drag-header'" :parent="true">
+      <div style="width:100%;height:100%;background:#fff">
+        <div class="drag-header"></div>
+        <div style="height:calc(100% - 28px);overflow-x:hidden">
+          <a-tree draggable :treeData="gData" @dragenter="onDragEnter" @drop="onDrop" @select="(key,node)=>selectComponent(key,node)"/>
+        </div>
       </div>
-      <div style="margin-left:calc(50% - 188px);width:375px;height:667px;border:1px #000 solid"></div>
-      <!-- <VueDraggableResizable class="mobile" :resizable="false" :w="375" :h="667"></VueDraggableResizable> -->
+    </VueDraggableResizable>
+    <div style="width:20%;height:100%">
+      <subAttribute v-model="selectedAttributes"></subAttribute>
+    </div>
+    <div class="code">
+      <a-button style="position:fixed;right:0;top:0" @click="mount">refresh</a-button>
+      <div
+        style="margin-left:calc(50% - 188px);width:375px;height:667px;border:1px #000 solid"
+        id="mbl"
+      ></div>
     </div>
     <div style="width:20%;height:100%">
-      <iconList></iconList>
+      <iconList v-model="tst"></iconList>
       <ul class="components-list">
-        <li @dblclick="addTree()">input<a-input></a-input></li>
-        <li @dblclick="addTree"><a-button>button</a-button></li>
+        <li @dblclick="addTree('AInput')">
+          输入框
+          <a-input style="width:200px"></a-input>
+        </li>
+        <li @dblclick="addTree('AButton')">
+          <a-button>button</a-button>
+        </li>
       </ul>
     </div>
     <!-- <a-modal v-drap :visible="visiable" >
@@ -21,32 +36,66 @@
           fasfasfsa
         </div>
       </template>
-    </a-modal> -->
+    </a-modal>-->
   </div>
 </template>
 
 <script>
+import subAttribute from "@/components/subAttribute.vue";
+import Vue from "vue";
 import VueDraggableResizable from "@/components/vue-draggable-resizable.vue";
 import iconList from "@/components/iconSelect/iconList.vue";
 import mount from "./mount";
+import { getTemplate } from "@/template";
+
 export default {
   components: {
     VueDraggableResizable,
+    subAttribute,
     iconList
   },
   data() {
     return {
+      tst: "",
       gData: [],
       visiable: true,
-      dataSource:['plus','del']
+      dataSource: ["plus", "del"],
+      key: 0,
+      selectedAttributes: {attributes:{}}
     };
   },
   methods: {
+    selectComponent(key,node){
+      console.log(node)
+      if(key.length>0){
+        this.selectedAttributes=node.node.$vnode.data.props
+      }else{
+        this.selectedAttributes={attributes:{}}
+      }
+      
+      console.log(this.selectedAttributes)
+    },
+    mount() {
+      let template = "";
+      this.gData.forEach(ele => {
+        template += ele.template;
+      });
+      mount("mbl", this.gData);
+      console.log(this.gData);
+    },
     onSelect(value) {
-      console.log('onSelect', value);
+      console.log("onSelect", value);
     },
     addTree(e) {
-      console.log(e);
+      console.log(getTemplate);
+      let info = { name: e };
+      let component = getTemplate(info);
+      component["key"] = this.key;
+      component["title"] = e;
+      component["info"]=info;
+      this.key++;
+      this.gData.push(component);
+      console.log(component);
     },
     onDragEnter(info) {
       // expandedKeys 需要受控时设置
@@ -108,15 +157,24 @@ export default {
       }
       this.gData = data;
     }
+  },
+  mounted(){
+    console.log(this)
   }
 };
 </script>
 
 <style lang="less" scoped>
+.drag-header {
+  height: 28px;
+  width: 100%;
+  border-bottom: 1px solid #aaa;
+}
 .main-body {
   width: 100%;
   height: 100%;
   display: flex;
+  overflow: hidden;
 }
 .code {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.117647),

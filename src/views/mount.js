@@ -1,38 +1,27 @@
 import Vue from 'vue'
+import { getTemplate } from "@/template";
 //给定模板，和要挂载的元素id，挂载组件   
-var mount = function(id, _component) {
-    let components = _Vue.$store.state.components
-    let component = components.find(c => c.info.id === id)
+var mount = function(id, _components) {
+    
     return new Promise((resolve, reject) => {
         //需要延迟才能取到document.getElementById(id)
         setTimeout(() => {
             let data={}
-            if (_component.attributes) {
-                Object.keys(_component.attributes).forEach(key => {
-                    data[key] = _component.attributes[key].value
-                })
-            }
-            if (component.uid) { //销毁旧实例
-
-            }
+            console.log(_components)
+            let template='<div id="mbl">'
+            _components.forEach(element => {
+                console.log(element)
+                template+=getTemplate(element.info,element.attributes,element.slots).template+"\n"
+            });
+            template+='</div>'
+            console.log(template)
             let vm = new Vue({
                 name: id.toString(),
                 data() {
                     return data
                 },
-                template: _component.template,
+                template:template,
                 el: document.getElementById(id),
-                mounted() {
-                    this.$el.id = id
-                    if (component) {
-                        component.uid = this._uid
-                    }
-                    //添加选中效果
-                    let info = _Vue.$store.state.currentComponent.info
-                    if (!info)
-                        this.$el.click()
-
-                }
             })
             resolve(vm)
 

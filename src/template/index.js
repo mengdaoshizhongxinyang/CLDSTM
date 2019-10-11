@@ -1,4 +1,6 @@
-var getStringTypeAttr = function(attributes) {
+import Antd from "./antd";
+
+const getStringTypeAttr = function(attributes) {
     // value为空的不添加到模板中
     let stringAttr = ''
     Object.keys(attributes).forEach(key => {
@@ -14,4 +16,10 @@ var getStringTypeAttr = function(attributes) {
     })
     return stringAttr
 }
-export { getStringTypeAttr }
+
+
+const getTemplate=function(info,_attr={},_slots={}){
+    let component=Antd[info.name](_attr,_slots)
+    return component
+}
+export { getStringTypeAttr,getTemplate }
