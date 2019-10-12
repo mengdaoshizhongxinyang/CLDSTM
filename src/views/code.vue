@@ -19,7 +19,6 @@
       ></div>
     </div>
     <div style="width:20%;height:100%">
-      <iconList v-model="tst"></iconList>
       <ul class="components-list">
         <li @dblclick="addTree('AInput')">
           输入框
@@ -27,6 +26,9 @@
         </li>
         <li @dblclick="addTree('AButton')">
           <a-button>button</a-button>
+        </li>
+        <li @dblclick="addTree('AIcon')">
+          <a-icon type="smile"></a-icon>
         </li>
       </ul>
     </div>
@@ -61,19 +63,22 @@ export default {
       visiable: true,
       dataSource: ["plus", "del"],
       key: 0,
-      selectedAttributes: {attributes:{}}
+      selectedAttributes: {attributes:{},slot:''}
     };
   },
   methods: {
+    changeSlot(e){
+      console.log(e)
+    },
     selectComponent(key,node){
-      console.log(node)
+      console.log(node.node.$parent)
       if(key.length>0){
         this.selectedAttributes=node.node.$vnode.data.props
       }else{
-        this.selectedAttributes={attributes:{}}
+        this.selectedAttributes={attributes:{},slot:''}
       }
       
-      console.log(this.selectedAttributes)
+      console.log(this.selectedAttributes.slot)
     },
     mount() {
       let template = "";
@@ -89,7 +94,8 @@ export default {
     addTree(e) {
       console.log(getTemplate);
       let info = { name: e };
-      let component = getTemplate(info);
+      
+      let component = getTemplate({info});
       component["key"] = this.key;
       component["title"] = e;
       component["info"]=info;
@@ -156,10 +162,16 @@ export default {
         }
       }
       this.gData = data;
+      console.log(this.gData)
     }
   },
   mounted(){
-    console.log(this)
+    console.log(this['gData'])
+  },
+  watch:{
+    selectedAttributes:function(value){
+      console.log(value)
+    }
   }
 };
 </script>

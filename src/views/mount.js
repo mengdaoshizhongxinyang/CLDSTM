@@ -11,7 +11,7 @@ var mount = function(id, _components) {
             let template='<div id="mbl">'
             _components.forEach(element => {
                 console.log(element)
-                template+=getTemplate(element.info,element.attributes,element.slots).template+"\n"
+                template+=getTemplate(element).template+"\n"
             });
             template+='</div>'
             console.log(template)

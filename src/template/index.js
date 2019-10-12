@@ -6,20 +6,25 @@ const getStringTypeAttr = function(attributes) {
     Object.keys(attributes).forEach(key => {
         let attrKey
         let arr = ['text', 'selection', 'icon','color'] //这些类型都不用加bind
-        if (arr.includes(attributes[key].type) || attributes[key].notBind) {
-            attrKey = key
-        } else {
-            attrKey = `:${key}`
+        if(attributes[key].type==='slot'){
+            
+        }else{
+            if (arr.includes(attributes[key].type) || attributes[key].notBind) {
+                attrKey = key
+            } else {
+                attrKey = `:${key}`
+            }
+            let attr = attributes[key].value ? `${attrKey}="${attributes[key].value}"\n` : ''
+            stringAttr += attr
         }
-        let attr = attributes[key].value ? `${attrKey}="${attributes[key].value}"\n` : ''
-        stringAttr += attr
+        
     })
     return stringAttr
 }
 
 
-const getTemplate=function(info,_attr={},_slots={}){
-    let component=Antd[info.name](_attr,_slots)
+const getTemplate=function(_component){
+    let component=Antd[_component.info.name](_component)
     return component
 }
 export { getStringTypeAttr,getTemplate }
