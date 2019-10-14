@@ -317,7 +317,6 @@ export default {
     },
     elementDown (e) {
       const target = e.target || e.srcElement
-
       if (this.$el.contains(target)) {
         if (this.onDragStart && this.onDragStart(e) === false) {
           return
@@ -329,12 +328,13 @@ export default {
         ) {
           return
         }
-
+        console.log(this.enabled)
         if (!this.enabled) {
           this.enabled = true
 
           this.$emit('activated')
           this.$emit('update:active', true)
+                console.log(this.enabled)
         }
 
         if (this.draggable) {

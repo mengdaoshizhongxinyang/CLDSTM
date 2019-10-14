@@ -1,27 +1,39 @@
 import {getStringTypeAttr} from "./../index.js";
 const handle = function (component) {
     let attributes = {
-        style: {
-            type: 'string',
-            value: ''
-        },
-        addonBefore: {
-            type: 'string',
-            value: ''
-        },
-        theme: {
-            type: 'text',
-            value: ''
-        },
-        spin: {
+        disabled: {
             type: 'boolean',
             value: ''
         },
-        type: {
+        ghost: {
+            type: 'boolean',
+            value: ''
+        },
+        htmlType: {
+            type: 'text',
+            value: ''
+        },
+        icon: {
             type: 'icon',
             value: ''
         },
-        twoToneColor:{
+        loading: {
+            type: 'string',
+            value: ''
+        },
+        shape:{
+            type: 'string',
+            value: ''
+        },
+        size:{
+            type: 'string',
+            value: ''
+        },
+        type:{
+            type: 'string',
+            value: ''
+        },
+        block:{
             type: 'string',
             value: ''
         },
@@ -46,6 +58,7 @@ const handle = function (component) {
                 }
             })
         }
+        console.log(slots)
         Object.keys(slots).forEach(ele=>{
             if(slots[ele].length>0){
                 console.log(ele)
@@ -61,10 +74,10 @@ const handle = function (component) {
             }
         })
         let stringAttr = getStringTypeAttr(attributes)
-        let template = `<a-icon
+        let template = `<a-button 
             ${stringAttr}>
             ${slotTemplate}
-        </a-icon>`
-        return { template,attributes,slots }
+        </a-button>`
+        return {template,attributes,slots}
 }
 export default handle

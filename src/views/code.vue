@@ -1,13 +1,34 @@
 <template>
   <div class="main-body">
-    <VueDraggableResizable class="mobile" :drag-handle="'.drag-header'" :parent="true">
-      <div style="width:100%;height:100%;background:#fff">
-        <div class="drag-header"></div>
-        <div style="height:calc(100% - 28px);overflow-x:hidden">
-          <a-tree draggable :treeData="gData" @dragenter="onDragEnter" @drop="onDrop" @select="(key,node)=>selectComponent(key,node)"/>
+    <transition name="treeFade">
+      <VueDraggableResizable
+        class="mobile"
+        :drag-handle="'.drag-header'"
+        :parent="true"
+        v-if="treeIsShow"
+      >
+        <div style="width:100%;height:100%;background:#fff">
+          <div class="drag-header">
+            <div>treeNode</div>
+            <div style="display:flex">
+              <div class="close-icon" @click="closeTree">
+                <a-icon type="close"></a-icon>
+              </div>
+            </div>
+          </div>
+          <div style="height:calc(100% - 28px);overflow-x:hidden">
+            <a-tree
+              draggable
+              :treeData="gData"
+              @dragenter="onDragEnter"
+              @drop="onDrop"
+              @select="(key,node)=>selectComponent(key,node)"
+              showLine
+            />
+          </div>
         </div>
-      </div>
-    </VueDraggableResizable>
+      </VueDraggableResizable>
+    </transition>
     <div style="width:20%;height:100%">
       <subAttribute v-model="selectedAttributes"></subAttribute>
     </div>
@@ -32,13 +53,6 @@
         </li>
       </ul>
     </div>
-    <!-- <a-modal v-drap :visible="visiable" >
-      <template v-slot:title>
-        <div v-drap>
-          fasfasfsa
-        </div>
-      </template>
-    </a-modal>-->
   </div>
 </template>
 
@@ -58,27 +72,34 @@ export default {
   },
   data() {
     return {
+      treeIsShow: true,
       tst: "",
       gData: [],
       visiable: true,
       dataSource: ["plus", "del"],
       key: 0,
-      selectedAttributes: {attributes:{},slot:''}
+      selectedAttributes: { attributes: {}, slot: "" }
     };
   },
   methods: {
-    changeSlot(e){
-      console.log(e)
+    hidden() {
+      this.visiable = false;
     },
-    selectComponent(key,node){
-      console.log(node.node.$parent)
-      if(key.length>0){
-        this.selectedAttributes=node.node.$vnode.data.props
-      }else{
-        this.selectedAttributes={attributes:{},slot:''}
+    closeTree() {
+      this.treeIsShow = !this.treeIsShow;
+    },
+    changeSlot(e) {
+      console.log(e);
+    },
+    selectComponent(key, node) {
+      console.log(node.node.$parent);
+      if (key.length > 0) {
+        this.selectedAttributes = node.node.$vnode.data.props;
+      } else {
+        this.selectedAttributes = { attributes: {}, slot: "" };
       }
-      
-      console.log(this.selectedAttributes.slot)
+
+      console.log(this.selectedAttributes.slot);
     },
     mount() {
       let template = "";
@@ -87,6 +108,7 @@ export default {
       });
       mount("mbl", this.gData);
       console.log(this.gData);
+      // this.treeIsShow = !this.treeIsShow;
     },
     onSelect(value) {
       console.log("onSelect", value);
@@ -94,11 +116,11 @@ export default {
     addTree(e) {
       console.log(getTemplate);
       let info = { name: e };
-      
-      let component = getTemplate({info});
+
+      let component = getTemplate({ info });
       component["key"] = this.key;
       component["title"] = e;
-      component["info"]=info;
+      component["info"] = info;
       this.key++;
       this.gData.push(component);
       console.log(component);
@@ -162,15 +184,15 @@ export default {
         }
       }
       this.gData = data;
-      console.log(this.gData)
+      console.log(this.gData);
     }
   },
-  mounted(){
-    console.log(this['gData'])
+  mounted() {
+    console.log(this["gData"]);
   },
-  watch:{
-    selectedAttributes:function(value){
-      console.log(value)
+  watch: {
+    selectedAttributes: function(value) {
+      console.log(value);
     }
   }
 };
@@ -181,6 +203,8 @@ export default {
   height: 28px;
   width: 100%;
   border-bottom: 1px solid #aaa;
+  display: flex;
+  justify-content: space-between;
 }
 .main-body {
   width: 100%;
@@ -195,6 +219,7 @@ export default {
   height: 100%;
 }
 .mobile {
+  // display: none;
   box-shadow: 0 14px 45px rgba(0, 0, 0, 0.247059),
     0 10px 18px rgba(0, 0, 0, 0.219608);
 }
@@ -221,5 +246,35 @@ export default {
   i {
     vertical-align: middle;
   }
+}
+
+.close-icon {
+  padding :0 6px;
+  cursor: default;
+  color:#000;
+  &:hover {
+    background: #ff0000;
+    color:#fff;
+  }
+}
+.treeFade-enter-active {
+  transition: opacity 0.5s;
+  animation: treeFade-in .5s;
+}
+.treeFade-leave-active{
+  transition: opacity 0.5s;
+  animation: treeFade-in .5s reverse;
+}
+@keyframes treeFade-in {
+  0%{
+    transform: scale(0.6);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+.treeFade-enter,
+.treeFade-leave-to {
+  opacity: 0;
 }
 </style>
