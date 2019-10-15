@@ -23,7 +23,6 @@
               @dragenter="onDragEnter"
               @drop="onDrop"
               @select="(key,node)=>selectComponent(key,node)"
-              showLine
             />
           </div>
         </div>
@@ -33,25 +32,39 @@
       <subAttribute v-model="selectedAttributes"></subAttribute>
     </div>
     <div class="code">
-      <a-button style="position:fixed;right:0;top:0" @click="mount">refresh</a-button>
+      <a-button style="position:fixed;left:0;bottom:0" @click="mount">refresh</a-button>
       <div
         style="margin-left:calc(50% - 188px);width:375px;height:667px;border:1px #000 solid"
         id="mbl"
       ></div>
     </div>
     <div style="width:20%;height:100%">
-      <ul class="components-list">
-        <li @dblclick="addTree('AInput')">
-          输入框
-          <a-input style="width:200px"></a-input>
-        </li>
-        <li @dblclick="addTree('AButton')">
-          <a-button>button</a-button>
-        </li>
-        <li @dblclick="addTree('AIcon')">
-          <a-icon type="smile"></a-icon>
-        </li>
-      </ul>
+      <a-tabs defaultActiveKey="1" :style="{ height: '100%'}" @change="callback">
+        <a-tab-pane tab="antd" key="Antd">
+          <div class="tab-content">
+            <ul class="components-list">
+              <li @dblclick="addTree('AInput')">
+                输入框
+                <a-input style="width:200px"></a-input>
+              </li>
+              <li @dblclick="addTree('AButton')">
+                <a-button>button</a-button>
+              </li>
+              <li @dblclick="addTree('AIcon')">
+                <a-icon type="smile"></a-icon>
+              </li>
+            </ul>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane tab="自定义" key="Design">
+          <div class="tab-content"><ul class="components-list">
+              <li @dblclick="addTree('PCLeftRight')">
+                左右
+                <PCLeftRight style="width:200px"></PCLeftRight>
+              </li>
+            </ul></div>
+        </a-tab-pane>
+      </a-tabs>
     </div>
   </div>
 </template>
@@ -60,15 +73,15 @@
 import subAttribute from "@/components/subAttribute.vue";
 import Vue from "vue";
 import VueDraggableResizable from "@/components/vue-draggable-resizable.vue";
-import iconList from "@/components/iconSelect/iconList.vue";
 import mount from "./mount";
+import components from "@/components";
 import { getTemplate } from "@/template";
 
 export default {
   components: {
     VueDraggableResizable,
     subAttribute,
-    iconList
+    ...components
   },
   data() {
     return {
@@ -78,10 +91,14 @@ export default {
       visiable: true,
       dataSource: ["plus", "del"],
       key: 0,
+      type:'',
       selectedAttributes: { attributes: {}, slot: "" }
     };
   },
   methods: {
+    callback(val) {
+      this.type=val
+    },
     hidden() {
       this.visiable = false;
     },
@@ -114,8 +131,7 @@ export default {
       console.log("onSelect", value);
     },
     addTree(e) {
-      console.log(getTemplate);
-      let info = { name: e };
+      let info = { name: e,type:this.type };
 
       let component = getTemplate({ info });
       component["key"] = this.key;
@@ -249,32 +265,35 @@ export default {
 }
 
 .close-icon {
-  padding :0 6px;
+  padding: 0 6px;
   cursor: default;
-  color:#000;
+  color: #000;
   &:hover {
     background: #ff0000;
-    color:#fff;
+    color: #fff;
   }
 }
 .treeFade-enter-active {
   transition: opacity 0.5s;
-  animation: treeFade-in .5s;
+  animation: treeFade-in 0.5s;
 }
-.treeFade-leave-active{
+.treeFade-leave-active {
   transition: opacity 0.5s;
-  animation: treeFade-in .5s reverse;
+  animation: treeFade-in 0.5s reverse;
 }
 @keyframes treeFade-in {
-  0%{
-    transform: scale(0.6);
+  0% {
+    transform: scale(0.6) translateY(100px);
   }
-  100%{
+  100% {
     transform: scale(1);
   }
 }
 .treeFade-enter,
 .treeFade-leave-to {
   opacity: 0;
+}
+.tab-content {
+  padding: 4px;
 }
 </style>

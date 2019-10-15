@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import { getTemplate } from "@/template";
+import components from "@/components";
+console.log(components)
 //给定模板，和要挂载的元素id，挂载组件   
 var mount = function(id, _components) {
     
@@ -17,6 +19,7 @@ var mount = function(id, _components) {
             console.log(template)
             let vm = new Vue({
                 name: id.toString(),
+                components:components,
                 data() {
                     return data
                 },

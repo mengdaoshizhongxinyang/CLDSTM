@@ -1,4 +1,4 @@
-import {getStringTypeAttr,getTemplate} from "./../index.js";
+import {getStringTypeAttr,getTemplate,getSlots,getSlotsStringType} from "./../index.js";
 const handle = function (component) {
     let attributes = {
         addonAfter: {
@@ -42,34 +42,12 @@ const handle = function (component) {
             default:[]
         }
     
-    let slotTemplate=''
     Object.assign(attributes, component.attributes)
-    if(component.children!==undefined){
-        component.children.forEach(ele=>{
-            console.log(ele)
-            if(ele.attributes.slot.value!==''){
-                slots[ele.attributes.slot.value].push(ele)
-            }else{
-                console.log(1)
-                slots['default'].push(ele)
-            }
-        })
-    }
+    getSlots(slots,component);
+    let slotTemplate=''
+    slotTemplate+=getSlotsStringType(slots)
     console.log(slots)
-    Object.keys(slots).forEach(ele=>{
-        if(slots[ele].length>0){
-            console.log(ele)
-            if(ele!=='default'){
-                slotTemplate+=`<template v-slot:${ele}>`
-            }
-            slots[ele].forEach(temp=>{
-                slotTemplate+=getTemplate(temp).template
-            })
-            if(ele!=='default'){
-                slotTemplate+=`</template>`
-            }
-        }
-    })
+
     let stringAttr = getStringTypeAttr(attributes)
     let template = `<a-input 
         ${stringAttr}>
