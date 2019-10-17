@@ -6,6 +6,7 @@
         :drag-handle="'.drag-header'"
         :parent="true"
         v-if="treeIsShow"
+        :z="2"
       >
         <div style="width:100%;height:100%;background:#fff">
           <div class="drag-header">
@@ -34,7 +35,7 @@
     <div class="code">
       <a-button style="position:fixed;left:0;bottom:0" @click="mount">refresh</a-button>
       <div
-        style="margin-left:calc(50% - 188px);width:375px;height:667px;border:1px #000 solid"
+        
         id="mbl"
       ></div>
     </div>
@@ -70,6 +71,7 @@
 </template>
 
 <script>
+
 import subAttribute from "@/components/subAttribute.vue";
 import Vue from "vue";
 import VueDraggableResizable from "@/components/vue-draggable-resizable.vue";

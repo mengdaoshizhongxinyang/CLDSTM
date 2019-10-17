@@ -32,6 +32,10 @@ const handle = function (component) {
         "v-model": {
             type: 'string',
             value:''
+        },
+        slot:{
+            type:'slot',
+            value:''
         }
     },
         slots = {

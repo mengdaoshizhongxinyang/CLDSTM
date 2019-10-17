@@ -5,7 +5,7 @@
     </div>
     <slot></slot>
     <div class="right" :style="rightStyle">
-      <slot name="left"></slot>
+      <slot name="right"></slot>
     </div>
   </div>
 </template>

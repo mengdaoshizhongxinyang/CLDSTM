@@ -6503,11 +6503,6 @@ thread-loader@^2.1.2:
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
 
-three.proton.js@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/three.proton.js/-/three.proton.js-0.1.5.tgz#3ae32fd9cf3b5698e3b546946e53badbda04948e"
-  integrity sha512-6RlDLJMzJWOWeMaBuEYIgLDeC/Tuqih4zCQ5gi5JZMR2T0N9Hebpreo+6O7eeuj3yIwRX/VnLmTgWHd92p0eQA==
-
 three@^0.108.0:
   version "0.108.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.108.0.tgz#53d26597c7932f214bb43f4655e566d2058143b5"
