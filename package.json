@@ -13,6 +13,7 @@
     "core-js": "^2.6.5",
     "text-loader": "^0.0.1",
     "three": "^0.108.0",
+    "three.proton.js": "^0.1.5",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
     "vue-markdown": "^2.2.4",
