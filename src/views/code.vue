@@ -35,12 +35,12 @@
     <div class="code">
       <a-button style="position:fixed;left:0;bottom:0" @click="mount">refresh</a-button>
       <div
-        
+
         id="mbl"
       ></div>
     </div>
     <div style="width:20%;height:100%">
-      <a-tabs defaultActiveKey="1" :style="{ height: '100%'}" @change="callback">
+      <a-tabs defaultActiveKey="Antd" :style="{ height: '100%'}" @change="callback">
         <a-tab-pane tab="antd" key="Antd">
           <div class="tab-content">
             <ul class="components-list">
