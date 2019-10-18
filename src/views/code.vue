@@ -1,5 +1,6 @@
 <template>
-  <div class="main-body">
+  <div class="main-body"  @contextmenu.prevent>
+                
     <transition name="treeFade">
       <VueDraggableResizable
         class="mobile"
@@ -7,7 +8,9 @@
         :parent="true"
         v-if="treeIsShow"
         :z="2"
+        id='test'
       >
+        
         <div style="width:100%;height:100%;background:#fff">
           <div class="drag-header">
             <div>treeNode</div>
@@ -18,6 +21,10 @@
             </div>
           </div>
           <div style="height:calc(100% - 28px);overflow-x:hidden">
+            <div v-rightclick style="display:none;position:fixed;z-index:99999">
+          <div>删除</div>
+          <div>复制</div>
+        </div>
             <a-tree
               draggable
               :treeData="gData"
@@ -33,11 +40,15 @@
       <subAttribute v-model="selectedAttributes"></subAttribute>
     </div>
     <div class="code">
+      <div v-rightclick style="display:none;position:fixed;z-index:99999">
+          <div>删除</div>
+          <div>复制</div>
+          <div>测试</div>
+        </div>
       <a-button style="position:fixed;left:0;bottom:0" @click="mount">refresh</a-button>
-      <div
-
-        id="mbl"
-      ></div>
+      <div id="mbl">
+        
+      </div>
     </div>
     <div style="width:20%;height:100%">
       <a-tabs defaultActiveKey="Antd" :style="{ height: '100%'}" @change="callback">
@@ -58,29 +69,33 @@
           </div>
         </a-tab-pane>
         <a-tab-pane tab="自定义" key="Design">
-          <div class="tab-content"><ul class="components-list">
+          <div class="tab-content">
+            <ul class="components-list">
               <li @dblclick="addTree('PCLeftRight')">
                 左右
                 <PCLeftRight style="width:200px"></PCLeftRight>
               </li>
-            </ul></div>
+            </ul>
+          </div>
         </a-tab-pane>
       </a-tabs>
     </div>
+
+    
   </div>
 </template>
 
 <script>
-
+import VueContextMenu from "@/components/rightClickMenu/VueContextMenu.vue";
 import subAttribute from "@/components/subAttribute.vue";
 import Vue from "vue";
 import VueDraggableResizable from "@/components/vue-draggable-resizable.vue";
 import mount from "./mount";
 import components from "@/components";
 import { getTemplate } from "@/template";
-
 export default {
   components: {
+    VueContextMenu,
     VueDraggableResizable,
     subAttribute,
     ...components
@@ -93,13 +108,18 @@ export default {
       visiable: true,
       dataSource: ["plus", "del"],
       key: 0,
-      type:'',
+      type: "",
+      show: false,
+      contextMenuTarget: document.body,
       selectedAttributes: { attributes: {}, slot: "" }
     };
   },
   methods: {
-    callback(val) {
-      this.type=val
+    copyMsg() {
+      console.log("copy");
+    },
+    callback(val){
+      this.type = val;
     },
     hidden() {
       this.visiable = false;
@@ -133,7 +153,7 @@ export default {
       console.log("onSelect", value);
     },
     addTree(e) {
-      let info = { name: e,type:this.type };
+      let info = { name: e, type: this.type };
 
       let component = getTemplate({ info });
       component["key"] = this.key;
@@ -204,9 +224,6 @@ export default {
       this.gData = data;
       console.log(this.gData);
     }
-  },
-  mounted() {
-    console.log(this["gData"]);
   },
   watch: {
     selectedAttributes: function(value) {
@@ -297,5 +314,41 @@ export default {
 }
 .tab-content {
   padding: 4px;
+}
+
+
+.right-menu {
+  position: fixed;
+  background: #fff;
+  border: solid 1px rgba(0, 0, 0, .2);
+  border-radius: 3px;
+  z-index: 999;
+  display: none;
+}
+.right-menu a {
+  width: 75px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  display: block;
+  color: #1a1a1a;
+}
+.right-menu a:hover {
+  background: #eee;
+  color: #fff;
+}
+.right-menu {
+    border: 1px solid #eee;
+    box-shadow: 0 0.5em 1em 0 rgba(0,0,0,.1);
+    border-radius: 1px;
+}
+a {
+    text-decoration: none;
+}
+.right-menu a {
+    padding: 2px;
+}
+.right-menu a:hover {
+    background: #42b983;
 }
 </style>

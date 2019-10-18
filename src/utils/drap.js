@@ -7,6 +7,7 @@ const getAttr = (obj, key) => (
 const vDrap={
     inserted(el){
         const target = el.parentNode.parentNode.parentNode.parentNode;
+        console.log(target)
         const header=el.parentNode.parentNode;
         header.onmousedown=(e)=>{
             header.style.cursor='move';

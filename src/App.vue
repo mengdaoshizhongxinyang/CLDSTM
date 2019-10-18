@@ -21,4 +21,7 @@ export default {
   height: 100%;
   position:fixed;
 }
+body{
+  overflow: hidden;
+}
 </style>
