@@ -14,7 +14,7 @@ export const asyncRouterMap=[
     {
         path: '/test',
         name: 'test',
-        component:()=>import ('@/views/preview.vue'),
+        component:()=>import ('@/views/test1.vue'),
         meta:{title:'首页'}
     }
 ]
