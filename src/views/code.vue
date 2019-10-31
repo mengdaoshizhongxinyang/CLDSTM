@@ -1,6 +1,5 @@
 <template>
-  <div class="main-body"  @contextmenu.prevent>
-                
+  <div class="main-body" @contextmenu.prevent>
     <transition name="treeFade">
       <VueDraggableResizable
         class="mobile"
@@ -8,10 +7,9 @@
         :parent="true"
         v-if="treeIsShow"
         :z="2"
-        id='test'
+        id="test"
       >
-        
-        <div style="width:100%;height:100%;background:#fff">
+        <div style="width:100%;height:100%;background:#fff" @mouseup="e=>test2(e)">
           <div class="drag-header">
             <div>treeNode</div>
             <div style="display:flex">
@@ -21,10 +19,13 @@
             </div>
           </div>
           <div style="height:calc(100% - 28px);overflow-x:hidden">
-            <div v-rightclick style="display:none;position:fixed;z-index:99999">
-          <div>删除</div>
-          <div>复制</div>
-        </div>
+            <ContextMenu
+              :offset="contextMenuOffset"
+              :show.sync="show1"
+            >
+              <div>粘贴</div>
+              <div>剪切</div>
+            </ContextMenu>
             <a-tree
               draggable
               :treeData="gData"
@@ -39,16 +40,17 @@
     <div style="width:20%;height:100%">
       <subAttribute v-model="selectedAttributes"></subAttribute>
     </div>
-    <div class="code">
-      <div v-rightclick style="display:none;position:fixed;z-index:99999">
-          <div>删除</div>
-          <div>复制</div>
-          <div>测试</div>
-        </div>
+    <div class="code" @mouseup="e=>test1(e)">
+      <ContextMenu
+        :offset="contextMenuOffset"
+        :show.sync="show2"
+      >
+        <div>复制</div>
+        <div>粘贴</div>
+        <div>剪切</div>
+      </ContextMenu>
       <a-button style="position:fixed;left:0;bottom:0" @click="mount">refresh</a-button>
-      <div id="mbl">
-        
-      </div>
+      <div id="mbl"></div>
     </div>
     <div style="width:20%;height:100%">
       <a-tabs defaultActiveKey="Antd" :style="{ height: '100%'}" @change="callback">
@@ -80,13 +82,11 @@
         </a-tab-pane>
       </a-tabs>
     </div>
-
-    
   </div>
 </template>
 
 <script>
-import VueContextMenu from "@/components/rightClickMenu/VueContextMenu.vue";
+import ContextMenu from "@/components/rightClickMenu/VueContextMenu.vue";
 import subAttribute from "@/components/subAttribute.vue";
 import Vue from "vue";
 import VueDraggableResizable from "@/components/vue-draggable-resizable.vue";
@@ -95,7 +95,8 @@ import components from "@/components";
 import { getTemplate } from "@/template";
 export default {
   components: {
-    VueContextMenu,
+    
+    ContextMenu,
     VueDraggableResizable,
     subAttribute,
     ...components
@@ -109,16 +110,33 @@ export default {
       dataSource: ["plus", "del"],
       key: 0,
       type: "",
-      show: false,
+      show1: false,
+      show2: false,
       contextMenuTarget: document.body,
+      contextMenuOffset: {
+        left: 0,
+        top: 0
+      },
       selectedAttributes: { attributes: {}, slot: "" }
     };
   },
   methods: {
+    test1(e){
+      if(e.button===2){
+        this.contextMenuOffset.left=e.x
+        this.contextMenuOffset.top=e.y
+        this.show2=true
+      }
+    },
+    test2(e){
+      if(e.button===2){
+        this.show1=true
+      }
+    },
     copyMsg() {
       console.log("copy");
     },
-    callback(val){
+    callback(val) {
       this.type = val;
     },
     hidden() {
@@ -229,6 +247,9 @@ export default {
     selectedAttributes: function(value) {
       console.log(value);
     }
+  },
+  mounted() {
+    console.log(localStorage.length);
   }
 };
 </script>
@@ -316,11 +337,10 @@ export default {
   padding: 4px;
 }
 
-
 .right-menu {
   position: fixed;
   background: #fff;
-  border: solid 1px rgba(0, 0, 0, .2);
+  border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   z-index: 999;
   display: none;
@@ -338,17 +358,17 @@ export default {
   color: #fff;
 }
 .right-menu {
-    border: 1px solid #eee;
-    box-shadow: 0 0.5em 1em 0 rgba(0,0,0,.1);
-    border-radius: 1px;
+  border: 1px solid #eee;
+  box-shadow: 0 0.5em 1em 0 rgba(0, 0, 0, 0.1);
+  border-radius: 1px;
 }
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 .right-menu a {
-    padding: 2px;
+  padding: 2px;
 }
 .right-menu a:hover {
-    background: #42b983;
+  background: #42b983;
 }
 </style>
