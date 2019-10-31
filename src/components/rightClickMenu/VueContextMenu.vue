@@ -71,8 +71,13 @@ export default {
 </script>
 <style lang="less" scoped>
 .context-menu {
-  z-index: 10010;
+  z-index: 99999;
   display: block;
+  background: #fff;
+  border: 1px solid #a5a5a5;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+  padding: 4px 2px;
+  line-height: 1em;
   position: absolute;
 }
 </style>
