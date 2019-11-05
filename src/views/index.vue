@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div style="height:100%;width:255px">
+    <!-- <div style="height:100%;width:255px">
       <a-menu theme="light" style="height:100%" mode="inline">
         <template v-for="(item,i) in leftTree">
           <a-menu-item v-if="item.type!=='file'" :key="i" @click="openMD(item.name)">
@@ -19,7 +19,7 @@
     </div>
     <div style="height:100%;width:1500px" class="markdown-body">
       <VueMD :source="content" class="content"></VueMD>
-    </div>
+    </div> -->
   </div>
 </template>
 
