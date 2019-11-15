@@ -8,7 +8,7 @@ export const asyncRouterMap=[
     {
         path: '/',
         name: 'code',
-        component:()=>import ('@/views/code.vue'),
+        component:()=>import ('@/views/test2.vue'),
         meta:{title:'首页'}
     },
     {
