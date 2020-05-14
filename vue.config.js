@@ -1,11 +1,20 @@
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+console.log(MonacoWebpackPlugin)
 const options = {
     publicPath: './',
     configureWebpack: {
         resolve: {
-            alias:{
+            alias: {
                 'vue$': 'vue/dist/vue.esm.js'
             }
-        }
+        },
+        plugins: [
+            new MonacoWebpackPlugin({
+                // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+                languages: ['javascript', 'css', 'html', 'typescript', 'json'],
+                output: "./static/js/monaco-editor"
+            })
+        ]
     },
 
     chainWebpack: (config) => {

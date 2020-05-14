@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { matchesSelectorToParentElements, addEvent, removeEvent } from '../utils/dom'
+import { matchesSelectorToParentElements, addEvent, removeEvent } from '@/utils/dom'
 
 const events = {
   mouse: {

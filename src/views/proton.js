@@ -8,9 +8,6 @@
  *
  */
 import * as THREE from "three";
-console.log(THREE);
-
-    console.log(this)
 
     //the max particle number in pool
     Proton.POOL_MAX = 500;

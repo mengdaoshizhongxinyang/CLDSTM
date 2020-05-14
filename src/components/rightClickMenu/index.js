@@ -1,4 +1,4 @@
 import VueContextMenu from "./VueContextMenu.vue"
-export default{
+export{
     VueContextMenu
 }

@@ -78,6 +78,7 @@ export default {
   box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
   padding: 4px 2px;
   line-height: 1em;
-  position: absolute;
+  position: fixed;
+  min-width: 160px;
 }
 </style>

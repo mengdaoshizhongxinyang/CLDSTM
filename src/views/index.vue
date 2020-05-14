@@ -1,61 +1,61 @@
 <template>
   <div class="main">
-    <!-- <div style="height:100%;width:255px">
-      <a-menu theme="light" style="height:100%" mode="inline">
-        <template v-for="(item,i) in leftTree">
-          <a-menu-item v-if="item.type!=='file'" :key="i" @click="openMD(item.name)">
-            <span>{{item.name}}</span>
-          </a-menu-item>
-          <a-sub-menu v-else :key="i">
-            <template v-slot:title>
-              <span>{{item.name}}</span>
-            </template>
-            <a-menu-item v-for="(it,j) in item.children" :key="j" @click="openMD(it.name)">
-              <span>{{it.name}}</span>
-            </a-menu-item>
-          </a-sub-menu>
-        </template>
-      </a-menu>
-    </div>
-    <div style="height:100%;width:1500px" class="markdown-body">
-      <VueMD :source="content" class="content"></VueMD>
-    </div> -->
+    <div class="desktop"></div>
+    <Frame>
+      <div style="width:960px;padding:4px;" class="markdown-body">
+        <!-- <VueMD :source="content" class="content"></VueMD> -->
+        <vscode></vscode>
+      </div>
+    </Frame>
+    <DownMenu></DownMenu>
   </div>
 </template>
 
 <script>
+import { vscodeIcon } from "@/components/IconManage";
+import { vscode } from "@/components/Windows";
+import { Frame } from "@/components/Frame";
+import { DownMenu } from "@/components/DownMenu";
+import { getContent } from "@/api/home/menu";
+import moment from "moment";
 import * as device from "@/../public/device.min.js";
 import * as bundle from "@/../public/bundle.js";
 import VueMD from "vue-markdown";
 import * as THREE from "three";
-console.log(THREE)
 import config from "@/../public/config.js";
 // console.log(()=>import("three.proton.js"))
 import Proton from "./proton.js";
 let proton, emitter;
 let camera, scene, renderer;
 let three = new THREE.Scene();
-console.log(Proton)
+
 if (config.signboard === true) {
   let modelUrl = "./haru02/haru02.model.json";
   loadlive2d("live2dcanvas", modelUrl);
 }
 export default {
   components: {
-    VueMD
+    Frame,
+    VueMD,
+    DownMenu,
+    vscode
   },
   data() {
     return {
+      timeR: [],
       openKeys: [],
       content: "",
-      url: "@/../public/static/test.md",
-      leftTree: config.file
+      leftTree: config.file,
+      
     };
   },
   methods: {
+    moment,
+    search(e, e1) {
+      console.log(e, e1);
+    },
     openMD(name) {
       import(`@/../public/static/${name}.md`).then(res => {
-        console.log(res);
         this.$nextTick(function() {
           this.content = res.default;
         });
@@ -80,9 +80,8 @@ export default {
       window.addEventListener("resize", this.onWindowResize, false);
     },
     addProton() {
-      console.log(1)
       proton = new Proton();
-      
+
       emitter = new Proton.Emitter();
       emitter.rate = new Proton.Rate(
         new Proton.Span(34, 48),
@@ -132,30 +131,39 @@ export default {
       this.render();
     },
     render() {
-        proton.update();
-        renderer.render(scene, camera);
+      proton.update();
+      renderer.render(scene, camera);
     },
     onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     },
-    initBackGround(){
+    initBackGround() {
       this.addScene();
       this.addProton();
       this.animate();
     }
   },
-  mounted(){
+  mounted() {
     this.initBackGround();
+    getContent().then(res=>{
+      this.content=res
+    })
   }
 };
 </script>
 <style lang="less" scoped>
 .main {
-  display: flex;
   width: 100%;
   height: 100%;
+}
+.desktop{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 </style>
 <style lang="less">
@@ -629,7 +637,4 @@ export default {
     border-radius: 0 0 6px 0;
   }
 }
-
-
-
 </style>

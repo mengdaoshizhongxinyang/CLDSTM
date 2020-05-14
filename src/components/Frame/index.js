@@ -1,4 +1,4 @@
 import Frame from "./Frame.vue"
-export default{
+export{
     Frame
 }

@@ -1,14 +1,8 @@
 export const asyncRouterMap=[
     {
-        path: '/index',
+        path: '/',
         name: 'index',
         component:()=>import ('@/views/index.vue'),
-        meta:{title:'首页'}
-    },
-    {
-        path: '/',
-        name: 'code',
-        component:()=>import ('@/views/test2.vue'),
         meta:{title:'首页'}
     },
     {
