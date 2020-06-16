@@ -2,7 +2,7 @@
   <div
     ref="container"
     class="monaco-editor"
-    :style="`height: ${height}px`"
+    :style="`height: ${height}px;width:900px`"
   ></div>
 </template>
 
@@ -19,7 +19,8 @@ export default {
           theme: "vs", // 编辑器主题：vs, hc-black, or vs-dark，更多选择详见官网
           roundedSelection: false, // 右侧不显示编辑器预览框
           language: "javascript",
-          autoIndent: true // 自动缩进
+          autoIndent: true, // 自动缩进
+          automaticLayout: true
         };
       }
     },
@@ -30,6 +31,11 @@ export default {
   },
   mounted() {
     this.init();
+  },
+  data(){
+    return {
+      monacoEditor:null
+    }
   },
   methods: {
     init() {
@@ -51,6 +57,13 @@ export default {
     // 供父组件调用手动获取值
     getVal() {
       return this.monacoEditor.getValue();
+    }
+  },
+  watch:{
+    height:function(newHeight,oldHeight){
+      console.log(1)
+      console.log(this.monacoEditor)
+      
     }
   }
 };
