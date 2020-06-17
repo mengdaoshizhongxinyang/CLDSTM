@@ -1,15 +1,17 @@
 <template>
-  <div
-    ref="container"
-    class="monaco-editor"
-    :style="`height: ${height}px;width:900px`"
-  ></div>
+  <Frame @resize="handleResize" :scrollY="false">
+    <div ref="container" class="monaco-editor" :style="`height:${height}px;width:${width}px`"></div>
+  </Frame>
 </template>
 
 <script>
 import * as monaco from "monaco-editor";
+import { Frame } from "@/components/Frame";
 export default {
   name: "Monaco",
+  components:{
+    Frame
+  },
   props: {
     monacoOptions: {
       type: Object,
@@ -23,19 +25,17 @@ export default {
           automaticLayout: true
         };
       }
-    },
-    height: {
-      type: Number,
-      default: 300
     }
   },
   mounted() {
     this.init();
   },
-  data(){
+  data() {
     return {
-      monacoEditor:null
-    }
+      monacoEditor: null,
+      height:168,
+      width:246
+    };
   },
   methods: {
     init() {
@@ -57,13 +57,10 @@ export default {
     // 供父组件调用手动获取值
     getVal() {
       return this.monacoEditor.getValue();
-    }
-  },
-  watch:{
-    height:function(newHeight,oldHeight){
-      console.log(1)
-      console.log(this.monacoEditor)
-      
+    },
+    handleResize(w,h){
+      this.height = h-32;
+      this.width=w
     }
   }
 };

@@ -1,12 +1,15 @@
 <template>
   <div class="main">
     <div class="desktop"></div>
-    <Frame>
+
+      <vscode ></vscode>
+      <!-- <MonacoEditor :style="`width:800px;height:${th}px`" language="javascript"></MonacoEditor> -->
+
+    <!-- <Frame>
       <div style="width:960px;padding:4px;" class="markdown-body">
-        <!-- <VueMD :source="content" class="content"></VueMD> -->
-        <vscode></vscode>
+        <VueMD :source="content" class="content"></VueMD>
       </div>
-    </Frame>
+    </Frame>-->
     <DownMenu></DownMenu>
   </div>
 </template>
@@ -46,14 +49,40 @@ export default {
       openKeys: [],
       content: "",
       leftTree: config.file,
-      
+      th: 300,
+      ix:0
     };
   },
   methods: {
     moment,
+    test(from, to) {
+      console.log(from, to);
+    },
+    sttm(){
+      this.$refs.carousel1.goTo(this.ix);
+        this.$refs.carousel2.goTo(this.ix);
+        this.$refs.carousel3.goTo(this.ix);
+        this.ix+=1;
+        this.ix%=4;
+      setTimeout(this.sttm,2000)
+    },
+    handleBeforeChange(to) {
+
+
+        
+    },
     search(e, e1) {
       console.log(e, e1);
     },
+    onPanelChange(date) {
+      console.log(date);
+    },
+    getListData(value) {
+      console.log(value);
+      let listData;
+      return value.date() % 2;
+    },
+
     openMD(name) {
       import(`@/../public/static/${name}.md`).then(res => {
         this.$nextTick(function() {
@@ -147,23 +176,27 @@ export default {
   },
   mounted() {
     this.initBackGround();
-    getContent().then(res=>{
-      this.content=res
-    })
+    getContent().then(res => {
+      this.content = res;
+    });
   }
 };
 </script>
 <style lang="less" scoped>
+/* For demo */
 .main {
   width: 100%;
   height: 100%;
 }
-.desktop{
+.desktop {
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+}
+/deep/.ant-fullcalendar-content {
+  position: static;
 }
 </style>
 <style lang="less">
