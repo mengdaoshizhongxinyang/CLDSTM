@@ -16,6 +16,7 @@
 
 <script>
 import { vscodeIcon } from "@/components/IconManage";
+
 import { vscode } from "@/components/Windows";
 import { Frame } from "@/components/Frame";
 import { DownMenu } from "@/components/DownMenu";

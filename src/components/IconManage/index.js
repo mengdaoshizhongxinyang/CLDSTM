@@ -1,4 +1,4 @@
-import  vscode  from "./vscode.vue";
+import  vscodeIcon  from "./vscodeIcon.vue";
 export {
-    vscode
+    vscodeIcon
 }
