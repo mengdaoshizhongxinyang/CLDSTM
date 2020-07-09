@@ -1,4 +1,2 @@
-import VueContextMenu from "./VueContextMenu.vue"
-export{
-    VueContextMenu
-}
+import RightClickMenu from "./RightClickMenu"
+export default RightClickMenu

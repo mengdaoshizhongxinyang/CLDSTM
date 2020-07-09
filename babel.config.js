@@ -1,3 +1,4 @@
+console.log('ddd')
 module.exports = {
   presets: [
     '@vue/app',

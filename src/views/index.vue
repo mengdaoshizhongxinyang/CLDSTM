@@ -2,24 +2,25 @@
   <div class="main">
     <div class="desktop"></div>
 
-      <vscode ></vscode>
-      <!-- <MonacoEditor :style="`width:800px;height:${th}px`" language="javascript"></MonacoEditor> -->
-
-    <!-- <Frame>
+    <vscode>
+      
+    </vscode>
+    <Frame>
+      <Tree></Tree>
+    </Frame>
+    <Frame>
       <div style="width:960px;padding:4px;" class="markdown-body">
         <VueMD :source="content" class="content"></VueMD>
       </div>
-    </Frame>-->
+    </Frame>
     <DownMenu></DownMenu>
   </div>
 </template>
 
-<script>
-import { vscodeIcon } from "@/components/IconManage";
+<script> 
+import { vscode,Frame,DownMenu } from "@/components";
 
-import { vscode } from "@/components/Windows";
-import { Frame } from "@/components/Frame";
-import { DownMenu } from "@/components/DownMenu";
+
 import { getContent } from "@/api/home/menu";
 import moment from "moment";
 import * as device from "@/../public/device.min.js";
@@ -29,6 +30,7 @@ import * as THREE from "three";
 import config from "@/../public/config.js";
 // console.log(()=>import("three.proton.js"))
 import Proton from "./proton.js";
+import Tree from '@/components/Tree.vue';
 let proton, emitter;
 let camera, scene, renderer;
 let three = new THREE.Scene();
@@ -42,6 +44,7 @@ export default {
     Frame,
     VueMD,
     DownMenu,
+    Tree,
     vscode
   },
   data() {
@@ -51,27 +54,23 @@ export default {
       content: "",
       leftTree: config.file,
       th: 300,
-      ix:0
+      ix: 0
     };
   },
   methods: {
     moment,
-    test(from, to) {
-      console.log(from, to);
+    test(e) {
+      console.log(e);
     },
-    sttm(){
+    sttm() {
       this.$refs.carousel1.goTo(this.ix);
-        this.$refs.carousel2.goTo(this.ix);
-        this.$refs.carousel3.goTo(this.ix);
-        this.ix+=1;
-        this.ix%=4;
-      setTimeout(this.sttm,2000)
+      this.$refs.carousel2.goTo(this.ix);
+      this.$refs.carousel3.goTo(this.ix);
+      this.ix += 1;
+      this.ix %= 4;
+      setTimeout(this.sttm, 2000);
     },
-    handleBeforeChange(to) {
-
-
-        
-    },
+    handleBeforeChange(to) {},
     search(e, e1) {
       console.log(e, e1);
     },
@@ -199,6 +198,7 @@ export default {
 /deep/.ant-fullcalendar-content {
   position: static;
 }
+
 </style>
 <style lang="less">
 .content {
@@ -266,7 +266,7 @@ export default {
     color: #ff6600;
   }
   a:visited {
-    /*color: purple;*/
+    color: purple;
   }
   ul,
   ol {

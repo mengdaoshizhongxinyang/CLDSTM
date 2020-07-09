@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: "context-menu",
+  name: "right-click-menu",
   data() {
     return {
       style: {}
@@ -53,7 +53,7 @@ export default {
       let menuHeight = this.$el.getBoundingClientRect().height;
       let menuWidth = this.$el.getBoundingClientRect().width;
       console.log(menuHeight)
-      // 增加点击处与菜单间间隔，较为美观
+      // 增加点击处与菜单间间隔
       const gap = 10;
       let topover =
         this.offset.top + menuHeight >= docHeight

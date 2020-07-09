@@ -1,4 +1,2 @@
-import  vscodeIcon  from "./vscodeIcon.vue";
-export {
-    vscodeIcon
-}
+import  vscodeIcon  from "./vscodeIcon";
+export default vscodeIcon

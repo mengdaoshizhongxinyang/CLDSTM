@@ -21,7 +21,7 @@
 
 <script>
 import * as monaco from "monaco-editor";
-import { Frame } from "@/components/Frame";
+import Frame from "@/components/Frame";
 
 export default {
   name: "Monaco",
@@ -122,7 +122,7 @@ export default {
     min-width: 170px;
     .view-handle {
       cursor: e-resize;
-      position:absolute;
+      position: absolute;
       top: 0;
       width: 4px;
       height: 100%;

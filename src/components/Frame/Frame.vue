@@ -37,15 +37,18 @@
         </div>
       </div>
     </div>
-    <div class="content" :style="`overflow-x:${scrollX?'auto':'hidden'};overflow-y:${scrollY?'auto':'hidden'}`">
+    <div
+      class="content"
+      :style="`overflow-x:${scrollX?'auto':'hidden'};overflow-y:${scrollY?'auto':'hidden'}`"
+    >
       <slot></slot>
     </div>
   </VueDraggableResizable>
 </template>
 
 <script>
-import { VueDraggableResizable } from "@/components/BaseDraggable";
-import { VueContextMenu } from "@/components/rightClickMenu";
+import VueDraggableResizable from "@/components/BaseDraggable";
+import VueContextMenu from "@/components/RightClickMenu";
 export default {
   components: {
     VueDraggableResizable,

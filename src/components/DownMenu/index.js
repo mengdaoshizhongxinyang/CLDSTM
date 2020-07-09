@@ -1,4 +1,2 @@
 import DownMenu from "./DownMenu.vue"
-export{
-    DownMenu
-}
+export default DownMenu

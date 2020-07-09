@@ -1,5 +1,5 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
-console.log(MonacoWebpackPlugin)
+const vuecli= require('@vue/cli-service')
 const options = {
     publicPath: './',
     configureWebpack: {
