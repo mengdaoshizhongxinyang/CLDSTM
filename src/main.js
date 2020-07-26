@@ -45,13 +45,18 @@ import {
   Progress,
   Skeleton,
   Popconfirm,
+  carousel,
   message,
-  notification
+  notification,
+  TreeSelect,
 } from 'ant-design-vue'
 // import VueCropper from 'vue-cropper'
 
 Vue.use(LocaleProvider)
+Vue.use(TreeSelect)
 Vue.use(Layout)
+Vue.use(carousel)
+Vue.use(message)
 Vue.use(Input)
 Vue.use(InputNumber)
 Vue.use(Button)

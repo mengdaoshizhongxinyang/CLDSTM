@@ -2,14 +2,15 @@
   <VueDraggableResizable
     class="filter-main"
     drag-handle=".header"
-    :min-width="146"
-    :min-height="32"
+    :min-width="minWidth"
+    :min-height="minHeight"
     :w="w"
     :h="h"
     :x="x"
     :y="y"
     @resizestop="(x,y,w,h)=>handleResizestop(x,y,w,h)"
     @dragstop="(x,y)=>handleDragstop(x,y)"
+    v-on="$listeners"
   >
     <div class="header" @dblclick="fullScrean">
       <div class="header-content">{{title}}</div>
@@ -18,7 +19,7 @@
           <div class="menu-item">最小化</div>
           <div class="menu-item">最大化</div>
           <a-divider />
-          <div class="menu-item">关闭</div>
+          <div class="menu-item" @click="close">关闭</div>
         </VueContextMenu>
       </div>
       <slot name="header"></slot>
@@ -32,7 +33,7 @@
         <div class="header-button" v-else @click="fullScrean">
           <a-icon type="border"></a-icon>
         </div>
-        <div class="header-button-close">
+        <div class="header-button-close" @click="close">
           <a-icon type="close"></a-icon>
         </div>
       </div>
@@ -63,6 +64,22 @@ export default {
     scrollY: {
       type: Boolean,
       default: true
+    },
+    minWidth:{
+      type:Number,
+      default:146
+    },
+    minHeight:{
+      type:Number,
+      default:32
+    },
+    initialW:{
+      type:Number,
+      default:246
+    },
+    initialH:{
+      type:Number,
+      default:200
     }
   },
   data() {
@@ -123,7 +140,17 @@ export default {
     handleDragstop(x, y) {
       this.x = x;
       this.y = y;
+    },
+    close(){
+      this.$emit('close')
     }
+  },
+  created(){
+    const { initialW,initialH}=this
+    Object.assign(this,{
+      w:initialW,
+      h:initialH
+    })
   }
 };
 </script>

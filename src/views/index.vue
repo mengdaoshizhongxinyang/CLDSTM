@@ -2,23 +2,23 @@
   <div class="main">
     <div class="desktop"></div>
 
-    <vscode>
+    <!-- <vscode>
       
-    </vscode>
-    <Frame>
-      <Tree></Tree>
-    </Frame>
-    <Frame>
+    </vscode> -->
+      
+    <DownMenu></DownMenu>
+    <component :is="item" v-for="(item, index) in apps" :key="index" @actived="test(index)"></component>
+    <!-- <Frame>
       <div style="width:960px;padding:4px;" class="markdown-body">
         <VueMD :source="content" class="content"></VueMD>
       </div>
-    </Frame>
-    <DownMenu></DownMenu>
+    </Frame> -->
+    
   </div>
 </template>
 
 <script> 
-import { vscode,Frame,DownMenu } from "@/components";
+import { vscode,Frame,DownMenu,Money } from "@/components";
 
 
 import { getContent } from "@/api/home/menu";
@@ -29,6 +29,9 @@ import VueMD from "vue-markdown";
 import * as THREE from "three";
 import config from "@/../public/config.js";
 // console.log(()=>import("three.proton.js"))
+const pinyin = require('@/components/PinYin/index')
+
+
 import Proton from "./proton.js";
 import Tree from '@/components/Tree.vue';
 let proton, emitter;
@@ -45,10 +48,12 @@ export default {
     VueMD,
     DownMenu,
     Tree,
-    vscode
+    vscode,
+    Money
   },
   data() {
     return {
+      apps:['Money'],
       timeR: [],
       openKeys: [],
       content: "",
@@ -59,30 +64,9 @@ export default {
   },
   methods: {
     moment,
-    test(e) {
-      console.log(e);
-    },
-    sttm() {
-      this.$refs.carousel1.goTo(this.ix);
-      this.$refs.carousel2.goTo(this.ix);
-      this.$refs.carousel3.goTo(this.ix);
-      this.ix += 1;
-      this.ix %= 4;
-      setTimeout(this.sttm, 2000);
-    },
-    handleBeforeChange(to) {},
-    search(e, e1) {
-      console.log(e, e1);
-    },
-    onPanelChange(date) {
-      console.log(date);
-    },
-    getListData(value) {
-      console.log(value);
-      let listData;
-      return value.date() % 2;
-    },
+    test(index){
 
+    },
     openMD(name) {
       import(`@/../public/static/${name}.md`).then(res => {
         this.$nextTick(function() {
