@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            width: 400px;
+            height: 800px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="start">qids</button>
+    <canvas id="money"></canvas>
+    <script>
+        function Money() {
+            Command = function (moveL = 'ArrowLeft', moveR = 'ArrowRight', absorbC = 'a', freedC = 's') {
+
+                var moveL = moveL,
+                    moveR = moveR,
+                    absorbC = absorbC,
+                    freedC = freedC,
+                    optionsSetting = {}
+                this.init = function () {
+                    optionsSetting[moveL] = moveLeft
+                    optionsSetting[moveR] = moveRight
+                    optionsSetting[absorbC] = absorbCoins
+                    optionsSetting[freedC] = freedCoins
+                }
+
+                function moveLeft() {
+                    console.log('left')
+                }
+
+                function moveRight() {
+                    console.log('right')
+                }
+
+                function absorbCoins() {
+                    console.log('a')
+                }
+
+                function freedCoins() {
+                    console.log('s')
+                }
+                this.options = function (key) {
+                    if(optionsSetting[key]){
+                        optionsSetting[key]()
+                    }
+                }
+                this.getStting = function () {
+                    return {
+                        arrowLeft: moveL,
+                        arrowRight: moveR,
+                        absorbCoins: absorbC,
+                        freedCoins: freedC
+                    }
+                }
+                this.setOptions = function (moveL = 'ArrowLeft', moveR = 'ArrowRight', absorbC = 'a', freedC =
+                's') {
+                    optionsSetting = {}
+                    optionsSetting[moveL] = moveLeft
+                    optionsSetting[moveR] = moveRight
+                    optionsSetting[absorbC] = absorbCoins
+                    optionsSetting[freedC] = freedCoins
+                }
+            }
+            CoinsMatrix=function(layers=5){
+                this.layers=layers
+            }
+            var canvas
+            var context
+            var command = new Command()
+            this.init = function () {
+                canvas = document.getElementById('money');
+                if (canvas) {
+                    context=canvas.getContext('2d');
+                    canvas.tabIndex=-1
+                    canvas.focus()
+                    canvas.addEventListener('keydown', handleKeyInput)
+                }
+            }
+            var handleKeyInput = function (event) {
+                command.options(event.key)
+            }
+            var loop=function(){
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+        }
+        document.getElementById('start').addEventListener('click', function () {
+            var money = new Money()
+            money.init()
+        })
+    </script>
+</body>
+
+</html>

@@ -2,16 +2,17 @@
   <Frame
     :scrollY="false"
     :minWidth="400"
-    :minHeight="800"
-    :initialH="800"
+    :minHeight="832"
+    :initialH="832"
     :initialW="400"
     v-on="$listeners"
   >
     <div tabindex="-1" @keydown="keydownOpitions" class="money-main" ref="body">
-      <a-button v-if="!isStart" @click="start"></a-button>
+      <a-button v-if="!isStart" @click="start" type="primary">开始</a-button>
       <div v-for="(coins, coinsIndex) in money" :key="coinsIndex" style="width:50px">
         <div v-for="(coin, coinIndex) in coins" :key="coinIndex" class="coin">{{moneyType[coin]}}</div>
       </div>
+      <div class="person" ref="person" style="left:0"></div>
     </div>
   </Frame>
 </template>
@@ -34,6 +35,12 @@ export default {
   methods: {
     keydownOpitions(e) {
       console.log(e);
+      let person = this.$el.person
+      
+      if(e.key=='ArrowLeft'){
+        this.$refs.person.style.left=this.$refs.person.left+50
+      }
+      console.dir(this.$refs.person.style.left)
     },
     start() {
       this.isStart = true;
@@ -47,11 +54,11 @@ export default {
     },
     initGame() {
       this.addLayer(5)
-      requestAnimationFrame
       this.timingEvent=setInterval(this.addLayer,2000)
     },
     addLayer(num = 1) {
       const { money } = this;
+      let start=new Date().getTime()
       let maxLength=0
       for (let i = 0; i < num; i++) {
         for (let j = 0; j < 8; j++) {
@@ -59,6 +66,11 @@ export default {
           maxLength=Math.max(money[j].length)
         }
       }
+      
+      this.$nextTick(()=>{
+        let end=new Date().getTime()
+        console.log(start,end,end-start)
+      })
       if(maxLength>15){
           this.end()
       }
@@ -72,6 +84,7 @@ export default {
   width: 400px;
   height: 800px;
   display: flex;
+  position:relative;
   .coin {
     width: 48px;
     height: 48px;
@@ -79,6 +92,14 @@ export default {
     margin: 2px;
     text-align: center;
     line-height: 48px;
+  }
+  .person{
+    position: absolute;
+    color: white;
+    bottom: 0px;
+    background-color: #1890ff;
+    width: 50px;
+    height: 50px;
   }
 }
 </style>
