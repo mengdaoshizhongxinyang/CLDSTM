@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      apps:['Money'],
+      apps:['Money','Tree'],
       timeR: [],
       openKeys: [],
       content: "",

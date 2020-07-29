@@ -1,10 +1,9 @@
 <template>
   <Frame v-on="$listeners">
     <div>
-      {{dm[rand]}}
+      <a class="css-test">{{dm[rand]}}</a>
       <br />
       <button @click="reset">下一个</button>
-      <input type="text" @keydown="test" v-model="d" />
     </div>
   </Frame>
 </template>
@@ -12,8 +11,8 @@
 <script>
 import Frame from "@/components/Frame";
 export default {
-  components:{
-    Frame
+  components: {
+    Frame,
   },
   data() {
     return {
@@ -31,10 +30,10 @@ export default {
         "咕锅面馆",
         "韩料",
         "黄焖鸡",
-        "重庆面馆"
+        "重庆面馆",
       ],
       rand: 0,
-      d: ""
+      d: "",
     };
   },
   methods: {
@@ -46,10 +45,21 @@ export default {
       if (e.key == "F11") {
         e.preventDefault();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
+.css-test {
+  color: transparent;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue,blueviolet);
+  background-clip: text;
+  -webkit-background-clip: text;
+  &:hover {
+    color: transparent;
+    transition: 300ms ease;
+  }
+}
 </style>

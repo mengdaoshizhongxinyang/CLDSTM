@@ -10,20 +10,33 @@
             width: 400px;
             height: 800px;
         }
+        .css-test{
+            color:black;
+            font-weight: bold;
+            background: linear-gradient(90deg,red,orange,yellow,green, blue,purple);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+        .css-test:hover{
+            color:transparent;
+            transition: 300ms ease;
+        }
     </style>
 </head>
 
 <body>
+    <div class="css-test">一个css的记录</div>
     <button id="start">qids</button>
     <canvas id="money"></canvas>
     <script>
         function Money() {
             Command = function (moveL = 'ArrowLeft', moveR = 'ArrowRight', absorbC = 'a', freedC = 's') {
-
+                
                 var moveL = moveL,
                     moveR = moveR,
                     absorbC = absorbC,
                     freedC = freedC,
+                    
                     optionsSetting = {}
                 this.init = function () {
                     optionsSetting[moveL] = moveLeft
@@ -74,9 +87,11 @@
             }
             var canvas
             var context
+            var coins = []
             var command = new Command()
             this.init = function () {
                 canvas = document.getElementById('money');
+                command.init()
                 if (canvas) {
                     context=canvas.getContext('2d');
                     canvas.tabIndex=-1
@@ -91,6 +106,11 @@
                 context.clearRect(0, 0, canvas.width, canvas.height);
             }
 
+        }
+
+        function Coins(x, y,num) {
+            this.position = { x: x, y: y };
+            this.val=num
         }
         document.getElementById('start').addEventListener('click', function () {
             var money = new Money()
