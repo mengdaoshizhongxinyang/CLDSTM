@@ -1,9 +1,34 @@
-import Vue from "vue";
-import Vuex from "vuex";
-Vue.use(Vuex);
-const store = new Vuex.Store({
+import { StoreOptions, MutationTree, ActionTree, GetterTree, ModuleTree } from 'vuex'
 
-})
+import modules from '@/store/modules'
+
+/** @typedef {typeof state} RootState */
+const state = {
+}
+
+/** @type MutationTree<RootState> */
+const mutations = {
+}
+
+/** @type ActionTree<RootState, RootState> */
+const actions = {
+}
+
+/** @type GetterTree<RootState, RootState> */
+const getters = {
+}
+
+/** @type StoreOptions<RootState> */
+const storeOptions = {
+  modules,
+  state,
+  mutations,
+  actions,
+  getters
+}
+
+export default storeOptions
+
 // const store = new Vuex.Store({
 //     state: {
 //         width: [{
@@ -100,5 +125,3 @@ const store = new Vuex.Store({
 //         }
 //     }
 // })
-
-export default store

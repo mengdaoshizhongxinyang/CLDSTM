@@ -7,7 +7,7 @@
     </vscode> -->
       
     <DownMenu></DownMenu>
-    <component :is="item" v-for="(item, index) in apps" :key="index" @actived="test(index)"></component>
+    <component :is="item.apps" v-bind="item.binds" v-for="(item, index) in apps" :key="index" @actived="test(index)"></component>
     <!-- <Frame>
       <div style="width:960px;padding:4px;" class="markdown-body">
         <VueMD :source="content" class="content"></VueMD>
@@ -53,7 +53,15 @@ export default {
   },
   data() {
     return {
-      apps:['Money','Tree'],
+      apps:[{
+        apps:"Money",
+        binds:{},
+        id:1
+      },{
+        apps:"Tree",
+        binds:{},
+        id:2
+      }],
       timeR: [],
       openKeys: [],
       content: "",
