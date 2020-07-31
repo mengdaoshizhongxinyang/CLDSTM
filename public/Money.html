@@ -10,15 +10,17 @@
             width: 400px;
             height: 800px;
         }
-        .css-test{
-            color:black;
+
+        .css-test {
+            color: black;
             font-weight: bold;
-            background: linear-gradient(90deg,red,orange,yellow,green, blue,purple);
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
             background-clip: text;
             -webkit-background-clip: text;
         }
-        .css-test:hover{
-            color:transparent;
+
+        .css-test:hover {
+            color: transparent;
             transition: 300ms ease;
         }
     </style>
@@ -31,12 +33,12 @@
     <script>
         function Money() {
             Command = function (moveL = 'ArrowLeft', moveR = 'ArrowRight', absorbC = 'a', freedC = 's') {
-                
+
                 var moveL = moveL,
                     moveR = moveR,
                     absorbC = absorbC,
                     freedC = freedC,
-                    
+
                     optionsSetting = {}
                 this.init = function () {
                     optionsSetting[moveL] = moveLeft
@@ -61,7 +63,7 @@
                     console.log('s')
                 }
                 this.options = function (key) {
-                    if(optionsSetting[key]){
+                    if (optionsSetting[key]) {
                         optionsSetting[key]()
                     }
                 }
@@ -74,7 +76,7 @@
                     }
                 }
                 this.setOptions = function (moveL = 'ArrowLeft', moveR = 'ArrowRight', absorbC = 'a', freedC =
-                's') {
+                    's') {
                     optionsSetting = {}
                     optionsSetting[moveL] = moveLeft
                     optionsSetting[moveR] = moveRight
@@ -82,35 +84,57 @@
                     optionsSetting[freedC] = freedCoins
                 }
             }
-            CoinsMatrix=function(layers=5){
-                this.layers=layers
+
+            CoinsMatrix = function (layers = 5) {
+                this.layers = layers
             }
             var canvas
             var context
             var coins = []
+            var process
             var command = new Command()
             this.init = function () {
                 canvas = document.getElementById('money');
+                canvas.width=400
+                canvas.height=800
                 command.init()
                 if (canvas) {
-                    context=canvas.getContext('2d');
-                    canvas.tabIndex=-1
+                    context = canvas.getContext('2d');
+                    canvas.tabIndex = -1
                     canvas.focus()
                     canvas.addEventListener('keydown', handleKeyInput)
+
+                    process = setInterval(loop, 17);
                 }
             }
             var handleKeyInput = function (event) {
                 command.options(event.key)
             }
-            var loop=function(){
+            var loop = function () {
                 context.clearRect(0, 0, canvas.width, canvas.height);
+                context.beginPath();
+                context.fillStyle = '#fa3380';
+                context.strokeStyle = 'rgba(2,179,228,0.8)';
+                context.arc(25, 25, 25, 0, Math.PI * 2);
+                context.fill();
+                context.stroke();
             }
 
         }
 
-        function Coins(x, y,num) {
-            this.position = { x: x, y: y };
-            this.val=num
+        function Coins(x, y, num) {
+            this.position = {
+                x: x,
+                y: y
+            };
+            this.val = num
+        }
+        function Coins(x, y, num) {
+            this.position = {
+                x: x,
+                y: y
+            };
+            this.val = num
         }
         document.getElementById('start').addEventListener('click', function () {
             var money = new Money()

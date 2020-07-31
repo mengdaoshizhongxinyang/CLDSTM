@@ -1,5 +1,5 @@
 <template>
-  <Frame v-on="$listeners">
+  <Frame v-on="$listeners" v-bind="$attrs">
     <div>
       <a class="css-test">{{dm[rand]}}</a>
       <br />

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main">
-      <div class="appmenu">
+      <div class="appmenu" @click="openMenu">
         <a-icon type="windows" style="color:#fff;fontSize:24px;"></a-icon>
       </div>
       <div class="icon"></div>
@@ -38,6 +38,9 @@ export default {
     },
     handleTitleTimeStatus(statu) {
       this.titleTimeStatus = statu;
+    },
+    openMenu(){
+      
     }
   },
   mounted() {
@@ -54,6 +57,7 @@ export default {
   height: 44px;
   display: flex;
   background: #000000aa;
+  z-index:19999999;
 }
 .appmenu {
   width: 48px;

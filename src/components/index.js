@@ -5,6 +5,7 @@ import IconManage from "@/components/IconManage";
 import vscode from "@/components/VsCode";
 import RightClickMenu from "@/components/RightClickMenu";
 import Money from "@/components/Money"
+import DesktopIcon from "@/components/DesktopIcon";
 export{
     BaseDraggable,
     DownMenu,
@@ -12,5 +13,6 @@ export{
     IconManage,
     RightClickMenu,
     vscode,
+    DesktopIcon,
     Money
 }

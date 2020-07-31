@@ -8,6 +8,7 @@
     :h="h"
     :x="x"
     :y="y"
+    :z="z"
     @resizestop="(x,y,w,h)=>handleResizestop(x,y,w,h)"
     @dragstop="(x,y)=>handleDragstop(x,y)"
     v-on="$listeners"
@@ -80,6 +81,10 @@ export default {
     initialH:{
       type:Number,
       default:200
+    },
+    z:{
+      type:Number,
+      default:0
     }
   },
   data() {

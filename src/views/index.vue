@@ -4,22 +4,30 @@
 
     <!-- <vscode>
       
-    </vscode> -->
-      
+    </vscode>-->
+    <DesktopIcon></DesktopIcon>
+    
+
     <DownMenu></DownMenu>
-    <component :is="item.apps" v-bind="item.binds" v-for="(item, index) in apps" :key="index" @actived="test(index)"></component>
+    <component
+      :is="item.apps"
+      v-bind="item.binds"
+      :z="item.zindex"
+      v-for="(item, index) in desktopApps.apps"
+      :key="item.id"
+      @activated="handleActived(item,index)"
+      @close="handleAppClose(item,index)"
+    ></component>
     <!-- <Frame>
       <div style="width:960px;padding:4px;" class="markdown-body">
         <VueMD :source="content" class="content"></VueMD>
       </div>
-    </Frame> -->
-    
+    </Frame>-->
   </div>
 </template>
 
-<script> 
-import { vscode,Frame,DownMenu,Money } from "@/components";
-
+<script>
+import { vscode, Frame, DownMenu, Money,DesktopIcon } from "@/components";
 
 import { getContent } from "@/api/home/menu";
 import moment from "moment";
@@ -29,11 +37,10 @@ import VueMD from "vue-markdown";
 import * as THREE from "three";
 import config from "@/../public/config.js";
 // console.log(()=>import("three.proton.js"))
-const pinyin = require('@/components/PinYin/index')
-
+const pinyin = require("@/components/PinYin/index");
 
 import Proton from "./proton.js";
-import Tree from '@/components/Tree.vue';
+import Tree from "@/components/Tree.vue";
 let proton, emitter;
 let camera, scene, renderer;
 let three = new THREE.Scene();
@@ -49,35 +56,50 @@ export default {
     DownMenu,
     Tree,
     vscode,
-    Money
+    DesktopIcon,
+    Money,
   },
   data() {
     return {
-      apps:[{
-        apps:"Money",
-        binds:{},
-        id:1
-      },{
-        apps:"Tree",
-        binds:{},
-        id:2
-      }],
+      desktopApps: {
+        apps: [
+          {
+            apps: "Money",
+            binds: {},
+            id: 1,
+            zindex:1
+          },
+          {
+            apps: "Tree",
+            binds: {},
+            id: 2,
+            zindex:2
+          },
+        ],
+        maxZindex:2
+      },
       timeR: [],
       openKeys: [],
       content: "",
       leftTree: config.file,
       th: 300,
-      ix: 0
+      ix: 0,
     };
   },
   methods: {
     moment,
-    test(index){
-
+    handleActived(item,index) {
+      
+      const{desktopApps}=this
+      item.zindex=++this.desktopApps.maxZindex
+      this.$forceUpdate()
+    },
+    handleAppClose(item,index) {
+      this.desktopApps.apps.splice(index,1);
     },
     openMD(name) {
-      import(`@/../public/static/${name}.md`).then(res => {
-        this.$nextTick(function() {
+      import(`@/../public/static/${name}.md`).then((res) => {
+        this.$nextTick(function () {
           this.content = res.default;
         });
       });
@@ -143,7 +165,7 @@ export default {
         map: map,
         transparent: true,
         opacity: 0.5,
-        color: 0xffffff
+        color: 0xffffff,
       });
       return new THREE.Sprite(material);
     },
@@ -164,14 +186,14 @@ export default {
       this.addScene();
       this.addProton();
       this.animate();
-    }
+    },
   },
   mounted() {
     this.initBackGround();
-    getContent().then(res => {
+    getContent().then((res) => {
       this.content = res;
     });
-  }
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -190,7 +212,6 @@ export default {
 /deep/.ant-fullcalendar-content {
   position: static;
 }
-
 </style>
 <style lang="less">
 .content {
