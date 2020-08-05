@@ -14,7 +14,10 @@ const options = {
                 languages: ['javascript', 'css', 'html', 'typescript', 'json'],
                 output: "./static/js/monaco-editor"
             })
-        ]
+        ],
+        externals: {
+          'config': 'config',
+        }
     },
 
     chainWebpack: (config) => {

@@ -6,7 +6,9 @@ import vscode from "@/components/VsCode";
 import RightClickMenu from "@/components/RightClickMenu";
 import Money from "@/components/Money"
 import DesktopIcon from "@/components/DesktopIcon";
+import ArticleMd from "@/components/Article"
 export{
+    ArticleMd,
     BaseDraggable,
     DownMenu,
     Frame,
