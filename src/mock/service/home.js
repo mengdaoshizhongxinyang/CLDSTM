@@ -4,9 +4,7 @@ import { builder } from '../util'
 const Home = (options) => {
     const result={
         "msg":"",
-        "data":[
-            {"icon":"/img/file.png"}
-        ]
+        "data":configs.get
     }
     return builder(result)
 }

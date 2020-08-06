@@ -1,22 +1,45 @@
 let fs = require("fs")
 let data = fs.readdirSync('./static')
-let config=fs.readFileSync('./config.js').toString()
-let articleList="//article start//\n    var article=[\n"
+let config = fs.readFileSync('./config.js').toString()
+let articleList = "//article start//\n    var article=["
+console.log(data)
+function getFileTreeContent(res,now) {
+    let ans=""
+    if (res.split('.').length > 1) {
+        let content = fs.readFileSync(`./static/${res}`).toString().split('\r\n').join('\\n')
+        ans += `
+        {
+            name:"${res}",
+            type:"article",
+            icon:"file-markdown",
+            bind:{
+                content:"${content}"
+            }
+        },`
+        return ans;
+    }else{
+        let content = fs.readdirSync(`${now}/${res}`)
+        let children=""
+        content.forEach(next=>{
+            children+=getFileTreeContent(next,`${now}/${res}`)
+        })
+        ans += `
+        {
+            name:"${res}",
+            type:"folder",
+            icon:"folder",
+            bind:{
+                children:[
+                    ${children}
+                ]
+            }
+        },`
+        return ans;
+    }
 
-data.forEach(res=>{
-    let content=fs.readFileSync(`./static/${res}`).toString().split('\r\n').join('\\n')
-    articleList+=`
-    {
-        name:"${res}",
-        type:"article",
-        bind:{
-            content:"${content}"
-        }
-    },`
-})
-articleList+="]\n"
-articleList+="//article end//"
-config=config.replace(/\/\/article start\/\/[\n|\r|\r\n](.*[\n|\r|\r\n])*\/\/article end\/\//,articleList)//\/\/article start\/\/\n.*\n\/\/article end\/\/
-console.log(config)
-console.log(data);
-fs.writeFileSync('./config.js',config)
+}
+articleList+=getFileTreeContent('static','./')
+articleList += "]\n"
+articleList += "//article end//"
+config = config.replace(/.*\/\/article start\/\/[\n|\r|\r\n](.*[\n|\r|\r\n])*.*\/\/article end\/\//, articleList)//\/\/article start\/\/\n.*\n\/\/article end\/\/
+fs.writeFileSync('./config.js', config)

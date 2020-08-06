@@ -1,7 +1,7 @@
 import { axios } from "@/utils/request";
-export function getContent() {
+export function getDesktop() {
     return axios({
-        url: '/static/test.md',
+        url: '/desktop',
         method: 'get'
     })
 }

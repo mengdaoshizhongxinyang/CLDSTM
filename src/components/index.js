@@ -7,6 +7,7 @@ import RightClickMenu from "@/components/RightClickMenu";
 import Money from "@/components/Money"
 import DesktopIcon from "@/components/DesktopIcon";
 import ArticleMd from "@/components/Article"
+import Floder from "@/components/Floder"
 export{
     ArticleMd,
     BaseDraggable,
@@ -16,5 +17,6 @@ export{
     RightClickMenu,
     vscode,
     DesktopIcon,
-    Money
+    Money,
+    Floder
 }

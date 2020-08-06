@@ -12,6 +12,9 @@ const mutations = {
 
 /** @type ActionTree<RootState, RootState> */
 const actions = {
+  initializationOption({ dispatch, commit, getters }){
+    
+  }
 }
 
 /** @type GetterTree<RootState, RootState> */

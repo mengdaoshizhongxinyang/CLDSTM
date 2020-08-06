@@ -1,15 +1,17 @@
 <template>
   <BaseDraggable
     :resizable="false"
-    :w="60"
-    :h="80"
+    :w="76"
+    :h="88"
     :parent="true"
     :active.sync="actived"
+    v-on="$listeners"
+    v-bind="$attrs"
   >
-    <div class="desktop-icon" tabindex="-1">
+    <div class="desktop-icon" tabindex="-1" @dblclick="e=>openApps(e)">
       <div class="desktop-icon-icon">
         <slot>
-          <div class="desktop-icon-icon-default"><a-icon :type="icon" /></div>
+          <div class="desktop-icon-icon-default"><a-icon :type="icon" theme="filled"/></div>
         </slot>
       </div>
       <div class="desktop-icon-text">
@@ -40,6 +42,13 @@ export default {
       actived: false,
     };
   },
+  methods:{
+    openApps(e){
+      e.preventDefault();
+      
+      this.$emit('openApps')
+    }
+  }
 };
 </script>
 
@@ -64,13 +73,16 @@ export default {
         width:100%;
         height:54px;
         &-default{
+          line-height: 1.2em;
           color: #fff;
-          font-size: 32px;
+          font-size: 42px;
           text-align: center;
         }
     }
     &-text{
-
+      color: #fff;
+      text-align: center;
+      line-height: 1.2em;
     }
     &:hover{
       background: rgba(230, 242, 255,0.15);

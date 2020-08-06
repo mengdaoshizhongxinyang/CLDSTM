@@ -5,8 +5,15 @@
     <!-- <vscode>
       
     </vscode>-->
-    <desktop-icon></desktop-icon>
-    
+    <desktop-icon
+      v-for="(icon,index) in desktopIcons"
+      :x="Math.floor(index/desktopIconNum)*70"
+      :y="Math.floor(index%desktopIconNum)*88"
+      :key="icon.name"
+      :name="icon.name"
+      :icon="icon.icon"
+      @openApps="handleOpenApps(icon)"
+    ></desktop-icon>
 
     <down-menu></down-menu>
     <component
@@ -18,12 +25,19 @@
       @activated="handleActived(item,index)"
       @close="handleAppClose(item,index)"
     ></component>
-    <article-md v-bind="art.bind" v-for="(art, index) in artlist" :key="index"></article-md>
   </div>
 </template>
 
 <script>
-import { vscode, Frame, DownMenu, Money,DesktopIcon,ArticleMd } from "@/components";
+import {
+  vscode,
+  Frame,
+  DownMenu,
+  Money,
+  DesktopIcon,
+  ArticleMd,
+  Floder
+} from "@/components";
 
 import moment from "moment";
 import * as device from "@/../public/device.min.js";
@@ -40,58 +54,61 @@ let three = new THREE.Scene();
 
 export default {
   components: {
+    Floder,
     Frame,
     DownMenu,
     Tree,
     vscode,
     DesktopIcon,
     Money,
-    ArticleMd
+    ArticleMd,
   },
-  created(){
-    this.artlist=config.getFile()
-    console.log(config.getFile())
+  created() {
+    this.desktopIcons = configs.getDesktopIcon();
+    this.desktopIconNum=Math.floor(document.body.offsetHeight/88)
   },
   data() {
     return {
       desktopApps: {
-        apps: [
-          {
-            apps: "Money",
-            binds: {},
-            id: 1,
-            zindex:1
-          },
-          {
-            apps: "Tree",
-            binds: {},
-            id: 2,
-            zindex:2
-          }
-        ],
-        maxZindex:2
+        apps: [],
+        maxZindex: 0,
+        id:0
       },
+      desktopIconNum:1,
       timeR: [],
       openKeys: [],
       content: "",
       th: 300,
       ix: 0,
-      artlist:[]
+      desktopIcons: [],
+      apps:{
+        'article':'ArticleMd',
+        'Money':'Money',
+        'folder':'Floder'
+      }
     };
   },
   methods: {
     moment,
-    handleActived(item,index) {
-      const{desktopApps}=this
-      item.zindex=++this.desktopApps.maxZindex
-      this.$forceUpdate()
+    handleOpenApps(icon) {
+      this.desktopApps.apps.push({
+        apps:this.apps[icon.type],
+        binds: icon.bind || {},
+        id:++this.desktopApps.id,
+        zindex:++this.desktopApps.maxZindex
+      })
     },
-    handleAppClose(item,index) {
-      this.desktopApps.apps.splice(index,1);
+    handleActived(item, index) {
+      const { desktopApps } = this;
+      item.zindex = ++this.desktopApps.maxZindex;
+      this.$forceUpdate();
+    },
+    handleAppClose(item, index) {
+      this.desktopApps.apps.splice(index, 1);
     },
     openMD(name) {
-      let res=require.context(`@/../public/static/`,true,/\.js$/)
-      console.log(res)
+      let res = require.context(`@/../public/static/`, true, /\.js$/);
+      console.log(res);
       this.content = res.default;
     },
     addScene() {
@@ -180,7 +197,7 @@ export default {
   },
   mounted() {
     this.initBackGround();
-    this.openMD()
+    this.openMD();
   },
 };
 </script>

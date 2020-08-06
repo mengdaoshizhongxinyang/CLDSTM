@@ -16,7 +16,7 @@ const options = {
             })
         ],
         externals: {
-          'config': 'config',
+          'configs': 'configs',
         }
     },
 

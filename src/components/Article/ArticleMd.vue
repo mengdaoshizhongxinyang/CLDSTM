@@ -1,7 +1,7 @@
 <template>
-  <Frame v-on="$listeners" v-bind="$attrs">
-    <div style="width:960px;padding:4px;" class="markdown-body">
-      <vue-md :source="content" class="content"></vue-md>
+  <Frame v-on="$listeners" v-bind="$attrs" :initialH="600" :initialW="1000">
+    <div class="markdown-body">
+      <vue-md :source="content" class="markdown-content"></vue-md>
     </div>
   </Frame>
 </template>
@@ -12,21 +12,27 @@ import Frame from "@/components/Frame";
 export default {
   components: {
     VueMd,
-    Frame
+    Frame,
   },
   props: {
     content: {
       type: String,
       default: "",
-    }
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.markdown-body{
+    min-width: 800px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+}
 </style>
 <style lang="less">
-.content {
+.markdown-content {
   h1,
   h2,
   h3,
