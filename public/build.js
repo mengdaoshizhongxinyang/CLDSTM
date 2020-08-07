@@ -6,7 +6,7 @@ console.log(data)
 function getFileTreeContent(res,now) {
     let ans=""
     if (res.split('.').length > 1) {
-        let content = fs.readFileSync(`./static/${res}`).toString().split('\r\n').join('\\n')
+        let content = fs.readFileSync(`${now}/${res}`).toString().split('\r\n').join('\\n')
         ans += `
         {
             name:"${res}",

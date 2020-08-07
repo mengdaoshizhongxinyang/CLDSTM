@@ -1,8 +1,10 @@
-import drap from "./drap.js";
-import rightclick from "./rightclick.js";
+import drap from "./drap";
+import rightclick from "./rightclick";
+import imglazy from "./imglazy";
 const directives={
     drap,
-    rightclick
+    rightclick,
+    imglazy
 }
 export default{
     install(Vue){

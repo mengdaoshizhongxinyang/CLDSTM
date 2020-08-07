@@ -32,6 +32,14 @@ function Config() {
             bind:{
                 children:[
                     
+        {
+            name:"新的md.md",
+            type:"article",
+            icon:"file-markdown",
+            bind:{
+                content:"新md\n===="
+            }
+        },
                 ]
             }
         },

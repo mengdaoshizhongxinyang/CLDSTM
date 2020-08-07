@@ -43,9 +43,13 @@ import moment from "moment";
 import * as device from "@/../public/device.min.js";
 import * as bundle from "@/../public/bundle.js";
 import * as THREE from "three";
-
 const pinyin = require("@/components/PinYin/index");
-
+import {
+  mapGetters,
+  mapState,
+  mapActions
+} from 'vuex'
+import { SET_RUNING_APPS,ACTIVE_RUNING_APPS,CLOSE_RUNING_APPS } from "@/store/modules";
 import Proton from "./proton.js";
 import Tree from "@/components/Tree.vue";
 let proton, emitter;
@@ -63,17 +67,20 @@ export default {
     Money,
     ArticleMd,
   },
+  computed:{
+    ...mapGetters(['desktopApps'])
+  },
   created() {
     this.desktopIcons = configs.getDesktopIcon();
     this.desktopIconNum=Math.floor(document.body.offsetHeight/88)
   },
   data() {
     return {
-      desktopApps: {
-        apps: [],
-        maxZindex: 0,
-        id:0
-      },
+      // desktopApps: {
+      //   apps: [],
+      //   maxZindex: 0,
+      //   id:0
+      // },
       desktopIconNum:1,
       timeR: [],
       openKeys: [],
@@ -91,20 +98,15 @@ export default {
   methods: {
     moment,
     handleOpenApps(icon) {
-      this.desktopApps.apps.push({
-        apps:this.apps[icon.type],
-        binds: icon.bind || {},
-        id:++this.desktopApps.id,
-        zindex:++this.desktopApps.maxZindex
-      })
+      this.$store.commit(SET_RUNING_APPS,icon)
     },
     handleActived(item, index) {
-      const { desktopApps } = this;
-      item.zindex = ++this.desktopApps.maxZindex;
+      this.$store.commit(ACTIVE_RUNING_APPS,index)
       this.$forceUpdate();
     },
     handleAppClose(item, index) {
-      this.desktopApps.apps.splice(index, 1);
+      this.$store.commit(CLOSE_RUNING_APPS,index)
+      this.$forceUpdate();
     },
     openMD(name) {
       let res = require.context(`@/../public/static/`, true, /\.js$/);

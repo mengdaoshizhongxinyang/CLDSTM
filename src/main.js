@@ -4,7 +4,10 @@ import router from './router'
 import './mock'
 import 'ant-design-vue/dist/antd.css' 
 import Directives from '@/utils/directives.js';
+import Vuex, { Store } from 'vuex'
+Vue.use(Vuex)
 import store from "./store";
+let storeOption=new Store(store)
 Vue.use(Directives)
 Vue.config.productionTip = false
 import {
@@ -96,6 +99,6 @@ Vue.use(Popconfirm)
 Vue.use(notification)
 new Vue({
   router,
-  store,
+  store:storeOption,
   render: h => h(App),
 }).$mount('#app')
