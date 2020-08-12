@@ -18,6 +18,16 @@ export default {
     },
   components: {
 
+  },
+  methods:{
+    handleKeyDown(e){
+
+        e.preventDefault();
+
+    }
+  },
+  mounted(){
+    document.onkeydown=this.handleKeyDown
   }
 };
 </script>

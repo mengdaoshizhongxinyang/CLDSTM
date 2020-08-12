@@ -6,13 +6,13 @@
       
     </vscode>-->
     <desktop-icon
-      v-for="(icon,index) in desktopIcons"
+      v-for="(icon,index) in Object.keys(desktopIcons)"
       :x="Math.floor(index/desktopIconNum)*70"
       :y="Math.floor(index%desktopIconNum)*88"
-      :key="icon.name"
-      :name="icon.name"
-      :icon="icon.icon"
-      @openApps="handleOpenApps(icon)"
+      :key="desktopIcons[icon].name"
+      :name="desktopIcons[icon].name"
+      :icon="desktopIcons[icon].icon"
+      @openApps="handleOpenApps(desktopIcons[icon])"
     ></desktop-icon>
 
     <down-menu></down-menu>
@@ -36,7 +36,7 @@ import {
   Money,
   DesktopIcon,
   ArticleMd,
-  Floder
+  Folder
 } from "@/components";
 
 import moment from "moment";
@@ -58,7 +58,7 @@ let three = new THREE.Scene();
 
 export default {
   components: {
-    Floder,
+    Folder,
     Frame,
     DownMenu,
     Tree,
@@ -87,7 +87,7 @@ export default {
       content: "",
       th: 300,
       ix: 0,
-      desktopIcons: [],
+      desktopIcons:{},
       apps:{
         'article':'ArticleMd',
         'Money':'Money',
@@ -107,11 +107,6 @@ export default {
     handleAppClose(item, index) {
       this.$store.commit(CLOSE_RUNING_APPS,index)
       this.$forceUpdate();
-    },
-    openMD(name) {
-      let res = require.context(`@/../public/static/`, true, /\.js$/);
-      console.log(res);
-      this.content = res.default;
     },
     addScene() {
       camera = new THREE.PerspectiveCamera(
@@ -199,7 +194,6 @@ export default {
   },
   mounted() {
     this.initBackGround();
-    this.openMD();
   },
 };
 </script>

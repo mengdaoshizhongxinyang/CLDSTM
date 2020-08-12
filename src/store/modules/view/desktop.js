@@ -14,7 +14,7 @@ const state = {
     apps: {
         'article': 'ArticleMd',
         'Money': 'Money',
-        'folder': 'Floder'
+        'folder': 'Folder'
     }
 }
 
