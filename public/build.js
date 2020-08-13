@@ -9,6 +9,7 @@ function getFileTreeContent(res,now) {
         let content = fs.readFileSync(`${now}/${res}`).toString().split('\r\n').join('\\n')
         ans += `
         "${res}":{
+            position:"${now}/${res}",
             name:"${res}",
             type:"article",
             icon:"file-markdown",
@@ -25,6 +26,7 @@ function getFileTreeContent(res,now) {
         })
         ans += `
         "${res}":{
+            position:"${now}/${res}",
             name:"${res}",
             type:"folder",
             icon:"folder",
@@ -38,7 +40,7 @@ function getFileTreeContent(res,now) {
     }
 
 }
-articleList+=getFileTreeContent('static','./')
+articleList+=getFileTreeContent('static','.')
 articleList += "}\n"
 articleList += "//article end//"
 config = config.replace(/.*\/\/article start\/\/[\n|\r|\r\n](.*[\n|\r|\r\n])*.*\/\/article end\/\//, articleList)//\/\/article start\/\/\n.*\n\/\/article end\/\/
