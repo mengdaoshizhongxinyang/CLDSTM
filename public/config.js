@@ -3,6 +3,7 @@ function Config() {
 //article start//
     var article={
         "static":{
+            position:"./static",
             name:"static",
             type:"folder",
             icon:"folder",
@@ -10,6 +11,7 @@ function Config() {
                 children:{
                     
         "d2.md":{
+            position:"./static/d2.md",
             name:"d2.md",
             type:"article",
             icon:"file-markdown",
@@ -18,6 +20,7 @@ function Config() {
             }
         },
         "test.md":{
+            position:"./static/test.md",
             name:"test.md",
             type:"article",
             icon:"file-markdown",
@@ -26,6 +29,7 @@ function Config() {
             }
         },
         "分类测试":{
+            position:"./static/分类测试",
             name:"分类测试",
             type:"folder",
             icon:"folder",
@@ -33,6 +37,7 @@ function Config() {
                 children:{
                     
         "新的md.md":{
+            position:"./static/分类测试/新的md.md",
             name:"新的md.md",
             type:"article",
             icon:"file-markdown",

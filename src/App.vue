@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted(){
-    document.onkeydown=this.handleKeyDown
+    // document.onkeydown=this.handleKeyDown
   }
 };
 </script>

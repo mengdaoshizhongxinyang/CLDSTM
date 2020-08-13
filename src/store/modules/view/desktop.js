@@ -4,6 +4,7 @@ import { RootState } from '@/store'
 export const SET_RUNING_APPS = 'SET_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
+export const SET_FILELIST = 'SET_FILELIST'
 /** @typedef {typeof state} TemplateState */
 const state = {
     desktopApps: {
@@ -15,11 +16,15 @@ const state = {
         'article': 'ArticleMd',
         'Money': 'Money',
         'folder': 'Folder'
-    }
+    },
+    fileList:{}
 }
 
 /** @type MutationTree<TemplateState> */
 const mutations = {
+    [SET_FILELIST](state,item){
+        state.fileList=item
+    },
     [SET_RUNING_APPS](state, item) {
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
@@ -50,6 +55,9 @@ const actions = {
 const getters = {
     desktopApps(state) {
         return state.desktopApps
+    },
+    fileList(state){
+        return state.fileList
     }
 }
 

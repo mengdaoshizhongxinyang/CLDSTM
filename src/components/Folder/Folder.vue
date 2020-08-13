@@ -19,6 +19,17 @@
         ></a-button>
         <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
         <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
+        <a-input size="small" class="floder-address-input"></a-input>
+        <a-button
+          size="small"
+          icon="redo"
+          class="floder-address-button floder-address-input-suffix"
+        ></a-button>
+        <a-input size="small" class="floder-address-search">
+          <template #suffix>
+            <a-icon type="search"></a-icon>
+          </template>
+        </a-input>
       </div>
       <div class="floder-content">
         <div class="floder-content-tree"></div>
@@ -67,6 +78,9 @@ export default {
       backStack: [],
       nextStack: []
     };
+  },
+  computed: {
+    ...mapGetters(["desktopApps"])
   },
   components: {
     DesktopIcon,
@@ -124,6 +138,8 @@ export default {
   &-address {
     height: 30px;
     display: flex;
+    padding: 4px 8px;
+    min-width: 400px;
     &-button {
       border: 0;
       font-size: 12px;
@@ -134,13 +150,35 @@ export default {
         cursor: default;
       }
     }
+    &-input-suffix,
+    &-input {
+      border-radius: 0;
+      border: 1px solid #d9d9d9;
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    &-input {
+      flex: 1;
+    }
+    &-input-suffix {
+      border-left: 0;
+    }
+    &-search {
+      margin-left: 12px;
+      width: 98px;
+      /deep/.ant-input {
+        border-radius: 0;
+      }
+    }
   }
 
   &-content {
     flex: 1;
     display: flex;
     &-tree {
-      width: 160px;
+      width: 154px;
     }
     &-list {
       flex: 1;

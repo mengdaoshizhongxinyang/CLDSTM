@@ -97,8 +97,12 @@ Vue.use(Skeleton)
 Vue.use(Popconfirm)
 // Vue.use(VueCropper)
 Vue.use(notification)
+
 new Vue({
   router,
   store:storeOption,
   render: h => h(App),
+  created(){
+    this.$store.dispatch('initAll')
+  }
 }).$mount('#app')
