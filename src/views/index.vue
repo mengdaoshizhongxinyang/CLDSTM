@@ -22,6 +22,7 @@
       @activated="handleActived(item,index)"
       @close="handleAppClose(item,index)"
     ></component>
+    <message></message>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import * as device from "@/../public/device.min.js";
 import * as bundle from "@/../public/bundle.js";
 import * as THREE from "three";
 const pinyin = require("@/components/PinYin/index");
+import message from "@/components/Message/dialog.jsx";
 import {
   mapGetters,
   mapState,
@@ -65,6 +67,7 @@ export default {
     DesktopIcon,
     Money,
     ArticleMd,
+    message
   },
   computed:{
     ...mapGetters(['desktopApps'])

@@ -17,7 +17,6 @@
         <a-divider />
         <div class="menu-item">显示设置</div>
         <div class="menu-item">个性化</div>
-        
       </right-click-menu>
     </div>
   </div>
@@ -56,7 +55,8 @@ export default {
       this.headerMenu=false
     },
     handleCreate(){
-      
+      this.headerMenu=false
+      this.$store.dispatch('createIcon','./')
     }
   },
   mounted() {
