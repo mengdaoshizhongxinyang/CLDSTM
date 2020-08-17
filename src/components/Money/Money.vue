@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     keydownOpitions(e) {
-      console.log(e);
       let person = this.$el.person
       
       if(e.key=='ArrowLeft'){

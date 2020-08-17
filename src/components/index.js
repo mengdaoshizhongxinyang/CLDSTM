@@ -6,6 +6,7 @@ import vscode from "@/components/VsCode";
 import RightClickMenu from "@/components/RightClickMenu";
 import Money from "@/components/Money"
 import DesktopIcon from "@/components/DesktopIcon";
+import Desktop from "@/components/Desktop";
 import ArticleMd from "@/components/Article"
 import Folder from "@/components/Folder"
 export{
@@ -16,6 +17,7 @@ export{
     IconManage,
     RightClickMenu,
     vscode,
+    Desktop,
     DesktopIcon,
     Money,
     Folder

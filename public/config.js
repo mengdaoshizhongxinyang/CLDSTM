@@ -70,7 +70,18 @@ function Config() {
     this.getDesktopIcon = function () {
         return file
     }
+    this.actions={
+        test(Obj,data){
+            console.log(Obj)
+        }
+    }
+    var actionsItem={
+        base:[{name:"测试",action:"test"}]
+    }
     this.init()
 
+    this.getActionsItem=function(){
+        return actionsItem
+    }
 }
 var configs = new Config()

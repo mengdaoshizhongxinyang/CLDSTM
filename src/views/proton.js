@@ -45,7 +45,7 @@ import * as THREE from "three";
     function Proton(preParticles, integrationType) {
         this.preParticles = Proton.Util.initValue(preParticles, Proton.POOL_MAX);
         this.integrationType = Proton.Util.initValue(integrationType, Proton.EULER);
-        console.log(1)
+
         this.emitters = [];
         this.renderers = [];
 

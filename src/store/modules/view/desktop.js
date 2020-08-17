@@ -48,7 +48,8 @@ const actions = {
     },
     closeApps({commit},index){
         commit(CLOSE_RUNING_APPS,index)
-    }
+    },
+    ...configs.actions
 }
 
 /** @type GetterTree<TemplateState, RootState> */

@@ -1,10 +1,7 @@
 <template>
   <div class="main">
-    <div class="desktop"></div>
+    <desktop></desktop>
 
-    <!-- <vscode>
-      
-    </vscode>-->
     <desktop-icon
       v-for="(icon,index) in Object.keys(desktopIcons)"
       :x="Math.floor(index/desktopIconNum)*70"
@@ -36,7 +33,8 @@ import {
   Money,
   DesktopIcon,
   ArticleMd,
-  Folder
+  Folder,
+  Desktop
 } from "@/components";
 
 import moment from "moment";
@@ -63,6 +61,7 @@ export default {
     DownMenu,
     Tree,
     vscode,
+    Desktop,
     DesktopIcon,
     Money,
     ArticleMd,
@@ -76,23 +75,9 @@ export default {
   },
   data() {
     return {
-      // desktopApps: {
-      //   apps: [],
-      //   maxZindex: 0,
-      //   id:0
-      // },
       desktopIconNum:1,
-      timeR: [],
-      openKeys: [],
       content: "",
-      th: 300,
-      ix: 0,
-      desktopIcons:{},
-      apps:{
-        'article':'ArticleMd',
-        'Money':'Money',
-        'folder':'Floder'
-      }
+      desktopIcons:{}
     };
   },
   methods: {
@@ -203,13 +188,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.desktop {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
+
 /deep/.ant-fullcalendar-content {
   position: static;
 }

@@ -16,7 +16,7 @@
     <div class="header" @dblclick="fullScrean">
       <div class="header-content">{{title}}</div>
       <div class="header-back" @mouseup="e=>rightClick(e,'headerMenu')">
-        <VueContextMenu :offset="contextMenuOffset" :show.sync="headerMenu" class="rightmenu">
+        <VueContextMenu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
           <div class="menu-item">最小化</div>
           <div class="menu-item">最大化</div>
           <a-divider />
@@ -161,6 +161,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../RightClickMenu/menu';
 .filter-main {
   box-shadow: 0 0 2px 0 #000000aa;
   background: #fff;
@@ -219,21 +220,6 @@ export default {
     height: calc(100% - 32px);
   }
 }
-.rightmenu {
-  color: #000000;
-  padding: 2px;
-  .menu-item {
-    height: 22px;
-    line-height: 22px;
-    padding: 0 7px;
-    user-select: none;
-    &:hover {
-      color: #fff;
-      background: #1890ff;
-    }
-  }
-}
-/deep/.ant-divider-horizontal {
-  margin: 4px 0 2px 0;
-}
+
+
 </style>
