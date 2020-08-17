@@ -155,7 +155,9 @@ export default {
       border-radius: 0;
       border: 1px solid #d9d9d9;
       &:focus {
-        outline: 0;
+        // outline: 0;
+        border: 1px solid #1890ff;
+        box-shadow: none
       }
     }
 
@@ -214,6 +216,11 @@ export default {
         }
       }
     }
+  }
+}
+/deep/.ant-input{
+  &:focus{
+    box-shadow: none;
   }
 }
 </style>
