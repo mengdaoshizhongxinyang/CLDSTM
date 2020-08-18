@@ -1,15 +1,14 @@
-import PropTypes from './vue-types';
 
 export default {
   props: {
-    autoMount: PropTypes.bool.def(true),
-    autoDestroy: PropTypes.bool.def(true),
-    visible: PropTypes.bool,
-    forceRender: PropTypes.bool.def(false),
-    parent: PropTypes.any,
-    getComponent: PropTypes.func.isRequired,
-    getContainer: PropTypes.func.isRequired,
-    children: PropTypes.func.isRequired,
+    autoMount: true,
+    autoDestroy: true,
+    visible: Boolean,
+    forceRender: false,
+    parent: null,
+    getComponent: null,
+    getContainer: null,
+    children: null,
   },
 
   mounted() {

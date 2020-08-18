@@ -32,7 +32,9 @@
         </a-input>
       </div>
       <div class="floder-content">
-        <div class="floder-content-tree"></div>
+        <div class="floder-content-tree">
+          <tree></tree>
+        </div>
         <div class="floder-content-list">
           <div
             class="icon"
@@ -59,8 +61,8 @@
 </template>
 
 <script>
-import { Frame } from "@/components";
-import { DesktopIcon } from "@/components";
+import Tree from "../Tree";
+import { DesktopIcon,Frame } from "@/components";
 import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 import { SET_RUNING_APPS } from "@/store/modules";
 export default {
@@ -72,6 +74,11 @@ export default {
       }
     }
   },
+  components: {
+    DesktopIcon,
+    Tree,
+    Frame
+  },
   data() {
     return {
       folderList: [],
@@ -82,10 +89,7 @@ export default {
   computed: {
     ...mapGetters(["desktopApps"])
   },
-  components: {
-    DesktopIcon,
-    Frame
-  },
+
   methods: {
     handleOpenApps(icon) {
       let { folderList, backStack } = this;

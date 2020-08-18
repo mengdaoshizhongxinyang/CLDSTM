@@ -1,4 +1,2 @@
-import TreeItem from "TreeItem.jsx";
-export {
-    TreeItem
-}
+import Tree from "./Tree.vue";
+export default Tree

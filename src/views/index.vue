@@ -22,7 +22,6 @@
       @activated="handleActived(item,index)"
       @close="handleAppClose(item,index)"
     ></component>
-    <message></message>
   </div>
 </template>
 
@@ -51,7 +50,7 @@ import {
 } from 'vuex'
 import { SET_RUNING_APPS,ACTIVE_RUNING_APPS,CLOSE_RUNING_APPS } from "@/store/modules";
 import Proton from "./proton.js";
-import Tree from "@/components/Tree.vue";
+
 let proton, emitter;
 let camera, scene, renderer;
 let three = new THREE.Scene();
@@ -61,7 +60,6 @@ export default {
     Folder,
     Frame,
     DownMenu,
-    Tree,
     vscode,
     Desktop,
     DesktopIcon,

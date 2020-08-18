@@ -1,43 +1,79 @@
+import Vue from "vue";
+// import ContainerRender from './ContainerRender';
+// let openCount = 0;
+// const DialogWrap = {
+//   inheritAttrs: false,
+//   props: {
+//     visible: Boolean,
+//   },
+//   data() {
+//     console.log(this.visible)
+//     openCount = this.visible ? openCount + 1 : openCount;
+//     this.renderComponent = () => {};
+//     this.removeContainer = () => {};
+//     return {};
+//   },
+//   watch: {
+//     visible(val, preVal) {
+//       openCount = val && !preVal ? openCount + 1 : openCount - 1;
+//     },
+//   },
+//   beforeDestroy() {
+//     if (this.visible) {
+//       openCount = openCount ? openCount - 1 : openCount;
+//       this.renderComponent({
+//         afterClose: this.removeContainer,
+//         visible: false,
+//         on: {
+//           close() {},
+//         },
+//       });
+//     } else { 
+//       this.removeContainer();
+//     }
+//   },
+//   methods: {
+//     getComponent(extra = {}) {
+//       console.log(222)
+//       const {  $props, $slots, getContainer } = this;
+//       const { on, ...otherProps } = extra;
+//       return <div class={`test`}>{$slots.default}</div>;
+//     },
+
+//     getContainer2() {
+//       const container = document.createElement('div');
+//       if (this.getContainer) {
+//         this.getContainer().appendChild(container);
+//       } else {
+//         document.body.appendChild(container);
+//       }
+//       return container;
+//     },
+//   },
+
+//   render() {
+//     const { visible } = this;
+//     return (
+//       <ContainerRender
+//         parent={this}
+//         visible={visible}
+//         autoDestroy={false}
+//         getComponent={this.getComponent}
+//         getContainer={this.getContainer2}
+//         children={({ renderComponent, removeContainer }) => {
+//           this.renderComponent = renderComponent;
+//           this.removeContainer = removeContainer;
+//           return null;
+//         }}
+//       />
+//     );
+//   },
+// };
+
+// export default DialogWrap;
 export default {
-  props: {
-    autoMount: true,
-    autoDestroy: true,
-    visible: true,
-    forceRender: false,
-    parent: null,
-
-    children: null,
-  },
-
-  mounted() {
-    if (this.autoMount) {
-      this.renderComponent();
-    }
-  },
-
-  updated() {
-    if (this.autoMount) {
-      this.renderComponent();
-    }
-  },
-
-  beforeDestroy() {
-    if (this.autoDestroy) {
-      this.removeContainer();
-    }
-  },
-  methods: {
-    getComponent(){
-      return(
-        <div></div>
-      )
-    },
-    children(){
-      this.renderComponent()
-      this.removeContainer();
-      return null;
-    },
-    getContainer(){
+  methods:{
+    getContainer2() {
       const container = document.createElement('div');
       if (this.getContainer) {
         this.getContainer().appendChild(container);
@@ -46,59 +82,17 @@ export default {
       }
       return container;
     },
-    removeContainer() {
-      if (this.container) {
-        this._component && this._component.$destroy();
-        this.container.parentNode.removeChild(this.container);
-        this.container = null;
-        this._component = null;
-      }
-    },
-
-    renderComponent(props = {}, ready) {
-      const { visible, forceRender, getContainer, parent } = this;
-      const self = this;
-      if (visible || parent.$refs._component || forceRender) {
-        let el = this.componentEl;
-        if (!this.container) {
-          this.container = getContainer();
-          el = document.createElement('div');
-          this.componentEl = el;
-          this.container.appendChild(el);
-        }
-        if (!this._component) {
-          this._component = new this.$root.constructor({
-            el,
-            parent: self,
-            data: {
-              comProps: props,
-            },
-            mounted() {
-              this.$nextTick(() => {
-                if (ready) {
-                  ready.call(self);
-                }
-              });
-            },
-            updated() {
-              this.$nextTick(() => {
-                if (ready) {
-                  ready.call(self);
-                }
-              });
-            },
-            render() {
-              return self.getComponent(this.comProps);
-            },
-          });
-        } else {
-          this._component.comProps = props;
-        }
-      }
-    },
   },
-
   render() {
-    return this.children();
-  },
-};
+    let el = document.createElement('div');
+    let self=this
+    console.log(this.$root.constructor)
+    return new this.$root.constructor(new Vue({
+      el,
+      parent: self,
+      render() {
+        return <div></div>
+      },
+    }));
+  }
+}

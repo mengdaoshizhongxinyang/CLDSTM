@@ -9,9 +9,9 @@ import DesktopIcon from "@/components/DesktopIcon";
 import Desktop from "@/components/Desktop";
 import ArticleMd from "@/components/Article"
 import Folder from "@/components/Folder"
-import {TreeItem} from "@/components/Tree"
+import Tree from "@/components/Tree"
 export{
-    TreeItem,
+    Tree,
     ArticleMd,
     BaseDraggable,
     DownMenu,
