@@ -19,7 +19,7 @@
         ></a-button>
         <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
         <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
-        <a-input size="small" class="floder-address-input"></a-input>
+        <a-input size="small" class="floder-address-input" v-model="children.position"></a-input>
         <a-button
           size="small"
           icon="redo"
@@ -83,7 +83,8 @@ export default {
     return {
       folderList: [],
       backStack: [],
-      nextStack: []
+      nextStack: [],
+      position:""
     };
   },
   computed: {
