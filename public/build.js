@@ -6,31 +6,31 @@ console.log(data)
 function getFileTreeContent(res,now) {
     let ans=""
     if (res.split('.').length > 1) {
-        let content = fs.readFileSync(`${now}/${res}`).toString().split('\r\n').join('\\n')
+        let content = fs.readFileSync(`.${now}/${res}`).toString().split('\r\n').join('\\n')
         ans += `
         "${res}":{
-            position:"${now}/${res}",
             name:"${res}",
             type:"article",
             icon:"file-markdown",
+            position:"${now}/${res}",
             bind:{
                 content:"${content}"
             }
         },`
         return ans;
     }else{
-        let content = fs.readdirSync(`${now}/${res}`)
+        let content = fs.readdirSync(`.${now}/${res}`)
         let children=""
         content.forEach(next=>{
             children+=getFileTreeContent(next,`${now}/${res}`)
         })
         ans += `
         "${res}":{
-            position:"${now}/${res}",
             name:"${res}",
             type:"folder",
             icon:"folder",
             bind:{
+                position:"${now}/${res}",
                 children:{
                     ${children}
                 }
@@ -40,7 +40,7 @@ function getFileTreeContent(res,now) {
     }
 
 }
-articleList+=getFileTreeContent('static','.')
+articleList+=getFileTreeContent('static','')
 articleList += "}\n"
 articleList += "//article end//"
 config = config.replace(/.*\/\/article start\/\/[\n|\r|\r\n](.*[\n|\r|\r\n])*.*\/\/article end\/\//, articleList)//\/\/article start\/\/\n.*\n\/\/article end\/\/

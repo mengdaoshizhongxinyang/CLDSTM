@@ -19,17 +19,21 @@
         ></a-button>
         <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
         <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
-        <a-input size="small" class="floder-address-input" v-model="children.position"></a-input>
+        <div class="floder-address-input-div">
+          <a-input size="small" class="floder-address-input" v-model="path"></a-input>
+        </div>
+        
         <a-button
           size="small"
           icon="redo"
           class="floder-address-button floder-address-input-suffix"
         ></a-button>
-        <a-input size="small" class="floder-address-search">
-          <template #suffix>
-            <a-icon type="search"></a-icon>
-          </template>
-        </a-input>
+        <a-input-search
+          size="small"
+          class="floder-address-search"
+          @search="handleSearch"
+          v-model="search"
+        ></a-input-search>
       </div>
       <div class="floder-content">
         <div class="floder-content-tree">
@@ -62,7 +66,7 @@
 
 <script>
 import Tree from "../Tree";
-import { DesktopIcon,Frame } from "@/components";
+import { DesktopIcon, Frame } from "@/components";
 import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 import { SET_RUNING_APPS } from "@/store/modules";
 export default {
@@ -71,64 +75,101 @@ export default {
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
+    position: {
+      type: String,
+      default: "",
+    },
+  },
+  created() {
+    this.path = this.position;
+    this.folders = this.children;
   },
   components: {
     DesktopIcon,
     Tree,
-    Frame
+    Frame,
   },
   data() {
     return {
-      folderList: [],
+      folderList: null,
       backStack: [],
       nextStack: [],
-      position:""
+      path: "",
+      search: "",
+      cacheSearch:""
     };
   },
   computed: {
-    ...mapGetters(["desktopApps"])
+    ...mapGetters(["desktopApps"]),
   },
-
   methods: {
     handleOpenApps(icon) {
-      let { folderList, backStack } = this;
+      let { folderList, backStack, path,cacheSearch } = this;
+      this.search=icon.bind.search?icon.bind.search:""
       if (icon.type == "folder") {
-        backStack.push(folderList);
+        let search=cacheSearch
+        backStack.push({ folderList, path, search });
         folderList = icon.bind.children;
+        path = icon.bind.position;
         Object.assign(this, {
           folderList,
-          nextStack: []
+          path,
+          nextStack: [],
+          cacheSearch:this.search
         });
       } else {
         this.$store.commit(SET_RUNING_APPS, icon);
       }
     },
     handleBack() {
-      let { folderList, backStack, nextStack } = this;
+      let { folderList, backStack, nextStack, path, search } = this;
       let backFolder = backStack.pop();
-      nextStack.push(folderList);
+      nextStack.push({ folderList, path, search });
       Object.assign(this, {
         backStack,
         nextStack,
-        folderList: backFolder
+        ...backFolder,
       });
     },
     handleNext() {
-      let { folderList, backStack, nextStack } = this;
+      let { folderList, backStack, nextStack, path, search } = this;
       let backFolder = nextStack.pop();
-      backStack.push(folderList);
+      backStack.push({ folderList, path, search });
       Object.assign(this, {
         backStack,
         nextStack,
-        folderList: backFolder
+        ...backFolder,
       });
-    }
+    },
+    handleSearch(e) {
+      if (e == "") {
+        return;
+      }
+      let tempList = Object.values(this.folderList).map((item) => {
+        return item;
+      });
+      let folderList = [];
+      while (tempList.length > 0) {
+        let start = tempList.shift();
+        if (start.type == "folder") {
+          tempList=tempList.concat(
+            Object.values(start.bind.children).map((item) => {
+              return item;
+            })
+          );
+        }
+        if(~start.name.indexOf(e)){
+          folderList.push(start)
+        }
+      }
+      this.handleOpenApps({bind:{children:folderList,position:`${e}的搜索结果`,search:e},type:"folder"})
+    },
   },
   mounted() {
     this.folderList = this.children;
-  }
+  },
 };
 </script>
 
@@ -155,6 +196,10 @@ export default {
         cursor: default;
       }
     }
+    &-input-div{
+      border-radius: 0;
+      flex: 1;
+    }
     &-input-suffix,
     &-input {
       border-radius: 0;
@@ -162,12 +207,8 @@ export default {
       &:focus {
         // outline: 0;
         border: 1px solid #1890ff;
-        box-shadow: none
+        box-shadow: none;
       }
-    }
-
-    &-input {
-      flex: 1;
     }
     &-input-suffix {
       border-left: 0;
@@ -223,8 +264,8 @@ export default {
     }
   }
 }
-/deep/.ant-input{
-  &:focus{
+/deep/.ant-input {
+  &:focus {
     box-shadow: none;
   }
 }
