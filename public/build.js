@@ -14,6 +14,8 @@ function getFileTreeContent(res,now) {
             icon:"file-markdown",
             position:"${now}/${res}",
             bind:{
+                type:"article",
+                icon:"file-markdown",
                 content:"${content}"
             }
         },`
@@ -31,6 +33,8 @@ function getFileTreeContent(res,now) {
             icon:"folder",
             bind:{
                 position:"${now}/${res}",
+                type:"folder",
+                icon:"folder",
                 children:{
                     ${children}
                 }

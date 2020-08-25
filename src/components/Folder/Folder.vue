@@ -19,9 +19,13 @@
         ></a-button>
         <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
         <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
-        <div class="floder-address-input-div">
-          <a-input size="small" class="floder-address-input" v-model="path"></a-input>
-        </div>
+
+          <a-input size="small" class="floder-address-input" v-model="path">
+            <template #prefix>
+              <a-icon :type="icon" />
+            </template>
+          </a-input>
+
         
         <a-button
           size="small"
@@ -81,6 +85,10 @@ export default {
       type: String,
       default: "",
     },
+    icon:{
+      type: String,
+      default: "file-unknown",
+    }
   },
   created() {
     this.path = this.position;
@@ -201,7 +209,7 @@ export default {
       flex: 1;
     }
     &-input-suffix,
-    &-input {
+    &-input /deep/.ant-input{
       border-radius: 0;
       border: 1px solid #d9d9d9;
       &:focus {
@@ -210,12 +218,15 @@ export default {
         box-shadow: none;
       }
     }
+    &-input{
+      flex: 1;
+    }
     &-input-suffix {
       border-left: 0;
     }
     &-search {
       margin-left: 12px;
-      width: 98px;
+      width: 112px;
       /deep/.ant-input {
         border-radius: 0;
       }
