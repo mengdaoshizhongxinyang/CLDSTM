@@ -52,10 +52,12 @@ import {
   message,
   notification,
   TreeSelect,
+  ConfigProvider
 } from 'ant-design-vue'
 // import VueCropper from 'vue-cropper'
 
 Vue.use(LocaleProvider)
+Vue.use(ConfigProvider)
 Vue.use(TreeSelect)
 Vue.use(Layout)
 Vue.use(carousel)
