@@ -3,9 +3,9 @@
     <div class="desktop-icon-icon">
       <slot>
         <div class="desktop-icon-icon-default">
-          <a-icon :type="iconList.antd[icon]" theme="filled" v-if="iconList.antd[icon]"/>
-          <component :is="iconList.more[icon]" theme="filled" v-else-if="iconList.more[icon]"/>
-          <a-icon type="file-unknown" theme="filled" v-else />
+          <a-icon :type="iconList.antd[icon]" v-bind="iconStyle" v-if="iconList.antd[icon]"/>
+          <component :is="iconList.more[icon]" v-bind="iconStyle" v-else-if="iconList.more[icon]"/>
+          <a-icon type="file-unknown" v-bind="iconStyle" v-else />
         </div>
       </slot>
     </div>
@@ -28,9 +28,14 @@ export default {
       type: String,
       default: "",
     },
+    iconStyle:{
+      type: Object,
+      default: ()=>{
+        return {theme:"filled"}
+      }
+    }
   },
   data() {
-    console.log(vscodeIcon)
     return {
       actived: false,
       iconList:{
@@ -57,6 +62,7 @@ export default {
 <style lang="less" scoped>
 @main:~"desktop-icon";
 .@{main}{
+    color: #fff;
     position: relative;
     width: 74px;
     cursor: pointer;
@@ -76,13 +82,12 @@ export default {
         height:54px;
         &-default{
           line-height: 1.2em;
-          color: #fff;
           font-size: 42px;
           text-align: center;
         }
     }
     &-text{
-      color: #fff;
+      
       text-align: center;
       line-height: 1.2em;
 

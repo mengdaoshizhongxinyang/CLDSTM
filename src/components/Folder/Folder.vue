@@ -41,24 +41,18 @@
           <tree></tree>
         </div>
         <div class="floder-content-list">
-          <div
+          <desktop-icon-base
             class="icon"
             tabindex="-1"
-            @dblclick="handleOpenApps(icon)"
+            @openApps="handleOpenApps(icon)"
             v-for="icon in folderList"
             :key="icon.name"
             :name="icon.name"
             :icon="icon.icon"
+            style="color:#000"
+            :iconStyle="iconStyle"
           >
-            <div class="icon-content">
-              <slot>
-                <div class="icon-content-default">
-                  <a-icon :type="icon.icon" theme="filled" />
-                </div>
-              </slot>
-            </div>
-            <div class="icon-text">{{icon.name}}</div>
-          </div>
+          </desktop-icon-base>
         </div>
       </div>
     </div>
@@ -70,6 +64,7 @@ import Tree from "../Tree";
 import { DesktopIcon, Frame } from "@/components";
 import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 import { SET_RUNING_APPS } from "@/store/modules";
+import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue"
 export default {
   props: {
     children: {
@@ -92,6 +87,7 @@ export default {
     this.folders = this.children;
   },
   components: {
+    DesktopIconBase,
     DesktopIcon,
     Tree,
     Frame,
@@ -103,7 +99,13 @@ export default {
       nextStack: [],
       path: "",
       search: "",
-      cacheSearch:""
+      cacheSearch:"",
+      iconStyle:{
+        theme:"filled",
+        style:{
+          color:"#000"
+        }
+      }
     };
   },
   computed: {
