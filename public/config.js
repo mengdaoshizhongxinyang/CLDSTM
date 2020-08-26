@@ -63,11 +63,11 @@ function Config() {
         },}
 //article end//
     var file = {
-        // {
-        //     name:"零用钱大作战",
-        //     type:"Money",
-        //     icon:"pay-circle"
-        // }
+        vscode:{
+            name:"vscode",
+            type:"vscode",
+            icon:"vscode"
+        }
     }
     this.getFile = function () {
         console.log(file)

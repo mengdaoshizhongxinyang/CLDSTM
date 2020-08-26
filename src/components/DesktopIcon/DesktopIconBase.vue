@@ -3,7 +3,9 @@
     <div class="desktop-icon-icon">
       <slot>
         <div class="desktop-icon-icon-default">
-          <a-icon :type="icon" theme="filled" />
+          <a-icon :type="iconList.antd[icon]" theme="filled" v-if="iconList.antd[icon]"/>
+          <component :is="iconList.more[icon]" theme="filled" v-else-if="iconList.more[icon]"/>
+          <a-icon type="file-unknown" theme="filled" v-else />
         </div>
       </slot>
     </div>
@@ -12,7 +14,11 @@
 </template>
 
 <script>
+import {vscodeIcon} from "@/components/IconManage"
 export default {
+  components:{
+    vscodeIcon
+  },
   props: {
     icon: {
       type: String,
@@ -24,8 +30,18 @@ export default {
     },
   },
   data() {
+    console.log(vscodeIcon)
     return {
       actived: false,
+      iconList:{
+        antd:{
+          folder:"folder",
+          article:"article"
+        },
+        more:{
+          vscode:"vscodeIcon"
+        }
+      }
     };
   },
   methods: {
@@ -76,6 +92,7 @@ export default {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       word-break: break-all;
+      user-select: none;
     }
     &:hover{
       background: rgba(230, 242, 255,0.15);

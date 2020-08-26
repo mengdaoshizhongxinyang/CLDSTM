@@ -19,8 +19,8 @@
       :z="item.zindex"
       v-for="(item, index) in desktopApps.apps"
       :key="item.id"
-      @activated="handleActived(item,index)"
-      @close="handleAppClose(item,index)"
+      :appsId="index"
+
     ></component>
   </div>
 </template>

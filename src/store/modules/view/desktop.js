@@ -6,6 +6,7 @@ export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
 export const SET_FILELIST = 'SET_FILELIST'
 export const CREATE_ICON = 'CREATE_ICON'
+export const MERGE_APPS = 'MERGE_APPS'
 /** @typedef {typeof state} TemplateState */
 const state = {
     desktopApps: {
@@ -16,7 +17,8 @@ const state = {
     apps: {
         'article': 'ArticleMd',
         'Money': 'Money',
-        'folder': 'Folder'
+        'folder': 'Folder',
+        'vscode':'vscode'
     },
     fileList:{}
 }
@@ -45,6 +47,9 @@ const mutations = {
         let lists=list.split('/')
         console.log(lists)
         console.log(1)
+    },
+    [MERGE_APPS](state,apps={}){
+        state.apps=Object.assign(state.apps,apps)
     }
 }
 
@@ -56,9 +61,13 @@ const actions = {
     closeApps({commit},index){
         commit(CLOSE_RUNING_APPS,index)
     },
+    activeApps({commit},index){
+        commit(ACTIVE_RUNING_APPS,index)
+    },
     createIcon({commit},index){
         commit(CREATE_ICON,index)
     },
+    
     ...configs.actions
 }
 

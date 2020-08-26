@@ -1,7 +1,7 @@
 <template>
   <div style="display:flex">
-    <Vleft></Vleft>
-    <Vright></Vright>
+    <v-left></v-left>
+    <v-right></v-right>
   </div>
 </template>
 

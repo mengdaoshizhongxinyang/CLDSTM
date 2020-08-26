@@ -19,14 +19,11 @@
         ></a-button>
         <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
         <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
-
           <a-input size="small" class="floder-address-input" v-model="path">
             <template #prefix>
               <a-icon :type="icon" />
             </template>
           </a-input>
-
-        
         <a-button
           size="small"
           icon="redo"

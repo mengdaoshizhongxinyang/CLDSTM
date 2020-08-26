@@ -1,5 +1,5 @@
 <template>
-  <Frame @resize="handleResize" :scrollY="false">
+  <Frame @resize="handleResize" :scrollY="false" v-bind="$attrs">
     <div class="vsbody">
       <div class="composite-bar">
         <div class="action-bar">

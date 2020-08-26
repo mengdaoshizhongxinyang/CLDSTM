@@ -12,6 +12,7 @@
     @resizestop="(x,y,w,h)=>handleResizestop(x,y,w,h)"
     @dragstop="(x,y)=>handleDragstop(x,y)"
     v-on="$listeners"
+    @activated="active"
   >
     <div class="header" @dblclick="fullScrean">
       <div class="header-content">{{title}}</div>
@@ -51,11 +52,17 @@
 <script>
 import VueDraggableResizable from "@/components/BaseDraggable";
 import VueContextMenu from "@/components/RightClickMenu";
+import {
+  mapGetters,
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   components: {
     VueDraggableResizable,
     VueContextMenu
   },
+
   props: {
     title: String,
     scrollX: {
@@ -83,6 +90,10 @@ export default {
       default:200
     },
     z:{
+      type:Number,
+      default:0
+    },
+    appsId:{
       type:Number,
       default:0
     }
@@ -147,7 +158,11 @@ export default {
       this.y = y;
     },
     close(){
+      this.$store.dispatch('closeApps',this.appsId)
       this.$emit('close')
+    },
+    active(){
+      this.$store.dispatch('activeApps',this.appsId)
     }
   },
   created(){

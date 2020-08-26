@@ -1,6 +1,6 @@
 import { StoreOptions, MutationTree, ActionTree, GetterTree, ModuleTree } from 'vuex'
 
-import modules,{SET_FILELIST} from '@/store/modules'
+import modules,{SET_FILELIST,MERGE_APPS} from '@/store/modules'
 
 /** @typedef {typeof state} RootState */
 const state = {
@@ -14,6 +14,7 @@ const mutations = {
 const actions = {
   initAll({ dispatch, commit, getters }){
     commit(SET_FILELIST,configs.getDesktopIcon())
+    // commit(MERGE_APPS,)
   }
 }
 
