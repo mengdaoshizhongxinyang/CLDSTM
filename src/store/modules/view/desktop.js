@@ -32,6 +32,7 @@ const mutations = {
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
             binds: item.bind || {},
+            name:item.name,
             id: ++state.desktopApps.id,
             zindex: ++state.desktopApps.maxZindex
         })
@@ -60,6 +61,9 @@ const actions = {
     },
     closeApps({commit},index){
         commit(CLOSE_RUNING_APPS,index)
+    },
+    updateApps({commit},data){
+        commit(CLOSE_RUNING_APPS,data)
     },
     activeApps({commit},index){
         commit(ACTIVE_RUNING_APPS,index)

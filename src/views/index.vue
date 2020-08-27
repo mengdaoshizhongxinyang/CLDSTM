@@ -84,14 +84,11 @@ export default {
   methods: {
     moment,
     handleOpenApps(icon) {
-      this.$store.commit(SET_RUNING_APPS,icon)
+      console.log(icon)
+      this.$store.dispatch("openApps",icon)
     },
     handleActived(item, index) {
-      this.$store.commit(ACTIVE_RUNING_APPS,index)
-      this.$forceUpdate();
-    },
-    handleAppClose(item, index) {
-      this.$store.commit(CLOSE_RUNING_APPS,index)
+      this.$store.commit("activeApps",index)
       this.$forceUpdate();
     },
     addScene() {
