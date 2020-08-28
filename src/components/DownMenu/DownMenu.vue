@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="main">
-      <div class="appmenu" @click="openMenu">
+      <div class="appmenu" tabindex="-1" @focus="openMenu" @blur="closeMenu">
+        <div class="appmenu-open" v-show="openMenuStatus"></div>
         <a-icon type="windows" style="color:#fff;fontSize:24px;"></a-icon>
       </div>
       <div class="icon"></div>
@@ -26,7 +27,8 @@ export default {
       date: "",
       time: "",
       titleTime: "",
-      titleTimeStatus: false
+      titleTimeStatus: false,
+      openMenuStatus:false
     };
   },
   methods: {
@@ -40,7 +42,10 @@ export default {
       this.titleTimeStatus = statu;
     },
     openMenu(){
-      
+      this.openMenuStatus=true
+    },
+    closeMenu(){
+      this.openMenuStatus=false
     }
   },
   mounted() {
@@ -62,8 +67,26 @@ export default {
 .appmenu {
   width: 48px;
   cursor: pointer;
+  position:relative;
   padding: 10px 12px;
+  &-open{
+    position: absolute;
+    bottom: 100%;
+    height: 200px;
+    width: 200px;
+    // overflow: hidden;
+    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.9);
+  }
+  @supports (-webkit-backdrop-filter:none) or (backdrop-filter:none) {
+    &-open {
+      backdrop-filter: blur(15px);  
+    }
+  }
   &:hover {
+    background: #ffffff2a;
+  }
+  &:focus{
     background: #ffffff2a;
   }
 }
