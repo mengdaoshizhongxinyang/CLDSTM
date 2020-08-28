@@ -1,2 +1,2 @@
-import  vscodeIcon  from "./vscodeIcon";
-export { vscodeIcon }
+import  Icon  from "./Icon";
+export default Icon

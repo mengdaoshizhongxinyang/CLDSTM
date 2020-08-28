@@ -5,7 +5,16 @@
         <div class="appmenu-open" v-show="openMenuStatus"></div>
         <a-icon type="windows" style="color:#fff;fontSize:24px;"></a-icon>
       </div>
-      <div class="icon"></div>
+      <div class="task-menu">
+        <div class="task-menu-item" v-for="(item, index) in desktopApps.apps" :key="index">
+          <div class="task-menu-item-container">
+            <div class="task-menu-item-container-content">
+              <span class="task-menu-item-container-content-icon"><icon :icon="item.icon"></icon></span>
+              {{item.name}}
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         class="status"
         @mouseenter="handleTitleTimeStatus(true)"
@@ -21,7 +30,12 @@
 
 <script>
 import moment from "moment";
+import { mapGetters } from "vuex";
+import  Icon from "@/components/IconManage";
 export default {
+  components:{
+    Icon
+  },
   data() {
     return {
       date: "",
@@ -30,6 +44,9 @@ export default {
       titleTimeStatus: false,
       openMenuStatus:false
     };
+  },
+  computed:{
+    ...mapGetters(['desktopApps'])
   },
   methods: {
     clock() {
@@ -41,10 +58,10 @@ export default {
     handleTitleTimeStatus(statu) {
       this.titleTimeStatus = statu;
     },
-    openMenu(){
+    openMenu() {
       this.openMenuStatus=true
     },
-    closeMenu(){
+    closeMenu() {
       this.openMenuStatus=false
     }
   },
@@ -59,9 +76,9 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 44px;
+  height: 40px;
   display: flex;
-  background: #000000aa;
+  background: rgba(26, 26, 26, 0.88);
   z-index:19999999;
 }
 .appmenu {
@@ -84,14 +101,53 @@ export default {
     }
   }
   &:hover {
-    background: #ffffff2a;
+    background: rgba(255, 255,255, 0.16);
   }
   &:focus{
-    background: #ffffff2a;
+    background: rgba(255, 255,255, 0.16);
   }
 }
-.icon {
+.task-menu {
   flex: 1;
+  display: flex;
+  &-item{
+    color: #fff;
+    font-size: 16px;
+    max-width: 160px;
+    flex: 1;
+    height: 100%;
+    margin-right: 1px;
+    position: relative;
+    cursor: default;
+    user-select: none;
+    &:hover{
+      background: rgba(255, 255, 255, 0.12);
+    }
+    &-container{
+      left: 0px;
+      position: absolute;
+      width: 152px;
+      left: 50%;
+      transform: translate(-50%,0);
+      overflow: hidden;
+      height: 100%;
+      &-content{
+        position:absolute;
+        line-height: 40px;
+        left: 4px;
+        display: flex;
+        word-break: break-all;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        width: 152px;
+        &-icon{
+          font-size: 32px;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
 }
 .status {
   width: 110px;
@@ -100,7 +156,7 @@ export default {
   color: #fff;
   position: relative;
   &:hover {
-    background: #ffffff2a;
+    background: rgba(255, 255,255, 0.16);
   }
   .title {
     position: absolute;

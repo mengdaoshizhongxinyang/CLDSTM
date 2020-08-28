@@ -10,6 +10,7 @@ import Desktop from "@/components/Desktop";
 import ArticleMd from "@/components/Article"
 import Folder from "@/components/Folder"
 import Tree from "@/components/Tree"
+import Icon from "@/components/IconManage"
 export{
     Tree,
     ArticleMd,
@@ -22,5 +23,6 @@ export{
     Desktop,
     DesktopIcon,
     Money,
-    Folder
+    Folder,
+    Icon
 }

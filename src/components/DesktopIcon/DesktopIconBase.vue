@@ -3,9 +3,7 @@
     <div class="desktop-icon-icon">
       <slot>
         <div class="desktop-icon-icon-default">
-          <a-icon :type="iconList.antd[icon]" v-bind="iconStyle" v-if="iconList.antd[icon]"/>
-          <component :is="iconList.more[icon]" v-bind="iconStyle" v-else-if="iconList.more[icon]"/>
-          <a-icon type="file-unknown" v-bind="iconStyle" v-else />
+          <icon :icon="icon" v-bind="iconStyle" ></icon>
         </div>
       </slot>
     </div>
@@ -14,10 +12,10 @@
 </template>
 
 <script>
-import {vscodeIcon} from "@/components/IconManage"
+import Icon from "@/components/IconManage"
 export default {
   components:{
-    vscodeIcon
+    Icon
   },
   props: {
     icon: {
@@ -38,15 +36,7 @@ export default {
   data() {
     return {
       actived: false,
-      iconList:{
-        antd:{
-          folder:"folder",
-          article:"article"
-        },
-        more:{
-          vscode:"vscodeIcon"
-        }
-      }
+
     };
   },
   methods: {

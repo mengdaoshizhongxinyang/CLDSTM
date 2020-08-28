@@ -33,6 +33,7 @@ const mutations = {
             apps: state.apps[item.type],
             binds: item.bind || {},
             name:item.name,
+            icon:item.icon,
             id: ++state.desktopApps.id,
             zindex: ++state.desktopApps.maxZindex
         })
