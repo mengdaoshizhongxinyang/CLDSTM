@@ -28,7 +28,7 @@ export default {
       iconList: {
         antd: {
           folder: "folder",
-          article: "article",
+        article: "file-markdown",
         },
         more: {
           vscode: "vscodeIcon",

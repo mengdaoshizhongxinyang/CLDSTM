@@ -11,11 +11,11 @@ function getFileTreeContent(res,now) {
         "${res}":{
             name:"${res}",
             type:"article",
-            icon:"file-markdown",
+            icon:"article",
             position:"${now}/${res}",
             bind:{
                 type:"article",
-                icon:"file-markdown",
+                icon:"article",
                 content:"${content}"
             }
         },`
