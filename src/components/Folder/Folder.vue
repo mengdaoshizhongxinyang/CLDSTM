@@ -1,5 +1,14 @@
 <template>
-  <Frame v-on="$listeners" v-bind="$attrs">
+  <Frame
+    v-on="$listeners"
+    v-bind="$attrs"
+    @resize="handleResize"
+    @dragstop="handleDragstop"
+    :initialH="folderStatus.h"
+    :initialW="folderStatus.w"
+    :initialX="folderStatus.x"
+    :initialY="folderStatus.y"
+  >
     <div class="floder">
       <div class="floder-menu"></div>
       <div class="floder-address">
@@ -19,11 +28,11 @@
         ></a-button>
         <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
         <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
-          <a-input size="small" class="floder-address-input" v-model="path">
-            <template #prefix>
-              <a-icon :type="icon" />
-            </template>
-          </a-input>
+        <a-input size="small" class="floder-address-input" v-model="path">
+          <template #prefix>
+            <a-icon :type="icon" />
+          </template>
+        </a-input>
         <a-button
           size="small"
           icon="redo"
@@ -51,8 +60,7 @@
             :icon="icon.icon"
             style="color:#000"
             :iconStyle="iconStyle"
-          >
-          </desktop-icon-base>
+          ></desktop-icon-base>
         </div>
       </div>
     </div>
@@ -64,7 +72,7 @@ import Tree from "../Tree";
 import { DesktopIcon, Frame } from "@/components";
 import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 import { SET_RUNING_APPS } from "@/store/modules";
-import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue"
+import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
 export default {
   props: {
     children: {
@@ -77,10 +85,10 @@ export default {
       type: String,
       default: "",
     },
-    icon:{
+    icon: {
       type: String,
       default: "file-unknown",
-    }
+    },
   },
   created() {
     this.path = this.position;
@@ -99,24 +107,24 @@ export default {
       nextStack: [],
       path: "",
       search: "",
-      cacheSearch:"",
-      iconStyle:{
-        theme:"filled",
-        style:{
-          color:"#000"
-        }
-      }
+      cacheSearch: "",
+      iconStyle: {
+        theme: "filled",
+        style: {
+          color: "#000",
+        },
+      },
     };
   },
   computed: {
-    ...mapGetters(["desktopApps"]),
+    ...mapGetters(["desktopApps", "folderStatus"]),
   },
   methods: {
     handleOpenApps(icon) {
-      let { folderList, backStack, path,cacheSearch } = this;
-      this.search=icon.bind.search?icon.bind.search:""
+      let { folderList, backStack, path, cacheSearch } = this;
+      this.search = icon.bind.search ? icon.bind.search : "";
       if (icon.type == "folder") {
-        let search=cacheSearch
+        let search = cacheSearch;
         backStack.push({ folderList, path, search });
         folderList = icon.bind.children;
         path = icon.bind.position;
@@ -124,7 +132,7 @@ export default {
           folderList,
           path,
           nextStack: [],
-          cacheSearch:this.search
+          cacheSearch: this.search,
         });
       } else {
         this.$store.commit(SET_RUNING_APPS, icon);
@@ -161,21 +169,33 @@ export default {
       while (tempList.length > 0) {
         let start = tempList.shift();
         if (start.type == "folder") {
-          tempList=tempList.concat(
+          tempList = tempList.concat(
             Object.values(start.bind.children).map((item) => {
               return item;
             })
           );
         }
-        if(~start.name.indexOf(e)){
-          folderList.push(start)
+        if (~start.name.indexOf(e)) {
+          folderList.push(start);
         }
       }
-      this.handleOpenApps({bind:{children:folderList,position:`${e}的搜索结果`,search:e},type:"folder"})
+      this.handleOpenApps({
+        bind: { children: folderList, position: `${e}的搜索结果`, search: e },
+        type: "folder",
+      });
     },
+    handleResize(w, h, x, y) {
+      this.$store.dispatch('updateFolderStatus',{w, h, x:x+20, y:y+20})
+    },
+    handleDragstop(x, y) {
+      this.$store.dispatch('updateFolderStatus',{x, y})
+    }
   },
   mounted() {
+    const {w, h, x, y}=this.folderStatus
     this.folderList = this.children;
+    
+    this.$store.dispatch('updateFolderStatus',{w, h, x:x+20, y:y+20})
   },
 };
 </script>
@@ -203,12 +223,12 @@ export default {
         cursor: default;
       }
     }
-    &-input-div{
+    &-input-div {
       border-radius: 0;
       flex: 1;
     }
     &-input-suffix,
-    &-input /deep/.ant-input{
+    &-input /deep/.ant-input {
       border-radius: 0;
       border: 1px solid #d9d9d9;
       &:focus {
@@ -217,7 +237,7 @@ export default {
         box-shadow: none;
       }
     }
-    &-input{
+    &-input {
       flex: 1;
     }
     &-input-suffix {

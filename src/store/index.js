@@ -14,6 +14,7 @@ const mutations = {
 const actions = {
   initAll({ dispatch, commit, getters }){
     commit(SET_FILELIST,configs.getDesktopIcon())
+    dispatch('initFolderStatus')
     // commit(MERGE_APPS,)
   }
 }

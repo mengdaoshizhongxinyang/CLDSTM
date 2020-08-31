@@ -4,6 +4,14 @@ import router from './router'
 import './mock'
 import 'ant-design-vue/dist/antd.css' 
 import Directives from '@/utils/directives.js';
+import Storage from 'vue-ls';
+ 
+let options = {
+  namespace: 'vuejs__', // key prefix
+  name: 'ls', // name variable Vue.[ls] or this.[$ls],
+  storage: 'local', // storage name session, local, memory
+};
+Vue.use(Storage, options);
 import Vuex, { Store } from 'vuex'
 Vue.use(Vuex)
 import store from "./store";

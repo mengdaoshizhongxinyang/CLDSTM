@@ -90,6 +90,14 @@ export default {
       type:Number,
       default:200
     },
+    initialX:{
+      type:Number,
+      default:0
+    },
+    initialY:{
+      type:Number,
+      default:0
+    },
     z:{
       type:Number,
       default:0
@@ -157,11 +165,12 @@ export default {
       this.y = y;
       this.w = w;
       this.h = h;
-      this.$emit("resize", w, h);
+      this.$emit("resize", w, h, x, y);
     },
     handleDragstop(x, y) {
       this.x = x;
       this.y = y;
+      this.$emit('dragstop',x,y)
     },
     close(){
       this.$store.dispatch('closeApps',this.appsId)
@@ -172,10 +181,12 @@ export default {
     }
   },
   created(){
-    const { initialW,initialH}=this
+    const { initialW,initialH,initialX,initialY}=this
     Object.assign(this,{
       w:initialW,
-      h:initialH
+      h:initialH,
+      x:initialX,
+      y:initialY
     })
   }
 };

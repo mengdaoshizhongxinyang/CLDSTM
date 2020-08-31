@@ -8,7 +8,7 @@ export const SET_FILELIST = 'SET_FILELIST'
 export const CREATE_ICON = 'CREATE_ICON'
 export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
-/** @typedef {typeof state} TemplateState */
+/** @typedef {typeof state} DesktopState */
 const state = {
     desktopApps: {
         apps: [],
@@ -24,7 +24,7 @@ const state = {
     fileList:{}
 }
 
-/** @type MutationTree<TemplateState> */
+/** @type MutationTree<DesktopState> */
 const mutations = {
     [SET_FILELIST](state,item){
         state.fileList=item
@@ -60,7 +60,7 @@ const mutations = {
     }
 }
 
-/** @type ActionTree<TemplateState, RootState> */
+/** @type ActionTree<DesktopState, RootState> */
 const actions = {
     openApps({ commit }, icon) {
         commit(SET_RUNING_APPS, icon)
@@ -84,7 +84,7 @@ const actions = {
     ...configs.actions
 }
 
-/** @type GetterTree<TemplateState, RootState> */
+/** @type GetterTree<DesktopState, RootState> */
 const getters = {
     desktopApps(state) {
         return state.desktopApps
@@ -94,13 +94,12 @@ const getters = {
     },
     getAppInfo(state){
         return (id)=>{
-            console.log(state.desktopApps.apps[id])
             return state.desktopApps.apps[id] || {name:""}
         }
     }
 }
 
-/** @type Module<TemplateState, RootState> */
+/** @type Module<DesktopState, RootState> */
 const vuexModule = {
     state,
     mutations,
