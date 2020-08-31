@@ -15,18 +15,18 @@
     @activated="active"
   >
     <div class="header" @dblclick="fullScrean">
-      <div class="header-content">{{title}}</div>
+      <div class="header-content">{{getAppInfo(appsId).name || ""}}</div>
       <div class="header-back" @mouseup="e=>rightClick(e,'headerMenu')">
         <VueContextMenu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
-          <div class="menu-item">最小化</div>
-          <div class="menu-item">最大化</div>
+          <div class="menu-item" @click="minimize">最小化</div>
+          <div class="menu-item" @click="fullScrean">最大化</div>
           <a-divider />
           <div class="menu-item" @click="close">关闭</div>
         </VueContextMenu>
       </div>
       <slot name="header"></slot>
       <div class="header-button-group">
-        <div class="header-button">
+        <div class="header-button" @click="minimize">
           <a-icon type="minus"></a-icon>
         </div>
         <div class="header-button" v-if="isFull" @click="fullScrean">
@@ -62,9 +62,10 @@ export default {
     VueDraggableResizable,
     VueContextMenu
   },
-
+  computed:{
+    ...mapGetters(['getAppInfo'])
+  },
   props: {
-    title: String,
     scrollX: {
       type: Boolean,
       default: true
@@ -113,7 +114,8 @@ export default {
       w: 246,
       h: 200,
       x: 0,
-      y: 0
+      y: 0,
+      title:""
     };
   },
   methods: {
@@ -145,6 +147,10 @@ export default {
         this.isFull = false;
       }
       this.$emit("resize", this.w, this.h);
+    },
+    minimize(){
+      this.$store.dispatch('minimizeApps',this.appsId)
+      this.$emit('minimize')
     },
     handleResizestop(x, y, w, h) {
       this.x = x;
@@ -178,7 +184,7 @@ export default {
 <style lang="less" scoped>
 @import '../RightClickMenu/menu';
 .filter-main {
-  box-shadow: 0 0 2px 0 #000000aa;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.68);
   background: #fff;
   display: flex;
   flex-flow: column;
@@ -196,10 +202,12 @@ export default {
       position: absolute;
       height: 100%;
       padding: 9px;
+      color:#000;
       line-height: 1em;
       top: 0;
     }
     .header-button-group {
+      background: #e1e1e1;
       display: flex;
       position: absolute;
       right: 0px;
@@ -211,9 +219,9 @@ export default {
         height: 32px;
         width: 42px;
         color: #000000;
-        background: #00000000;
+        background: rgba(0, 0, 0, 0);
         &:hover {
-          background: #00000011;
+          background: rgba(0, 0, 0, 0.08);
         }
       }
       .header-button-close {
@@ -221,7 +229,7 @@ export default {
         height: 32px;
         width: 42px;
         color: #000000;
-        background: #00000000;
+        background: rgba(0, 0, 0, 0);
         &:hover {
           background: red;
           color: #fff;

@@ -6,7 +6,7 @@
         <a-icon type="windows" style="color:#fff;fontSize:24px;"></a-icon>
       </div>
       <div class="task-menu">
-        <div class="task-menu-item" v-for="(item, index) in desktopApps.apps" :key="index">
+        <div class="task-menu-item" v-for="(item, index) in desktopApps.apps" :key="index" @click="resetMini(item,index)">
           <div class="task-menu-item-container">
             <div class="task-menu-item-container-content">
               <span class="task-menu-item-container-content-icon"><icon :icon="item.icon"></icon></span>
@@ -63,6 +63,9 @@ export default {
     },
     closeMenu() {
       this.openMenuStatus=false
+    },
+    resetMini(app,index){
+      this.$store.dispatch('minimizeApps',index)
     }
   },
   mounted() {

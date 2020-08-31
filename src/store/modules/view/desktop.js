@@ -7,6 +7,7 @@ export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
 export const SET_FILELIST = 'SET_FILELIST'
 export const CREATE_ICON = 'CREATE_ICON'
 export const MERGE_APPS = 'MERGE_APPS'
+export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 /** @typedef {typeof state} TemplateState */
 const state = {
     desktopApps: {
@@ -34,6 +35,7 @@ const mutations = {
             binds: item.bind || {},
             name:item.name,
             icon:item.icon,
+            mini:false,
             id: ++state.desktopApps.id,
             zindex: ++state.desktopApps.maxZindex
         })
@@ -43,6 +45,9 @@ const mutations = {
     },
     [ACTIVE_RUNING_APPS](state, index) {
         state.desktopApps.apps[index].zindex=++state.desktopApps.maxZindex
+    },
+    [MINIMIZE_APPS](state,index){
+        state.desktopApps.apps[index].mini=!state.desktopApps.apps[index].mini
     },
     [CREATE_ICON](state,list){
         console.log(list)
@@ -62,6 +67,9 @@ const actions = {
     },
     closeApps({commit},index){
         commit(CLOSE_RUNING_APPS,index)
+    },
+    minimizeApps({commit},index){
+        commit(MINIMIZE_APPS,index)
     },
     updateApps({commit},data){
         commit(CLOSE_RUNING_APPS,data)
@@ -83,6 +91,12 @@ const getters = {
     },
     fileList(state){
         return state.fileList
+    },
+    getAppInfo(state){
+        return (id)=>{
+            console.log(state.desktopApps.apps[id])
+            return state.desktopApps.apps[id] || {name:""}
+        }
     }
 }
 

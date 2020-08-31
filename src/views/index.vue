@@ -20,7 +20,7 @@
       v-for="(item, index) in desktopApps.apps"
       :key="item.id"
       :appsId="index"
-
+      v-show="!item.mini"
     ></component>
   </div>
 </template>
