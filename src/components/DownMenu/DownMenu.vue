@@ -15,7 +15,7 @@
           </div>
           <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave">
             <div class="menu-dark task-menu-context " tabindex="-1" ref="context" v-if="index==showIndex" @blur="closeMenu(index)">
-              <div class="menu-dark-item" @click="closeApp(index)">关闭</div>
+              <down-menu-right-menu @click="closeApp(index)">关闭</down-menu-right-menu>
             </div>
           </transition>
         </div>
@@ -37,8 +37,10 @@
 import moment from "moment";
 import { mapGetters } from "vuex";
 import  Icon from "@/components/IconManage";
+import DownMenuRightMenu from "./DownMenuRightMenu";
 export default {
   components:{
+    DownMenuRightMenu,
     Icon
   },
   data() {
