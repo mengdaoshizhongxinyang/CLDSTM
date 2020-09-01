@@ -14,6 +14,12 @@ const mutations = {
     state.folderStatus=status
   },
   [FOLDER_STATUS_UPDATE](state,status){
+    if(status.y && status.y>document.body.scrollHeight){
+      status.y=0
+    }
+    if(status.x && status.x>document.body.scrollWidth){
+      status.x=0
+    }
     Object.assign(state.folderStatus,status)
     Vue.ls.set('folderStatus',state.folderStatus)
   }

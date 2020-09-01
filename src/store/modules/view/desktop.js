@@ -32,9 +32,7 @@ const mutations = {
     [SET_RUNING_APPS](state, item) {
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
-            binds: item.bind || {},
-            name:item.name,
-            icon:item.icon,
+            ...item,
             mini:false,
             id: ++state.desktopApps.id,
             zindex: ++state.desktopApps.maxZindex

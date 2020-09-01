@@ -1,5 +1,5 @@
 <template>
-  <tree-branch v-if="node.bind && node.bind.children && Object.keys(node.bind.children).length" :node="node" :level="level+1"></tree-branch>
+  <tree-branch v-if="node && node.children && Object.keys(node.children).length" :node="node" :level="level+1"></tree-branch>
   <!-- <tree-node v-else :node="node" :level="level+1"></tree-node> -->
 </template>
 

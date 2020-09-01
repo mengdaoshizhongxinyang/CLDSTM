@@ -1,0 +1,42 @@
+@import "./default.less";
+.menu {
+  color: #000000;
+  padding: 2px;
+
+  &-item {
+    height: 22px;
+    line-height: 22px;
+    padding: 0 7px;
+    user-select: none;
+
+    &:hover {
+      color: #fff;
+      background: #1890ff;
+    }
+  }
+}
+
+.menu-dark {
+  color: #fff;
+  padding: 2px;
+  border: 1px solid @menu-dark-border-color;
+  background-color: @menu-dark-background-color;
+  &-item {
+    height: 22px;
+    line-height: 22px;
+    padding: 0 7px;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+      background-image:linear-gradient(to right,rgba(255,255,255,0.2),rgba(255,255,255,0.12));
+    }
+  }
+}
+@supports (-webkit-backdrop-filter:none) or (backdrop-filter:none) {
+  .menu-dark {
+    backdrop-filter: @menu-dark-background-filter;
+  }
+}
+/deep/.ant-divider-horizontal {
+  margin: 4px 0 2px 0;
+}

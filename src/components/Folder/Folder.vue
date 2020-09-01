@@ -122,12 +122,12 @@ export default {
   methods: {
     handleOpenApps(icon) {
       let { folderList, backStack, path, cacheSearch } = this;
-      this.search = icon.bind.search ? icon.bind.search : "";
+      this.search = icon.search ? icon.search : "";
       if (icon.type == "folder") {
         let search = cacheSearch;
         backStack.push({ folderList, path, search });
-        folderList = icon.bind.children;
-        path = icon.bind.position;
+        folderList = icon.children;
+        path = icon.position;
         Object.assign(this, {
           folderList,
           path,
@@ -170,7 +170,7 @@ export default {
         let start = tempList.shift();
         if (start.type == "folder") {
           tempList = tempList.concat(
-            Object.values(start.bind.children).map((item) => {
+            Object.values(start.children).map((item) => {
               return item;
             })
           );
@@ -180,7 +180,7 @@ export default {
         }
       }
       this.handleOpenApps({
-        bind: { children: folderList, position: `${e}的搜索结果`, search: e },
+        children: folderList, position: `${e}的搜索结果`, search: e,
         type: "folder",
       });
     },
@@ -194,7 +194,7 @@ export default {
   mounted() {
     const {w, h, x, y}=this.folderStatus
     this.folderList = this.children;
-    
+    console.log(this.children)
     this.$store.dispatch('updateFolderStatus',{w, h, x:x+20, y:y+20})
   },
 };

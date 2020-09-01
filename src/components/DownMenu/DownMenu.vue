@@ -6,13 +6,18 @@
         <a-icon type="windows" style="color:#fff;fontSize:24px;"></a-icon>
       </div>
       <div class="task-menu">
-        <div class="task-menu-item" v-for="(item, index) in desktopApps.apps" :key="index" @click="resetMini(item,index)">
-          <div class="task-menu-item-container">
+        <div class="task-menu-item" v-for="(item, index) in desktopApps.apps" :key="index" >
+          <div class="task-menu-item-container" @mouseup="e=>handleItemClick(e,item,index)">
             <div class="task-menu-item-container-content">
               <span class="task-menu-item-container-content-icon"><icon :icon="item.icon"></icon></span>
               {{item.name}}
             </div>
           </div>
+          <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave">
+            <div class="menu-dark task-menu-context " tabindex="-1" ref="context" v-if="index==showIndex" @blur="closeMenu(index)">
+              <div class="menu-dark-item" @click="closeApp(index)">关闭</div>
+            </div>
+          </transition>
         </div>
       </div>
       <div
@@ -42,7 +47,8 @@ export default {
       time: "",
       titleTime: "",
       titleTimeStatus: false,
-      openMenuStatus:false
+      openMenuStatus:false,
+      showIndex:-1
     };
   },
   computed:{
@@ -64,9 +70,47 @@ export default {
     closeMenu() {
       this.openMenuStatus=false
     },
+    handleItemClick(e,app,index){
+      if(e.button==0){
+        this.resetMini(app,index)
+      }else if(e.button==2){
+        this.openMenu(index)
+      }
+    },
     resetMini(app,index){
       this.$store.dispatch('minimizeApps',index)
-    }
+    },
+    openMenu(index){
+      this.showIndex=index
+      this.$nextTick(()=>{
+        this.$refs.context[0].focus()
+      })
+    },
+    closeMenu(index){
+      this.showIndex=-1
+    },
+    closeApp(index){
+      this.$store.dispatch('closeApps',index)
+      this.showIndex=-1
+    },
+    enter(el) {
+      el.style.height = "auto";
+      let endWidth = window.getComputedStyle(el).height;
+      el.style.height = "0px";
+      el.offsetHeight;
+      el.style.height = endWidth;
+    },
+    afterEnter(el) {
+      el.style.height = null;
+    },
+    leave(el) {
+      el.style.height = window.getComputedStyle(el).height;
+      el.offsetHeight;
+      el.style.height = "0px";
+    },
+    afterLeave(el) {
+      el.style.height = null;
+    },
   },
   mounted() {
     this.clock();
@@ -75,6 +119,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../Style/index";
+@import "../Style/menu";
 .main {
   position: fixed;
   bottom: 0;
@@ -95,12 +141,11 @@ export default {
     height: 200px;
     width: 200px;
     // overflow: hidden;
-    backdrop-filter: blur(2px);
-    background: rgba(0, 0, 0, 0.9);
+    background: @menu-dark-background-color;
   }
   @supports (-webkit-backdrop-filter:none) or (backdrop-filter:none) {
     &-open {
-      backdrop-filter: blur(15px);  
+      backdrop-filter: @menu-dark-background-filter;
     }
   }
   &:hover {
@@ -113,6 +158,7 @@ export default {
 .task-menu {
   flex: 1;
   display: flex;
+  position:relative;
   &-item{
     color: #fff;
     font-size: 16px;
@@ -151,6 +197,14 @@ export default {
       }
     }
   }
+  &-context{
+    padding:8px 2px;
+    width:130%;
+    left:-15%;
+    position: absolute;
+    bottom:100%;
+  }
+  
 }
 .status {
   width: 110px;

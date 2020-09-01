@@ -23,6 +23,7 @@
 </template>
 
 <script>
+
 import RightClickMenu from "../RightClickMenu";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
@@ -66,7 +67,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../RightClickMenu/menu";
+@import "../Style/menu";
 .desktop {
   position: fixed;
   width: 100%;

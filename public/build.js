@@ -13,11 +13,7 @@ function getFileTreeContent(res,now) {
             type:"article",
             icon:"article",
             position:"${now}/${res}",
-            bind:{
-                type:"article",
-                icon:"article",
-                content:"${content}"
-            }
+            content:"${content}"
         },`
         return ans;
     }else{
@@ -31,14 +27,13 @@ function getFileTreeContent(res,now) {
             name:"${res}",
             type:"folder",
             icon:"folder",
-            bind:{
-                position:"${now}/${res}",
-                type:"folder",
-                icon:"folder",
-                children:{
-                    ${children}
-                }
+
+            position:"${now}/${res}",
+
+            children:{
+                ${children}
             }
+
         },`
         return ans;
     }

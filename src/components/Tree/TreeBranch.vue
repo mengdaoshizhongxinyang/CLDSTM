@@ -8,7 +8,7 @@
     <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave">
       <div class="folder-tree-node-content" v-show="showChildren">
         <tree-item
-          v-for="item in node.bind.children"
+          v-for="item in node.children"
           :key="item.name"
           :node="item"
           :level="level+1"

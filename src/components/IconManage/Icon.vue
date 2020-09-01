@@ -15,12 +15,12 @@ export default {
       type: String,
       default: "file-unknown",
     },
-      iconStyle: {
-    type: Object,
-    default: () => {
-      return { theme: "filled" };
+    iconStyle: {
+      type: Object,
+      default: () => {
+        return { theme: "filled" };
+      },
     },
-  },
   },
 
   data() {
@@ -28,7 +28,7 @@ export default {
       iconList: {
         antd: {
           folder: "folder",
-        article: "file-markdown",
+          article: "file-markdown",
         },
         more: {
           vscode: "vscodeIcon",

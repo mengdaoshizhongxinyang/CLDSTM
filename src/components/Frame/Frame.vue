@@ -193,7 +193,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../RightClickMenu/menu';
+@import '../Style/menu';
 .filter-main {
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.68);
   background: #fff;
