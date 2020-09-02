@@ -15,7 +15,7 @@
           </div>
           <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave">
             <div class="menu-dark task-menu-context " tabindex="-1" ref="context" v-if="index==showIndex" @blur="closeMenu(index)">
-              <down-menu-right-menu @click="closeApp(index)">关闭</down-menu-right-menu>
+              <down-menu-right-menu @onClick="closeApp(index)">关闭</down-menu-right-menu>
             </div>
           </transition>
         </div>
