@@ -14,7 +14,7 @@
             </div>
           </div>
           <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave">
-            <div class="menu-dark task-menu-context " tabindex="-1" ref="context" v-if="index==showIndex" @blur="closeMenu(index)">
+            <div class="menu-dark task-menu-context " tabindex="-1" ref="context" v-if="index==showIndex" @blur="closeContext(index)">
               <down-menu-right-menu @onClick="closeApp(index)">关闭</down-menu-right-menu>
             </div>
           </transition>
@@ -76,19 +76,19 @@ export default {
       if(e.button==0){
         this.resetMini(app,index)
       }else if(e.button==2){
-        this.openMenu(index)
+        this.openContext(index)
       }
     },
     resetMini(app,index){
       this.$store.dispatch('minimizeApps',index)
     },
-    openMenu(index){
+    openContext(index){
       this.showIndex=index
       this.$nextTick(()=>{
         this.$refs.context[0].focus()
       })
     },
-    closeMenu(index){
+    closeContext(index){
       this.showIndex=-1
     },
     closeApp(index){
@@ -174,6 +174,9 @@ export default {
     &:hover{
       background: rgba(255, 255, 255, 0.12);
     }
+    &:focus{
+      background: rgba(255, 255,255, 0.16);
+    }
     &-container{
       left: 0px;
       position: absolute;
@@ -217,6 +220,7 @@ export default {
   &:hover {
     background: rgba(255, 255,255, 0.16);
   }
+
   .title {
     position: absolute;
     padding: 3px;

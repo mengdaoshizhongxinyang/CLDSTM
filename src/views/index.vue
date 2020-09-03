@@ -136,7 +136,7 @@ export default {
       renderer = new THREE.WebGLRenderer();
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
-
+      renderer.domElement.id="background"
       document.body.appendChild(renderer.domElement);
       window.addEventListener("resize", this.onWindowResize, false);
     },

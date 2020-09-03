@@ -194,7 +194,6 @@ export default {
   mounted() {
     const {w, h, x, y}=this.folderStatus
     this.folderList = this.children;
-    console.log(this.children)
     this.$store.dispatch('updateFolderStatus',{w, h, x:x+20, y:y+20})
   },
 };
