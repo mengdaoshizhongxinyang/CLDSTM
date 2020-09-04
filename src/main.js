@@ -107,7 +107,13 @@ Vue.use(Skeleton)
 Vue.use(Popconfirm)
 // Vue.use(VueCropper)
 Vue.use(notification)
-
+Vue.prototype.$confirm = Modal.confirm
+Vue.prototype.$message = message
+Vue.prototype.$notification = notification
+Vue.prototype.$info = Modal.info
+Vue.prototype.$success = Modal.success
+Vue.prototype.$error = Modal.error
+Vue.prototype.$warning = Modal.warning
 new Vue({
   router,
   store:storeOption,

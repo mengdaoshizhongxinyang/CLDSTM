@@ -47,6 +47,12 @@
           <a-icon type="idcard"></a-icon>
           前端程序员
         </div>
+        <div class="info-content-list">
+          <a-icon type="github"></a-icon>
+          <a href="https://github.com/mengdaoshizhongxinyang" target="_blank">
+            萌道是种信仰
+          </a>
+        </div>
         <a-divider></a-divider>
         <div class="info-content-list">
           <a-tag v-for="tag in tags" :key="tag" :color="tagColor">{{tag}}</a-tag>
@@ -60,7 +66,7 @@
           <article-list></article-list>
         </a-tab-pane>
         <a-tab-pane key="2" tab="项目">
-          Content of Tab Pane 2
+          <project></project>
         </a-tab-pane>      
       </a-tabs>
     </div>
@@ -69,9 +75,11 @@
 
 <script>
 import ArticleList from "./modules/ArticleList.vue";
+import Project from "./modules/Project.vue";
 export default {
   components:{
-    ArticleList
+    ArticleList,
+    Project
   },
   created() {
     let isMobile = navigator.userAgent.match(
@@ -83,6 +91,7 @@ export default {
       this.theme = "dark";
     } else {
       this.theme = "light";
+      
     }
   },
   data() {
@@ -126,6 +135,11 @@ export default {
   },
   mounted() {
     this.$route.params.key;
+    this.$nextTick(()=>{
+      if(this.theme=='light'){
+        this.$message.success("该页面有黑暗模式😁");
+      }
+    })
   },
 };
 </script>
@@ -171,6 +185,9 @@ export default {
       }
       &-list{
         width:100%;
+        a{
+          color: rgba(0,0,0,0.65);
+        }
       }
     }
   }
@@ -182,5 +199,28 @@ export default {
   }
   .module {
     box-shadow: 0px 0px 5px 5px rgba(55, 55, 55, 0.2);
+  }
+  .dark{
+    color:#fff;
+    .info-content-list{
+      a{
+          color: #fff;
+        }
+    }
+    /deep/.ant-list-item-meta-title > a{
+      color:#fff;
+    }
+    /deep/.ant-list-item-meta-description{
+      color:#afafaf;
+    }
+    /deep/.ant-list-items{
+      color:#afafaf;
+    }
+    /deep/.ant-tabs{
+      color:#fff;
+    }
+    .module{
+      border:1px solid #fff;
+    }
   }
 </style>

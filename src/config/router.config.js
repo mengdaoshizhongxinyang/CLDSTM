@@ -29,7 +29,7 @@
  */
 
 
-export const asyncRouterMap=[
+export let asyncRouterMap=[
     {
         path: '/',
         name: 'index',
@@ -40,10 +40,15 @@ export const asyncRouterMap=[
         name: 'Resume',
         component:()=>import ('@/views/resume/Resume.vue'),
         meta:{title:'简历'}
-    },{
+    },{ 
         path: '/resume',
         name: 'Resume',
         component:()=>import ('@/views/resume/Resume.vue'),
+        meta:{title:'简历'}
+    },{
+        path: '/article/*',
+        name: 'Article',
+        component:()=>import ('@/views/article/Article.vue'),
         meta:{title:'简历'}
     }
     
