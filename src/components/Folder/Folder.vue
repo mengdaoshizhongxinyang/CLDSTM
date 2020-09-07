@@ -188,7 +188,7 @@ export default {
       this.$store.dispatch('updateFolderStatus',{w, h, x:x+20, y:y+20})
     },
     handleDragstop(x, y) {
-      this.$store.dispatch('updateFolderStatus',{x, y})
+      this.$store.dispatch('updateFolderStatus',{x:x+20, y:y+20})
     }
   },
   mounted() {
