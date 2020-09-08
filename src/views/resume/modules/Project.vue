@@ -8,10 +8,10 @@
         />
         <div class="project-card-body">
           <div class="project-card-body-title">
-            Europe Street beat
+            Europe Street beat 
           </div>
           <div class="project-card-body-content">
-            www.instagrsdasdasdasdam.com
+            www.instagrsd asdasdasdam.com dasasfasdasd adasdasda
           </div>
         </div>
       </div>
@@ -51,9 +51,17 @@
         &-title{
           font-size: 16px;
           color:rgba(0,0,0,0.85);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         &-content{
-          
+          overflow : hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          word-break: break-all;
         }
       }
     }

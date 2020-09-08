@@ -17,6 +17,21 @@ export default {
       type: String,
       default: "",
     },
+    name: {
+      type: String,
+      default: "",
+    },
+    icon: {
+      type: String,
+      default: "article",
+    },
+    position:{
+      type:String,
+      default:"/"
+    },
+    description:"",
+    mtime:null,
+    ctime:null
   },
 };
 </script>

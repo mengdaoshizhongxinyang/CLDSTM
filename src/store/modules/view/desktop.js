@@ -8,6 +8,7 @@ export const SET_FILELIST = 'SET_FILELIST'
 export const CREATE_ICON = 'CREATE_ICON'
 export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
+export const SET_FILETYPES = 'SET_FILETYPES'
 /** @typedef {typeof state} DesktopState */
 const state = {
     desktopApps: {
@@ -21,7 +22,8 @@ const state = {
         'folder': 'Folder',
         'vscode':'vscode'
     },
-    fileList:{}
+    fileList:{},
+    fileTypes:{}
 }
 
 /** @type MutationTree<DesktopState> */
@@ -55,6 +57,9 @@ const mutations = {
     },
     [MERGE_APPS](state,apps={}){
         state.apps=Object.assign(state.apps,apps)
+    },
+    [SET_FILETYPES](state,types={}){
+        state.fileTypes=types
     }
 }
 

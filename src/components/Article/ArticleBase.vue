@@ -23,12 +23,14 @@ export default {
 
 <style lang="less" scoped>
 .markdown-body{
-
     padding: 4px;
 }
 </style>
 <style lang="less">
 .markdown-content {
+  h1{
+    text-align: center;
+  }
   h1,
   h2,
   h3,
@@ -36,7 +38,7 @@ export default {
     color: #111111;
     font-weight: 400;
     margin-top: 1em;
-    text-align: center;
+    
   }
 
   h1,
