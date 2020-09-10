@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop" @mouseup="e=>rightClick(e)">
+  <div class="desktop" @contextmenu="e=>rightClick(e)">
     <div class="desktp-rightmenu">
       <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
         <div class="menu-item" @click="handleRefresh">刷新</div>
@@ -13,7 +13,13 @@
           >{{item.name}}</div>
           <a-divider :key="`${items}-key`"/>
         </template>
-        <div class="menu-item" @click="handleCreate">新建</div>
+        <div class="menu-item" @click="handleCreate">
+          新建
+          <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
+            <div class="menu-item">显示设置</div>
+            <div class="menu-item">个性化</div>
+          </right-click-menu>
+        </div>
         <a-divider />
         <div class="menu-item">显示设置</div>
         <div class="menu-item">个性化</div>
@@ -37,16 +43,18 @@ export default {
         left: 0,
         top: 0,
       },
+      childContextMenuOffset:{
+        left: 0,
+        top: 0,
+      },
       list: {},
     };
   },
   methods: {
     rightClick(e) {
-      if (e.button === 2) {
-        this.contextMenuOffset.left = e.x;
-        this.contextMenuOffset.top = e.y;
-        this.headerMenu = true;
-      }
+      this.contextMenuOffset.left = e.x;
+      this.contextMenuOffset.top = e.y;
+      this.headerMenu = true;
     },
     handleItemClick(actions) {
       this.headerMenu = false;
