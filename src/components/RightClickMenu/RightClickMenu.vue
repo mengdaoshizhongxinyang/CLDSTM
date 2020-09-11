@@ -6,12 +6,18 @@
     @mousedown.stop
     @contextmenu.prevent
   >
-    <slot></slot>
+    <slot>
+      <sub-menu :menus="menus" :basePosition="offset" :show="show"></sub-menu>
+    </slot>
   </div>
 </template>
 <script>
+import SubMenu from "./SubMenu.vue";
 export default {
   name: "right-click-menu",
+  components:{
+    SubMenu
+  },
   data() {
     return {
       style: {}
@@ -23,16 +29,24 @@ export default {
       default: function() {
         return {
           left: 0,
-          top: 0
+          top: 0,
+          width:0,
+          height:0
         };
       }
     },
-    show: Boolean
+    show: Boolean,
+    menus:{
+        type:Array,
+        default:()=>{
+          return []
+        }
+      }
   },
   watch: {
     show(show) {
       if (show) {
-        this.$nextTick(this.setPosition)
+        // this.$nextTick(this.setPosition)
         document.body.addEventListener("mousedown", this.clickDocumentHandler);
       }else{
         document.body.removeEventListener("mousedown", this.clickDocumentHandler);
@@ -47,37 +61,20 @@ export default {
         this.$emit("update:show", true);
       }
     },
-    setPosition() {
-      let docHeight = document.documentElement.clientHeight;
-      let docWidth = document.documentElement.clientWidth;
-      let menuHeight = this.$el.getBoundingClientRect().height;
-      let menuWidth = this.$el.getBoundingClientRect().width;
-      // 增加点击处与菜单间间隔
-      const gap = 10;
-      let topover =
-        this.offset.top + menuHeight >= docHeight
-          ? menuHeight
-          : 0;
-      let leftover =
-        this.offset.left + menuWidth  >= docWidth ? menuWidth :0;
-      this.style = {
-        left: `${this.offset.left - leftover}px`,
-        top: `${this.offset.top - topover}px`
-      };
-    }
+    
   }
 };
 </script>
 <style lang="less" scoped>
 .context-menu {
-  z-index: 99999;
-  display: block;
-  background: #fff;
-  border: 1px solid #a5a5a5;
-  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
-  padding: 4px 2px;
-  line-height: 1em;
+  // z-index: 99999;
+  // display: block;
+  // background: #fff;
+  // border: 1px solid #a5a5a5;
+  // box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+  // padding: 4px 2px;
+  // line-height: 1em;
   position: fixed;
-  min-width: 160px;
+  // min-width: 160px;
 }
 </style>

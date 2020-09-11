@@ -1,8 +1,8 @@
 <template>
   <div class="desktop" @contextmenu="e=>rightClick(e)">
     <div class="desktp-rightmenu">
-      <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
-        <div class="menu-item" @click="handleRefresh">刷新</div>
+      <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" :menus="menus">
+        <!-- <div class="menu-item" @click="handleRefresh">刷新</div>
         <a-divider />
         <template v-for="items in Object.keys(list)">
           <div
@@ -15,14 +15,10 @@
         </template>
         <div class="menu-item" @click="handleCreate">
           新建
-          <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
-            <div class="menu-item">显示设置</div>
-            <div class="menu-item">个性化</div>
-          </right-click-menu>
         </div>
         <a-divider />
         <div class="menu-item">显示设置</div>
-        <div class="menu-item">个性化</div>
+        <div class="menu-item">个性化</div> -->
       </right-click-menu>
     </div>
   </div>
@@ -42,12 +38,16 @@ export default {
       contextMenuOffset: {
         left: 0,
         top: 0,
-      },
-      childContextMenuOffset:{
-        left: 0,
-        top: 0,
+        width:0,
+        height:0,
       },
       list: {},
+      menus:[
+        {label:"刷新"},
+        {label:"测试"},
+        {label:"显示设置"},
+        {label:"个性化"}
+      ]
     };
   },
   methods: {

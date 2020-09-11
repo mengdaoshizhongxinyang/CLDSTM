@@ -2,16 +2,23 @@
 .menu {
   color: #000000;
   padding: 2px;
-
+  position: fixed;
+  background-color: #fff;
+  min-width: 160px;
   &-item {
     height: 22px;
     line-height: 22px;
     padding: 0 7px;
     user-select: none;
-
+    .menu{
+      display:none;
+    }
     &:hover {
       color: #fff;
       background: #1890ff;
+      .menu{
+        display:block;
+      }
     }
   }
 }
