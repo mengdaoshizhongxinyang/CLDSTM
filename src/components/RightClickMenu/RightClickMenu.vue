@@ -1,77 +1,98 @@
-<template>
-  <div
-    class="context-menu"
-    v-show="show"
-    :style="`left:${offset.left}px;top:${offset.top}px`"
-    @mousedown.stop
-    @contextmenu.prevent
-  >
-    <slot>
-      <sub-menu :menus="menus" :show="show" @setPosition="handleSetPosition" @menuItemClick="handleClick"></sub-menu>
-    </slot>
-  </div>
-</template>
+
 <script>
 import SubMenu from "./SubMenu.vue";
 export default {
   name: "right-click-menu",
-  components:{
-    SubMenu
+  components: {
+    SubMenu,
   },
   data() {
     return {
-      style: {}
+      style: {},
     };
   },
   props: {
     offset: {
       type: Object,
-      default: function() {
+      default: function () {
         return {
           left: 0,
-          top: 0
+          top: 0,
         };
-      }
+      },
     },
     show: Boolean,
-    menus:{
-      type:Array,
-      default:()=>{
-        return []
-      }
-    }
+    menus: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   watch: {
     show(show) {
       if (show) {
         // this.$nextTick(this.setPosition)
         document.body.addEventListener("mousedown", this.clickDocumentHandler);
-      }else{
-        document.body.removeEventListener("mousedown", this.clickDocumentHandler);
+        this.$forceUpdate()
+      } else {
+        document.body.removeEventListener(
+          "mousedown",
+          this.clickDocumentHandler
+        );
       }
-    }
+    },
   },
   methods: {
     clickDocumentHandler() {
       if (this.show) {
         this.$emit("update:show", false);
-      }else{
+      } else {
         this.$emit("update:show", true);
       }
     },
-    handleSetPosition(style){
-      this.style=style
+    handleSetPosition(style) {
+      this.style = style;
     },
-    handleClick(menu){
+    handleClick(menu) {
       this.$emit("update:show", false);
-      this.$emit('menuItemClick',menu)
-    }
-  }
+      this.$emit("menuItemClick", menu);
+    },
+  },
+  render(h) {
+    let  {show,menus,offset,handleSetPosition,handleClick}=this
+    const on = {
+      mousedown: (event) => {
+        event.stopPropagation();
+      },
+    };
+    const scopedSlots=this.$scopedSlots
+    
+    return (
+      <div
+        class="context-menu"
+        v-show={show}
+        style={`left:${offset.left}px;top:${offset.top}px`}
+        on={on}
+      >
+
+        <SubMenu menus={menus} show={show} setPosition={handleSetPosition} menuItemClick={handleClick} {...{scopedSlots}}>
+          
+        </SubMenu>
+
+      </div>
+    );
+  },
+  mounted() {
+    this.$nextTick(() => {
+      console.log(this.$scopedSlots);
+    });
+  },
 };
 </script>
 <style lang="less" scoped>
 .context-menu {
-  // z-index: 99999;
+  z-index: 30000000;
   // display: block;
   // background: #fff;
   // border: 1px solid #a5a5a5;

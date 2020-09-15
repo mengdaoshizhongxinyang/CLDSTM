@@ -1,31 +1,26 @@
 <template>
   <div class="desktop" @contextmenu="e=>rightClick(e)">
     <div class="desktp-rightmenu">
-      <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" :menus="menus" @menuItemClick="handleMenuItemClick">
-        <!-- <div class="menu-item" @click="handleRefresh">刷新</div>
-        <a-divider />
-        <template v-for="items in Object.keys(list)">
-          <div
-            class="menu-item"
-            v-for="item in list[items]"
-            :key="item.action"
-            @click="handleItemClick(item.action)"
-          >{{item.name}}</div>
-          <a-divider :key="`${items}-key`"/>
+      <right-click-menu
+        :offset="contextMenuOffset"
+        :show.sync="headerMenu"
+        :menus="menus"
+        @menuItemClick="handleMenuItemClick"
+      >
+        <template #refresh="menu">
+          <a-icon type="left"></a-icon>
+          {{menu.label}}
         </template>
-        <div class="menu-item" @click="handleCreate">
-          新建
-        </div>
-        <a-divider />
-        <div class="menu-item">显示设置</div>
-        <div class="menu-item">个性化</div> -->
+        <template #create="menu">
+          <a-icon type="left"></a-icon>
+          {{menu.label}}
+        </template>
       </right-click-menu>
     </div>
   </div>
 </template>
 
 <script>
-
 import RightClickMenu from "../RightClickMenu";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
@@ -38,16 +33,19 @@ export default {
       contextMenuOffset: {
         left: 0,
         top: 0,
-        width:0,
-        height:0,
+        width: 0,
+        height: 0,
       },
       list: {},
-      menus:[
-        {label:"刷新",run:"refresh"},
-        {label:"创建",run:"create",children:[
-          {label:"文件夹",run:"createFolder"}
-        ]},
-      ]
+      menus: [
+        { label: "刷新", run: "refresh",name:"refresh" },
+        {
+          label: "创建",
+          run: "create",
+          name:"create",
+          children: [{ label: "文件夹", run: "createFolder" }],
+        },
+      ],
     };
   },
   methods: {
@@ -60,22 +58,18 @@ export default {
       this.headerMenu = false;
       this.$store.dispatch(actions);
     },
-    handleRefresh(){
-      this.headerMenu=false
-    },
-    handleCreate(){
-      this.headerMenu=false
-      this.$store.dispatch('createIcon','./')
-    },
-    handleMenuItemClick(menu){
-      if(menu.run){
-        this[menu.run]()
+    handleMenuItemClick(menu) {
+      if (menu.run) {
+        this[menu.run]();
       }
-    }
+    },
+    createFolder() {
+      this.$store.dispatch("createFile",{type:folder,name:"新建文件夹"});
+    },
   },
   mounted() {
     this.list = configs.getActionsItem();
-  }
+  },
 };
 </script>
 

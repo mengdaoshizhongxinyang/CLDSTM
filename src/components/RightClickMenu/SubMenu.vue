@@ -9,7 +9,14 @@
         @mouseleave="handleMouseleave(menu)"
         @click="handleClick(menu)"
       >
-        {{menu.label}}
+        <template v-if="menu.name">
+          <slot v-bind:[menu.name]="menu">
+            {{menu.label}}
+          </slot>
+        </template>
+        <template v-else>
+          {{menu.label}}
+        </template>
         <template v-if="menu.children && menu.children.length">
           <sub-menu :menus="menu.children" :show.sync="menu.show" @menuItemClick="handleClick"></sub-menu>
         </template>
@@ -22,6 +29,7 @@
 export default {
   name: "subMenu",
   created(){
+    
     this.menuList=[].concat(this.menus.map(item=>{
       return {
         ...item,

@@ -5,7 +5,7 @@ export const SET_RUNING_APPS = 'SET_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
 export const SET_FILELIST = 'SET_FILELIST'
-export const CREATE_ICON = 'CREATE_ICON'
+export const CREATE_FILE = 'CREATE_FILE'
 export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
@@ -49,11 +49,8 @@ const mutations = {
     [MINIMIZE_APPS](state,index){
         state.desktopApps.apps[index].mini=!state.desktopApps.apps[index].mini
     },
-    [CREATE_ICON](state,list){
-        console.log(list)
-        let lists=list.split('/')
-        console.log(lists)
-        console.log(1)
+    [CREATE_FILE](state,list){
+        
     },
     [MERGE_APPS](state,apps={}){
         state.apps=Object.assign(state.apps,apps)
@@ -80,8 +77,8 @@ const actions = {
     activeApps({commit},index){
         commit(ACTIVE_RUNING_APPS,index)
     },
-    createIcon({commit},index){
-        commit(CREATE_ICON,index)
+    createFile({commit},{path,type,name}){
+        commit(CREATE_FILE,{path,type,name})
     },
     
     ...configs.actions
