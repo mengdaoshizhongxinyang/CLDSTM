@@ -1,14 +1,18 @@
 <template>
   <transition name="contextmenu-fade">
-    <div class="menu" :style="style">
+    <div class="menu" :style="style" v-show="show">
       <div
         class="menu-item"
-        v-for="(menu,index) in menus"
+        v-for="(menu,index) in menuList"
         :key="index"
-        @mouseenter="handleMouseenter"
+        @mouseenter="handleMouseenter(menu)"
+        @mouseleave="handleMouseleave(menu)"
+        @click="handleClick(menu)"
       >
         {{menu.label}}
-        <sub-menu v-if="menu.children && menu.children.length"></sub-menu>
+        <template v-if="menu.children && menu.children.length">
+          <sub-menu :menus="menu.children" :show.sync="menu.show" @menuItemClick="handleClick"></sub-menu>
+        </template>
       </div>
     </div>
   </transition>
@@ -17,6 +21,14 @@
 <script>
 export default {
   name: "subMenu",
+  created(){
+    this.menuList=[].concat(this.menus.map(item=>{
+      return {
+        ...item,
+        hidden:false
+      }
+    }))
+  },
   props: {
     menus: {
       type: Array,
@@ -42,7 +54,13 @@ export default {
   },
   data(){
     return{
-      style:{}
+      style:{},
+      subStyle:{
+        x:0,
+        y:0
+      },
+      direction:"right",
+      menuList:[]
     }
   },
   watch: {
@@ -50,36 +68,61 @@ export default {
       if (show) {
         this.$nextTick(this.setPosition)
         document.body.addEventListener("mousedown", this.clickDocumentHandler);
+        this.direction="right"
       }else{
         document.body.removeEventListener("mousedown", this.clickDocumentHandler);
+        this.menuList.forEach(item=>{
+          item.show=false
+        })
       }
     }
   },
   methods: {
-    handleMouseenter(e) {
-      console.log(e.target.getBoundingClientRect());
+    handleMouseenter(menu) {
+      menu.show=true
+      this.$forceUpdate()
+    },
+    handleMouseleave(menu){
+      menu.show=false
+      this.$forceUpdate()
+    },
+    clickDocumentHandler() {
+      if (this.show) {
+        this.$emit("update:show", false);
+      }else{
+        this.$emit("update:show", true);
+      }
     },
     setPosition() {
+      const {x,y,width,height}=this.$el.parentElement.getBoundingClientRect()
+      let topover,leftover
       let docHeight = document.documentElement.clientHeight;
       let docWidth = document.documentElement.clientWidth;
       let menuHeight = this.$el.getBoundingClientRect().height;
       let menuWidth = this.$el.getBoundingClientRect().width;
-      // 增加点击处与菜单间间隔
-      const gap = 10;
-      
-      let topover = this.basePosition.top + menuHeight >= docHeight ? menuHeight : 0;
-      let leftover = this.basePosition.left + menuWidth >= docWidth ? menuWidth : 0;
-      console.log(menuWidth)
+      topover = (y+height + menuHeight) <= docHeight ? y : y+height-menuHeight;
+      if(this.$parent.direction=="left"){
+        leftover=x-menuWidth
+      }else{
+        leftover = x+width + menuWidth <= docWidth ? x+width : x-menuWidth;
+        if((x+width + menuWidth) > docWidth){
+          this.direction="left"
+        }
+      }
       this.style = {
-        left: `${this.basePosition.left - leftover}px`,
-        top: `${this.basePosition.top - topover}px`,
+        left: `${leftover}px`,
+        top: `${topover}px`,
       };
+      this.$emit('setPosition',this.style)
     },
-  },
-  mounted(){
-    this.$nextTick(()=>{
-      this.setPosition()
-    })
+    handleClick(menu){
+      if(!menu.children){
+        if(menu.function){
+          menu.function()
+        }
+        this.$emit('menuItemClick',menu)
+      }
+    }
   }
 };
 </script>

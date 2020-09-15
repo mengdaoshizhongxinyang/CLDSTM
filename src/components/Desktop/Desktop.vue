@@ -1,7 +1,7 @@
 <template>
   <div class="desktop" @contextmenu="e=>rightClick(e)">
     <div class="desktp-rightmenu">
-      <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" :menus="menus">
+      <right-click-menu :offset="contextMenuOffset" :show.sync="headerMenu" :menus="menus" @menuItemClick="handleMenuItemClick">
         <!-- <div class="menu-item" @click="handleRefresh">刷新</div>
         <a-divider />
         <template v-for="items in Object.keys(list)">
@@ -43,10 +43,10 @@ export default {
       },
       list: {},
       menus:[
-        {label:"刷新"},
-        {label:"测试"},
-        {label:"显示设置"},
-        {label:"个性化"}
+        {label:"刷新",run:"refresh"},
+        {label:"创建",run:"create",children:[
+          {label:"文件夹",run:"createFolder"}
+        ]},
       ]
     };
   },
@@ -66,6 +66,11 @@ export default {
     handleCreate(){
       this.headerMenu=false
       this.$store.dispatch('createIcon','./')
+    },
+    handleMenuItemClick(menu){
+      if(menu.run){
+        this[menu.run]()
+      }
     }
   },
   mounted() {

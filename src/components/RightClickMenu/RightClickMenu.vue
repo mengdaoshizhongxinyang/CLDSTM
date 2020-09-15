@@ -2,12 +2,12 @@
   <div
     class="context-menu"
     v-show="show"
-    :style="style"
+    :style="`left:${offset.left}px;top:${offset.top}px`"
     @mousedown.stop
     @contextmenu.prevent
   >
     <slot>
-      <sub-menu :menus="menus" :basePosition="offset" :show="show"></sub-menu>
+      <sub-menu :menus="menus" :show="show" @setPosition="handleSetPosition" @menuItemClick="handleClick"></sub-menu>
     </slot>
   </div>
 </template>
@@ -29,19 +29,17 @@ export default {
       default: function() {
         return {
           left: 0,
-          top: 0,
-          width:0,
-          height:0
+          top: 0
         };
       }
     },
     show: Boolean,
     menus:{
-        type:Array,
-        default:()=>{
-          return []
-        }
+      type:Array,
+      default:()=>{
+        return []
       }
+    }
   },
   watch: {
     show(show) {
@@ -61,7 +59,13 @@ export default {
         this.$emit("update:show", true);
       }
     },
-    
+    handleSetPosition(style){
+      this.style=style
+    },
+    handleClick(menu){
+      this.$emit("update:show", false);
+      this.$emit('menuItemClick',menu)
+    }
   }
 };
 </script>
