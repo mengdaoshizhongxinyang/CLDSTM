@@ -43,7 +43,7 @@ export default {
           label: "创建",
           run: "create",
           name:"create",
-          children: [{ label: "文件夹", run: "createFolder" }],
+          children: [{ label: "文件夹" }],
         },
       ],
     };
@@ -59,9 +59,7 @@ export default {
       this.$store.dispatch(actions);
     },
     handleMenuItemClick(menu) {
-      if (menu.run) {
-        this[menu.run]();
-      }
+
     },
     createFolder() {
       this.$store.dispatch("createFile",{type:folder,name:"新建文件夹"});

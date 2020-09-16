@@ -1,10 +1,10 @@
 
 <script>
-import SubMenu from "./SubMenu.vue";
+import SubContext from "./SubContext.vue";
 export default {
   name: "right-click-menu",
   components: {
-    SubMenu,
+    SubContext,
   },
   data() {
     return {
@@ -66,8 +66,18 @@ export default {
         event.stopPropagation();
       },
     };
+    let sub={
+      props:{
+        menus:this.menus,
+        show:this.show
+      },
+      on:{
+        setPosition:this.handleSetPosition,
+        menuItemClick:this.handleSetPosition
+      },
+      scopedSlots:this.$scopedSlots
+    }
     const scopedSlots=this.$scopedSlots
-    
     return (
       <div
         class="context-menu"
@@ -75,18 +85,13 @@ export default {
         style={`left:${offset.left}px;top:${offset.top}px`}
         on={on}
       >
-
-        <SubMenu menus={menus} show={show} setPosition={handleSetPosition} menuItemClick={handleClick} {...{scopedSlots}}>
+        {scopedSlots.refresh()}
+        <SubContext menus={menus} show={show} onSetPosition={handleSetPosition} onMenuItemClick={handleClick} scopedSlots={{...scopedSlots}}>
           
-        </SubMenu>
+        </SubContext>
 
       </div>
     );
-  },
-  mounted() {
-    this.$nextTick(() => {
-      console.log(this.$scopedSlots);
-    });
   },
 };
 </script>
