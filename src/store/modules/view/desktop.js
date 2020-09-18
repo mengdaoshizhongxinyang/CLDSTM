@@ -51,11 +51,10 @@ const mutations = {
     },
     [CREATE_FILE](state,{type,path,name,icon,other}){
         let i=1;
-        let tempName=name
+        let tempName=''
         let nameArray=Object.keys(state.fileList)
-        while(nameArray.indexOf(tempName)>-1){
-            console.log(1)
-            tempName+=(++i).toString()
+        while(nameArray.indexOf(name+tempName)>-1){
+            tempName=(++i).toString()
         }
         let fileTree=state.fileList
         let pathArray=path.split('/')
@@ -64,7 +63,7 @@ const mutations = {
                 fileTree=fileTree[item]
             }
         })
-        fileTree[tempName]={type,name:tempName,path,icon,...other}
+        fileTree[name+tempName]={type,name:name+tempName,path,icon,...other}
         state.fileList=Object.assign({},state.fileList)
         state.fileList=JSON.parse(JSON.stringify(state.fileList))
     },
