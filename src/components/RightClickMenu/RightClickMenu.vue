@@ -85,7 +85,6 @@ export default {
         style={`left:${offset.left}px;top:${offset.top}px`}
         on={on}
       >
-        {scopedSlots.refresh()}
         <SubContext menus={menus} show={show} onSetPosition={handleSetPosition} onMenuItemClick={handleClick} scopedSlots={{...scopedSlots}}>
           
         </SubContext>

@@ -7,14 +7,6 @@
         :menus="menus"
         @menuItemClick="handleMenuItemClick"
       >
-        <template #refresh="menu">
-          <a-icon type="left"></a-icon>
-          {{menu.label}}
-        </template>
-        <template #create="menu">
-          <a-icon type="left"></a-icon>
-          {{menu.label}}
-        </template>
       </right-click-menu>
     </div>
   </div>
@@ -32,18 +24,15 @@ export default {
       headerMenu: false,
       contextMenuOffset: {
         left: 0,
-        top: 0,
-        width: 0,
-        height: 0,
+        top: 0
       },
       list: {},
       menus: [
-        { label: "刷新", run: "refresh",name:"refresh" },
+        { label: "刷新", name:"refresh" },
         {
           label: "创建",
-          run: "create",
           name:"create",
-          children: [{ label: "文件夹" }],
+          children: [{ label: "文件夹",run:"createFolder" }],
         },
       ],
     };
@@ -59,10 +48,12 @@ export default {
       this.$store.dispatch(actions);
     },
     handleMenuItemClick(menu) {
-
+      if(this[menu.run]){
+        this[menu.run]()
+      }
     },
     createFolder() {
-      this.$store.dispatch("createFile",{type:folder,name:"新建文件夹"});
+      this.$store.dispatch("createFile",{type:'folder',name:"新建文件夹",path:"/"});
     },
   },
   mounted() {

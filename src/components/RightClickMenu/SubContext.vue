@@ -119,6 +119,22 @@ const SubContext = {
         this.$emit("menuItemClick", menu);
       }
     },
+    renderChildren(menu) {
+      const {handleClick,$scopedSlots}=this
+      return menu.children && menu.children.length > 0 ? (
+        <SubContext
+          menus={menu.children}
+          show={menu.show}
+          onUpdate={(val) => {
+            menu.show = val;
+          }}
+          onMenuItemClick={handleClick}
+          scopedSlots={{ ...$scopedSlots }}
+        ></SubContext>
+      ) : (
+        ""
+      );
+    },
   },
   render() {
     const {
@@ -128,7 +144,8 @@ const SubContext = {
       handleMouseenter,
       handleMouseleave,
       handleClick,
-      $scopedSlots
+      $scopedSlots,
+      renderChildren
     } = this;
     return (
       <transition name="contextmenu-fade">
@@ -142,21 +159,12 @@ const SubContext = {
                 onmouseleave={() => handleMouseleave(menu)}
                 onClick={() => handleClick(menu)}
               >
-                {menu.name && $scopedSlots[menu.name]
-                  ? $scopedSlots[menu.name](menu)
-                  : menu.label}
-                {menu.children && menu.children.length > 0 ? (
-                  <SubContext
-                    menus={menu.children}
-                    show={menu.show}
-                    onUpdate={(val) => {
-                      menu.show = val;
-                    }}
-                    onMenuItemClick={handleClick}
-                    scopedSlots={{...$scopedSlots}}
-                  ></SubContext>
+                {menu.name && $scopedSlots[menu.name] ? (
+                  $scopedSlots[menu.name](menu).concat(renderChildren(menu))
                 ) : (
-                  ""
+                  <div class="menu-item-content">{menu.label}
+                    {renderChildren(menu)}
+                  </div>
                 )}
               </div>
             );
@@ -170,7 +178,27 @@ export default SubContext;
 </script>
 
 <style lang="less" scoped>
-@import "../Style/menu.less";
+.menu {
+  color: #000000;
+  padding: 2px;
+  position: fixed;
+  background-color: #fff;
+  min-width: 160px;
+  border: 1px solid rgba(68, 68, 68, 0.219);
+  box-shadow: 0px 0px 2px 1px rgba(20, 20, 20, 0.2);
+  &-item {
+    line-height: 22px;
+
+    &-content {
+      padding: 2px 7px;
+      user-select: none;
+      &:hover {
+        color: #fff;
+        background: #1890ff;
+      }
+    }
+  }
+}
 .contextmenu-fade-enter-active,
 .contextmenu-fade-leave-active {
   transition: opacity 0.1s;

@@ -49,8 +49,24 @@ const mutations = {
     [MINIMIZE_APPS](state,index){
         state.desktopApps.apps[index].mini=!state.desktopApps.apps[index].mini
     },
-    [CREATE_FILE](state,list){
-        
+    [CREATE_FILE](state,{type,path,name,icon,other}){
+        let i=1;
+        let tempName=name
+        let nameArray=Object.keys(state.fileList)
+        while(nameArray.indexOf(tempName)>-1){
+            tempName+=(++i).toString()
+        }
+        let fileTree=state.fileList
+        let pathArray=path.split('/')
+        pathArray.forEach(item=>{
+            if(item){
+                fileTree=fileTree[item]
+            }
+        })
+        console.log(1)
+        fileTree[name]={type,name,path,icon,...other}
+        state.fileList=Object.assign({},state.fileList)
+        state.fileList=JSON.parse(JSON.stringify(state.fileList))
     },
     [MERGE_APPS](state,apps={}){
         state.apps=Object.assign(state.apps,apps)
@@ -78,7 +94,7 @@ const actions = {
         commit(ACTIVE_RUNING_APPS,index)
     },
     createFile({commit},{path,type,name}){
-        commit(CREATE_FILE,{path,type,name})
+        commit(CREATE_FILE,{path,type,name,icon:'folder',other:{children:{}}})
     },
     
     ...configs.actions

@@ -25,8 +25,8 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-09-01 15:58:16
- * @LastEditors: mengdaoshizhongxinyang
+ * @LastEditTime: 2020-09-18 17:07:16
+ * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
  -->
@@ -99,17 +99,21 @@ export default {
     message
   },
   computed:{
-    ...mapGetters(['desktopApps'])
+    ...mapGetters(['desktopApps']),
+    ...mapState({
+      /** @returns {Object} */
+      desktopIcons(state){
+        return state.view.desktop.fileList
+      }
+    })
   },
   created() {
-    this.desktopIcons = configs.getDesktopIcon();
     this.desktopIconNum=Math.floor(document.body.offsetHeight/88)
   },
   data() {
     return {
       desktopIconNum:1,
-      content: "",
-      desktopIcons:{}
+      content: ""
     };
   },
   methods: {
