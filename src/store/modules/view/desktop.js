@@ -54,6 +54,7 @@ const mutations = {
         let tempName=name
         let nameArray=Object.keys(state.fileList)
         while(nameArray.indexOf(tempName)>-1){
+            console.log(1)
             tempName+=(++i).toString()
         }
         let fileTree=state.fileList
@@ -63,8 +64,7 @@ const mutations = {
                 fileTree=fileTree[item]
             }
         })
-        console.log(1)
-        fileTree[name]={type,name,path,icon,...other}
+        fileTree[tempName]={type,name:tempName,path,icon,...other}
         state.fileList=Object.assign({},state.fileList)
         state.fileList=JSON.parse(JSON.stringify(state.fileList))
     },
