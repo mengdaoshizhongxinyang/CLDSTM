@@ -12,10 +12,8 @@ let options = {
   storage: 'local', // storage name session, local, memory
 };
 Vue.use(Storage, options);
-import Vuex, { Store } from 'vuex'
-Vue.use(Vuex)
-import store from "./store";
-let storeOption=new Store(store)
+import store, { Store } from './store/index';
+
 Vue.use(Directives)
 Vue.config.productionTip = false
 import {
@@ -56,7 +54,7 @@ import {
   Progress,
   Skeleton,
   Popconfirm,
-  carousel,
+  Carousel,
   message,
   notification,
   TreeSelect,
@@ -68,8 +66,8 @@ Vue.use(LocaleProvider)
 Vue.use(ConfigProvider)
 Vue.use(TreeSelect)
 Vue.use(Layout)
-Vue.use(carousel)
-Vue.use(message)
+Vue.use(Carousel)
+
 Vue.use(Input)
 Vue.use(InputNumber)
 Vue.use(Button)
@@ -106,7 +104,7 @@ Vue.use(Progress)
 Vue.use(Skeleton)
 Vue.use(Popconfirm)
 // Vue.use(VueCropper)
-Vue.use(notification)
+
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message
 Vue.prototype.$notification = notification
@@ -114,11 +112,18 @@ Vue.prototype.$info = Modal.info
 Vue.prototype.$success = Modal.success
 Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
-new Vue({
+const app=new Vue({
   router,
-  store:storeOption,
-  render: h => h(App),
-  created(){
-    this.$store.dispatch('initAll')
-  }
+  store:store,
+  render: h => h(App)
 }).$mount('#app')
+
+Vue.prototype.$tstore = app.$store;
+console.log(app.$store)
+app.$tstore.dispatch('initAll')
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $tstore: Store;
+  }
+}

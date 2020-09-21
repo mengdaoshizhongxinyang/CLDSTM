@@ -18,6 +18,8 @@
     "postprocessing": "^6.8.8",
     "text-loader": "^0.0.1",
     "three": "^0.110.0",
+    "ts-loader": "^8.0.4",
+    "typescript": "^4.0.3",
     "vue": "^2.6.10",
     "vue-draggable-resizable": "^2.1.0",
     "vue-loader": "^15.7.1",

@@ -19,7 +19,11 @@ const options = {
           'configs': 'configs',
         }
     },
-
+    pages:{
+        index:{
+            entry:'src/main.ts'
+        }
+    },
     chainWebpack: (config) => {
         config.module.rule('md')
             .test(/\.md/)
@@ -28,6 +32,24 @@ const options = {
             .options({
                 raw: true
             })
+        config.resolve.extensions.add('.ts').add('.tsx')
+        .end().end()
+        .module
+        .rule('typescript')
+        .test(/\.tsx?$/)
+        .use('babel-loader')
+        .loader('babel-loader')
+        .end()
+        .use('ts-loader')
+        .loader('ts-loader')
+        .options({
+          transpileOnly: true,
+          appendTsSuffixTo: [
+            '\\.vue$',
+          ],
+          happyPackMode: false,
+        })
+        .end();
     },
     css: {
         loaderOptions: {

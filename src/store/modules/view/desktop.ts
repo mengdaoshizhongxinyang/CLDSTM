@@ -1,6 +1,5 @@
-import { MutationTree, ActionTree, GetterTree, Module } from 'vuex'
-import { RootState } from '@/store'
 
+import { ReturnGetters, Store, ActionContext } from '@/types/store';
 export const SET_RUNING_APPS = 'SET_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
@@ -10,9 +9,10 @@ export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
 /** @typedef {typeof state} DesktopState */
+
 const state = {
     desktopApps: {
-        apps: [],
+        apps: [] as any,
         maxZindex: 0,
         id: 0
     },
@@ -25,13 +25,14 @@ const state = {
     fileList:{},
     fileTypes:{}
 }
+type State=typeof state
 
 /** @type MutationTree<DesktopState> */
 const mutations = {
-    [SET_FILELIST](state,item){
+    [SET_FILELIST](state :State,item :Object){
         state.fileList=item
     },
-    [SET_RUNING_APPS](state, item) {
+    [SET_RUNING_APPS](state :State, item:Object) {
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
             ...item,
@@ -40,23 +41,24 @@ const mutations = {
             zindex: ++state.desktopApps.maxZindex
         })
     },
-    [CLOSE_RUNING_APPS](state, index) {
+    [CLOSE_RUNING_APPS](state :State, index :Number) {
         state.desktopApps.apps.splice(index,1)
     },
-    [ACTIVE_RUNING_APPS](state, index) {
+    [ACTIVE_RUNING_APPS](state :State, index :string) {
         state.desktopApps.apps[index].zindex=++state.desktopApps.maxZindex
     },
-    [MINIMIZE_APPS](state,index){
+    [MINIMIZE_APPS](state :State,index :string){
         state.desktopApps.apps[index].mini=!state.desktopApps.apps[index].mini
     },
-    [CREATE_FILE](state,{type,path,name,icon,other}){
+    [CREATE_FILE](state :State,obj :any){
+        let {type,path,name,icon,other}=obj
         let i=1;
         let tempName=''
         let nameArray=Object.keys(state.fileList)
         while(nameArray.indexOf(name+tempName)>-1){
             tempName=(++i).toString()
         }
-        let fileTree=state.fileList
+        let fileTree :any=state.fileList
         let pathArray=path.split('/')
         pathArray.forEach(item=>{
             if(item){
@@ -67,53 +69,51 @@ const mutations = {
         state.fileList=Object.assign({},state.fileList)
         state.fileList=JSON.parse(JSON.stringify(state.fileList))
     },
-    [MERGE_APPS](state,apps={}){
+    [MERGE_APPS](state :State,apps={}){
         state.apps=Object.assign(state.apps,apps)
     },
-    [SET_FILETYPES](state,types={}){
+    [SET_FILETYPES](state :State,types={}){
         state.fileTypes=types
     }
 }
 
 /** @type ActionTree<DesktopState, RootState> */
 const actions = {
-    openApps({ commit }, icon) {
+    openApps({ commit }: ActionContext<State, Getters>, icon :any) {
         commit(SET_RUNING_APPS, icon)
     },
-    closeApps({commit},index){
+    closeApps({commit}: ActionContext<State, Getters>,index:any){
         commit(CLOSE_RUNING_APPS,index)
     },
-    minimizeApps({commit},index){
+    minimizeApps({commit}: ActionContext<State, Getters>,index:any){
         commit(MINIMIZE_APPS,index)
     },
-    updateApps({commit},data){
+    updateApps({commit}: ActionContext<State, Getters>,data:any){
         commit(CLOSE_RUNING_APPS,data)
     },
-    activeApps({commit},index){
+    activeApps({commit}: ActionContext<State, Getters>,index:any){
         commit(ACTIVE_RUNING_APPS,index)
     },
-    createFile({commit},{path,type,name}){
+    createFile({commit}: ActionContext<State, Getters>,{path,type,name}:any){
         commit(CREATE_FILE,{path,type,name,icon:'folder',other:{children:{}}})
-    },
-    
-    ...configs.actions
+    }
 }
 
 /** @type GetterTree<DesktopState, RootState> */
 const getters = {
-    desktopApps(state) {
+    desktopApps(state:State) {
         return state.desktopApps
     },
-    fileList(state){
+    fileList(state:State){
         return state.fileList
     },
-    getAppInfo(state){
-        return (id)=>{
+    getAppInfo(state:State){
+        return (id :string)=>{
             return state.desktopApps.apps[id] || {name:""}
         }
     }
 }
-
+type Getters = ReturnGetters<typeof getters>;
 /** @type Module<DesktopState, RootState> */
 const vuexModule = {
     state,

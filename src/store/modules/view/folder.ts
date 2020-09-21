@@ -1,5 +1,5 @@
-import { MutationTree, ActionTree, GetterTree, Module } from 'vuex'
-import { RootState } from '@/store'
+import { ReturnGetters, Store, ActionContext } from '@/types/store';
+import { moduleGetters } from "../../index";
 import Vue from "vue";
 export const FOLDER_STATUS_INIT = 'FOLDER_STATUS_INIT'
 export const FOLDER_STATUS_UPDATE = 'FOLDER_STATUS_UPDATE'
@@ -7,13 +7,13 @@ export const FOLDER_STATUS_UPDATE = 'FOLDER_STATUS_UPDATE'
 const state = {
   folderStatus:{}
 }
-
+type State=typeof state
 /** @type MutationTree<FolderState> */
 const mutations = {
-  [FOLDER_STATUS_INIT](state,status){
+  [FOLDER_STATUS_INIT](state :State,status:any){
     state.folderStatus=status
   },
-  [FOLDER_STATUS_UPDATE](state,status){
+  [FOLDER_STATUS_UPDATE](state :State,status:any){
     if(status.y && status.y>document.body.scrollHeight){
       status.y=0
     }
@@ -25,26 +25,27 @@ const mutations = {
   }
 }
 
-/** @type ActionTree<FolderState, RootState> */
+
 const actions = {
-  initFolderStatus({commit}){
+  initFolderStatus({commit,rootGetters}: ActionContext<State, moduleGetters>){
     let lsStatus=Vue.ls.get('folderStatus')
     let status=Object.assign({x:0,y:0,w:200,h:200},lsStatus)
+
     commit(FOLDER_STATUS_INIT,status)
   },
-  updateFolderStatus({commit},data){
+  updateFolderStatus({commit}:ActionContext<State, moduleGetters>,data :any){
     commit(FOLDER_STATUS_UPDATE,data)
   }
 }
 
-/** @type GetterTree<FolderState, RootState> */
+
 const getters = {
-  folderStatus(state){
+  getFolderStatus(state: State, getters: any, rootState: Store['state'], rootGetters: any){
     return state.folderStatus
   }
 }
+type Getters = ReturnGetters<typeof getters>;
 
-/** @type Module<FolderState, RootState> */
 const vuexModule = {
   state,
   mutations,

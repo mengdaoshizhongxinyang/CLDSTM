@@ -1,5 +1,4 @@
-import { Module } from 'vuex'
-import { RootState } from '@/store'
+import { Store } from "../../index";
 
 export * from './desktop'
 import desktop from './desktop'
@@ -12,5 +11,6 @@ const view = {
     desktop
   }
 }
+
 
 export default view

@@ -117,7 +117,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["desktopApps", "folderStatus"]),
+    ...mapGetters(["desktopApps"]),
+    ...mapState({
+      folderStatus(state){
+        return state.view.folder.folderStatus
+      }
+    })
   },
   methods: {
     handleOpenApps(icon) {

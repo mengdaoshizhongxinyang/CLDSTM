@@ -21,13 +21,13 @@ export default {
   },
   methods:{
     handleKeyDown(e){
-
-        e.preventDefault();
-
+      e.preventDefault();
     }
   },
   mounted(){
     // document.onkeydown=this.handleKeyDown
+    
+
   }
 };
 </script>
