@@ -1,5 +1,4 @@
 import { ReturnGetters, Store, ActionContext } from '@/types/store';
-import { moduleGetters } from "../../index";
 import Vue from "vue";
 export const FOLDER_STATUS_INIT = 'FOLDER_STATUS_INIT'
 export const FOLDER_STATUS_UPDATE = 'FOLDER_STATUS_UPDATE'
@@ -27,13 +26,13 @@ const mutations = {
 
 
 const actions = {
-  initFolderStatus({commit,rootGetters}: ActionContext<State, moduleGetters>){
+  initFolderStatus({commit}: ActionContext<State, Getters>){
     let lsStatus=Vue.ls.get('folderStatus')
     let status=Object.assign({x:0,y:0,w:200,h:200},lsStatus)
 
     commit(FOLDER_STATUS_INIT,status)
   },
-  updateFolderStatus({commit}:ActionContext<State, moduleGetters>,data :any){
+  updateFolderStatus({commit}:ActionContext<State, Getters>,data :any){
     commit(FOLDER_STATUS_UPDATE,data)
   }
 }

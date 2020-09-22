@@ -1,21 +1,36 @@
 <template>
-  <div class="desktop-icon" tabindex="-1" @dblclick="e=>openApps(e)">
-    <div class="desktop-icon-icon">
-      <slot>
-        <div class="desktop-icon-icon-default">
-          <icon :icon="icon" v-bind="iconStyle" ></icon>
-        </div>
-      </slot>
+  <div class="desktop-icon" tabindex="-1">
+    <div @dblclick="e=>openApps(e)">
+      <div class="desktop-icon-icon">
+        <slot>
+          <div class="desktop-icon-icon-default">
+            <icon :icon="icon" v-bind="iconStyle"></icon>
+          </div>
+        </slot>
+      </div>
+      <div class="desktop-icon-text" v-if="type=='show'">{{name}}</div>
     </div>
-    <div class="desktop-icon-text">{{name}}</div>
+    <div
+      class="desktop-icon-input"
+      v-if="type=='input'"
+      ref="input"
+      tabindex="1"
+      contenteditable="true"
+      @keydown="handleKeypress"
+      @mousedown.stop
+      @blur="changeName"
+    >{{tempName}}</div>
   </div>
 </template>
 
 <script>
-import Icon from "@/components/IconManage"
+import Icon from "@/components/IconManage";
 export default {
-  components:{
-    Icon
+  created() {
+    this.tempName = this.name;
+  },
+  components: {
+    Icon,
   },
   props: {
     icon: {
@@ -26,17 +41,18 @@ export default {
       type: String,
       default: "",
     },
-    iconStyle:{
+    iconStyle: {
       type: Object,
-      default: ()=>{
-        return {theme:"filled"}
-      }
-    }
+      default: () => {
+        return { theme: "filled" };
+      },
+    },
   },
   data() {
     return {
       actived: false,
-
+      type: "input",
+      tempName: "",
     };
   },
   methods: {
@@ -44,6 +60,21 @@ export default {
       e.preventDefault();
 
       this.$emit("openApps");
+    },
+    handleKeypress(e) {
+      if (e.key == "Enter") {
+        e.preventDefault();
+        this.changeName();
+      }
+    },
+    changeName() {
+      let newName = this.$refs.input.textContent;
+      this.$aemit(this, "changeName", newName).then(()=>{
+
+      }).catch(()=>{
+        this.$refs.input.textContent=this.tempName
+        this.$refs.input.focus()
+      });
     },
   },
 };
@@ -67,6 +98,7 @@ export default {
     //     background-size: 64px;
     //     opacity: 1;
     // }
+    text-align: center;
     &-icon{
         width:100%;
         height:54px;
@@ -88,6 +120,18 @@ export default {
       -webkit-box-orient: vertical;
       word-break: break-all;
       user-select: none;
+    }
+    &-input{
+      color: #000;
+      background: #fff;
+      min-width: 1px;
+      max-width: 100%;
+      padding:0 4px;
+      width:auto; 
+      display:inline-block;
+      &:focus{
+        outline: none;
+      }
     }
     &:hover{
       background: rgba(230, 242, 255,0.15);

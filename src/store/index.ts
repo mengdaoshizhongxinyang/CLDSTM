@@ -1,7 +1,7 @@
 import {ActionContext} from "@/types/store";
 import Vuex from "vuex";
 import Vue from "vue";
-import modules,{SET_FILELIST} from '@/store/modules/index'
+import modules,{SET_FILELIST,typeModules} from '@/store/modules/index'
 Vue.use(Vuex);
 
 const mutations = {
@@ -25,26 +25,24 @@ const storeOptions = new Vuex.Store<State>({
 });
 
 export default storeOptions
-interface State {
-  view:typeof modules.view.modules
-}
+type State = (
+  typeModules['state']
+)
+
 // 将 getter 函数转换成 {getterName: getterFuncsReturnType} 的对象类型
 export type ReturnGetters<T extends { [key: string]: (...args: any) => any }> = {
   [P in keyof T]: ReturnType<T[P]>;
 }
 type GettersFuncs = (
-  typeof modules.view.modules.desktop.getters
-  & typeof modules.view.modules.folder.getters
+  typeModules['getters']
 )
 type Getters = ReturnGetters<GettersFuncs>
 
 type CommitFuncs = (
-  typeof modules.view.modules.desktop.mutations
-  & typeof modules.view.modules.folder.mutations
+  typeModules['commit']
 )
 type DispatchFuncs = (
-  typeof modules.view.modules.desktop.actions
-  & typeof modules.view.modules.folder.actions
+  typeModules['dispatch']
   & typeof actions
 )
 

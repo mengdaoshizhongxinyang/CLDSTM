@@ -11,6 +11,22 @@ const view = {
     desktop
   }
 }
-
-
+export interface viewModule {
+  state: {
+    desktop:typeof desktop.state
+    folder:typeof folder.state
+  }
+  getters:(
+    typeof desktop.getters
+    & typeof folder.getters
+  )
+  commit:(
+    typeof desktop.mutations
+    & typeof folder.mutations
+  )
+  dispatch:(
+    typeof desktop.actions
+    & typeof folder.actions
+  )
+}
 export default view

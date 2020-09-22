@@ -119,11 +119,19 @@ const app=new Vue({
 }).$mount('#app')
 
 Vue.prototype.$tstore = app.$store;
-console.log(app.$store)
 app.$tstore.dispatch('initAll')
-
+Vue.prototype.$aemit = (that: any, mutationName: string, ...params: any) => {
+  if (!mutationName) throw new Error('$aemit need mutationName param');
+  return new Promise((resolve, reject) => {
+    that.$emit(mutationName, ...params, {
+      success: resolve,
+      fail: reject,
+    });
+  });
+};
 declare module 'vue/types/vue' {
   interface Vue {
     $tstore: Store;
+    $aemit:<T>(that: any, mutationName: string, ...params: any) => Promise<T>;
   }
 }
