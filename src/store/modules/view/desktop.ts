@@ -8,6 +8,7 @@ export const CREATE_FILE = 'CREATE_FILE'
 export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
+export const UPDATE_FILENAME='UPDATE_FILENAME'
 /** @typedef {typeof state} DesktopState */
 
 const state = {
@@ -22,7 +23,7 @@ const state = {
         'folder': 'Folder',
         'vscode':'vscode'
     },
-    fileList:{},
+    fileList:{} as any,
     fileTypes:{}
 }
 type State=typeof state
@@ -74,6 +75,27 @@ const mutations = {
     },
     [SET_FILETYPES](state :State,types={}){
         state.fileTypes=types
+    },
+    [UPDATE_FILENAME](state :State,info:{name:string,path:string,oldName:string}){
+
+        let temp=state.fileList
+
+        info.path.split('/').forEach((name,index)=>{
+            if(name){
+                console.log(1)
+                temp=temp[name]
+            }
+        })
+        
+        let content=Object.assign(temp[info.oldName])
+        
+        delete temp[info.oldName]
+        if(temp[info.name]){
+            temp[info.oldName]=content
+            return false
+        }else{
+            temp[info.name]=Object.assign(temp[info.oldName],{name:info.name});
+        }
     }
 }
 
@@ -96,6 +118,9 @@ const actions = {
     },
     createFile({commit}: ActionContext<State, Getters>,{path,type,name}:any){
         commit(CREATE_FILE,{path,type,name,icon:'folder',other:{children:{}}})
+    },
+    renameFile({commit}:ActionContext<State,Getters>,{name,path,oldName}:{name:string,path:string,oldName:string}){
+        commit(UPDATE_FILENAME,{name,path,oldName})
     }
 }
 

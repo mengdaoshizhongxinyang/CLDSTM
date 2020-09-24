@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-09-22 15:33:42
+ * @LastEditTime: 2020-09-24 16:44:37
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -38,8 +38,7 @@
       :x="Math.floor(index/desktopIconNum)*70"
       :y="Math.floor(index%desktopIconNum)*88"
       :key="desktopIcons[icon].name"
-      :name="desktopIcons[icon].name"
-      :icon="desktopIcons[icon].icon"
+      :iconInfo="desktopIcons[icon]"
       @openApps="handleOpenApps(desktopIcons[icon])"
     ></desktop-icon>
 
@@ -79,7 +78,6 @@ import {
   mapState,
   mapActions
 } from 'vuex'
-import { SET_RUNING_APPS,ACTIVE_RUNING_APPS,CLOSE_RUNING_APPS } from "@/store/modules";
 import Proton from "./proton.js";
 
 let proton, emitter;
@@ -119,7 +117,6 @@ export default {
   methods: {
     moment,
     handleOpenApps(icon) {
-      console.log(icon)
       this.$store.dispatch("openApps",icon)
     },
     handleActived(item, index) {

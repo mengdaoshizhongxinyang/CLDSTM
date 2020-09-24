@@ -17,7 +17,7 @@ function getFileTreeContent(res,now) {
             name:"${res}",
             type:"article",
             icon:"article",
-            position:"${now}/${res}",
+            position:"${now}",
             content:"${content}",
             description:"${desc[0]}",
             size:"${stat.size}",
@@ -36,7 +36,7 @@ function getFileTreeContent(res,now) {
             name:"${res}",
             type:"folder",
             icon:"folder",
-            position:"${now}/${res}",
+            position:"${now}",
             children:{
                 ${children}
             }

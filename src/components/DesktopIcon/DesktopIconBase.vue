@@ -1,18 +1,18 @@
 <template>
   <div class="desktop-icon" tabindex="-1">
-    <div @dblclick="e=>openApps(e)">
+    <div @dblclick="e=>openApps(e)" @contextmenu="handleIconMenu">
       <div class="desktop-icon-icon">
         <slot>
           <div class="desktop-icon-icon-default">
-            <icon :icon="icon" v-bind="iconStyle"></icon>
+            <icon :icon="iconInfo.icon" v-bind="iconStyle"></icon>
           </div>
         </slot>
       </div>
-      <div class="desktop-icon-text" v-if="type=='show'">{{name}}</div>
+      <div class="desktop-icon-text" v-if="type=='show'">{{iconInfo.name}}</div>
     </div>
     <div
       class="desktop-icon-input"
-      v-if="type=='input'"
+      v-show="type=='input'"
       ref="input"
       tabindex="1"
       contenteditable="true"
@@ -20,39 +20,52 @@
       @mousedown.stop
       @blur="changeName"
     >{{tempName}}</div>
+    <right-click-menu
+      :menus="menuList"
+      :show.sync="iconShow"
+      :offset="iconMenuOffset"
+      style="text-align:left"
+      @menuItemClick="handleMenuItemClick"
+    ></right-click-menu>
   </div>
 </template>
 
 <script>
 import Icon from "@/components/IconManage";
+import RightClickMenu from "@/components/RightClickMenu";
 export default {
   created() {
-    this.tempName = this.name;
+    this.tempName = this.iconInfo.name;
   },
   components: {
     Icon,
+    RightClickMenu,
   },
   props: {
-    icon: {
-      type: String,
-      default: "file-unknown",
-    },
-    name: {
-      type: String,
-      default: "",
-    },
     iconStyle: {
       type: Object,
       default: () => {
         return { theme: "filled" };
       },
     },
+    iconInfo: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
   },
   data() {
     return {
       actived: false,
-      type: "input",
+      type: "show",
       tempName: "",
+      iconShow: false,
+      iconMenuOffset: {
+        left: 0,
+        top: 0,
+      },
+      menuList: [{ label: "重命名", run: "rename" }],
     };
   },
   methods: {
@@ -67,14 +80,40 @@ export default {
         this.changeName();
       }
     },
+    handleMenuItemClick(menu){
+      if(this[menu.run]){
+        this[menu.run]()
+      }
+    },
+    rename() {
+      this.type = "input";
+      this.$refs.input.focus()
+    },
     changeName() {
       let newName = this.$refs.input.textContent;
-      this.$aemit(this, "changeName", newName).then(()=>{
-
-      }).catch(()=>{
-        this.$refs.input.textContent=this.tempName
-        this.$refs.input.focus()
+      const { iconInfo } = this;
+      this.$tstore.dispatch("renameFile", {
+        name: newName,
+        oldName: iconInfo.name,
+        path: iconInfo.position,
       });
+      this.type="show"
+      // this.$aemit(this, "changeName", newName)
+      //   .then(() => {
+      //     this.tempName = newName;
+      //   })
+      //   .catch(() => {
+      //     this.$refs.input.textContent = this.tempName;
+      //     this.$refs.input.focus();
+      //   });
+    },
+    handleIconMenu(e) {
+      this.iconMenuOffset = {
+        left: e.x,
+        top: e.y,
+      };
+      console.log(e);
+      this.iconShow = true;
     },
   },
 };

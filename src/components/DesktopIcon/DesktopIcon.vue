@@ -1,5 +1,5 @@
 <template>
-  <BaseDraggable
+  <base-draggable
     :resizable="false"
     :w="76"
     :h="88"
@@ -8,12 +8,12 @@
     v-on="$listeners"
     v-bind="$attrs"
   >
-    <desktop-icon-base :name="name" :icon="icon" v-on="$listeners">
+    <desktop-icon-base v-bind="$attrs" v-on="$listeners">
         <template>
             <slot></slot>
         </template>
     </desktop-icon-base>
-  </BaseDraggable>
+  </base-draggable>
 </template>
 
 <script>
@@ -23,16 +23,6 @@ export default {
   components: {
     BaseDraggable,
     DesktopIconBase
-  },
-  props: {
-    icon: {
-      type: String,
-      default: "file-unknown",
-    },
-    name:{
-      type:String,
-      default:""
-    }
   },
   data() {
     return {
