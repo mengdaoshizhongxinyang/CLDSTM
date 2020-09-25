@@ -77,7 +77,8 @@ export default {
     handleKeypress(e) {
       if (e.key == "Enter") {
         e.preventDefault();
-        this.changeName();
+        // this.changeName();
+        this.$refs.input.blur()
       }
     },
     handleMenuItemClick(menu){
@@ -92,20 +93,14 @@ export default {
     changeName() {
       let newName = this.$refs.input.textContent;
       const { iconInfo } = this;
+      console.log(2)
       this.$tstore.dispatch("renameFile", {
         name: newName,
         oldName: iconInfo.name,
         path: iconInfo.position,
       });
       this.type="show"
-      // this.$aemit(this, "changeName", newName)
-      //   .then(() => {
-      //     this.tempName = newName;
-      //   })
-      //   .catch(() => {
-      //     this.$refs.input.textContent = this.tempName;
-      //     this.$refs.input.focus();
-      //   });
+      
     },
     handleIconMenu(e) {
       this.iconMenuOffset = {

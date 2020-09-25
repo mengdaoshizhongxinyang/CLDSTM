@@ -1,5 +1,6 @@
 
 import { ReturnGetters, Store, ActionContext } from '@/types/store';
+import modal  from 'ant-design-vue/lib/modal';
 export const SET_RUNING_APPS = 'SET_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
@@ -86,15 +87,32 @@ const mutations = {
                 temp=temp[name]
             }
         })
-        
+        console.log(info)
         let content=Object.assign(temp[info.oldName])
-        
+        console.log(1)
         delete temp[info.oldName]
-        if(temp[info.name]){
+        if(info.oldName == info.name){
+            return;
+        }else if(temp[info.name]){
+            let i=2
             temp[info.oldName]=content
-            return false
+            while(temp[`${info.name}(${i})`]){
+                i++;
+            }
+            modal.confirm({
+                title: `要将"${info.oldName}"重命名为"${info.name}(${i})"吗`,
+                message: `此位置包含同名文件`,
+                onOk() {
+                    delete temp[info.oldName]
+                    temp[`${info.name}(${i})`]=Object.assign(content,{name:`${info.name}(${i})`});
+                },
+                onCancel() {
+                    return
+                },
+            });
         }else{
-            temp[info.name]=Object.assign(temp[info.oldName],{name:info.name});
+            delete temp[info.oldName]
+            temp[info.name]=Object.assign(content,{name:info.name});
         }
     }
 }
