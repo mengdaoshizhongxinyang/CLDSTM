@@ -83,13 +83,10 @@ const mutations = {
 
         info.path.split('/').forEach((name,index)=>{
             if(name){
-                console.log(1)
                 temp=temp[name]
             }
         })
-        console.log(info)
         let content=Object.assign(temp[info.oldName])
-        console.log(1)
         delete temp[info.oldName]
         if(info.oldName == info.name){
             return;

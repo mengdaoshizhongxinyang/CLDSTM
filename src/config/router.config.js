@@ -50,6 +50,11 @@ export let asyncRouterMap=[
         name: 'Article',
         component:()=>import ('@/views/article/Article.vue'),
         meta:{title:'简历'}
+    },{
+        path: '/test/demo1',
+        name: 'lengjing',
+        component:()=>import ('@/views/threedemo/threedemo1.vue'),
+        meta:{title:'three'}
     }
     
 ]
