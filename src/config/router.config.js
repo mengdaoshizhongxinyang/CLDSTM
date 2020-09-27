@@ -34,27 +34,29 @@ export let asyncRouterMap=[
         path: '/',
         name: 'index',
         component:()=>import ('@/views/index.vue'),
-        meta:{title:'首页'}
-    },{
-        path: '/resume/:key',
-        name: 'Resume',
-        component:()=>import ('@/views/resume/Resume.vue'),
-        meta:{title:'简历'}
-    },{ 
-        path: '/resume',
-        name: 'Resume',
-        component:()=>import ('@/views/resume/Resume.vue'),
-        meta:{title:'简历'}
-    },{
-        path: '/article/*',
-        name: 'Article',
-        component:()=>import ('@/views/article/Article.vue'),
-        meta:{title:'简历'}
-    },{
-        path: '/test/demo1',
-        name: 'lengjing',
-        component:()=>import ('@/views/threedemo/threedemo1.vue'),
-        meta:{title:'three'}
+        meta:{title:'首页'},
+        children:[
+            {
+                path: '/resume/:key',
+                name: 'Resume',
+                component:()=>import ('@/views/resume/Resume.vue'),
+                meta:{title:'简历'}
+            },{ 
+                path: '/resume',
+                name: 'Resume',
+                component:()=>import ('@/views/resume/Resume.vue'),
+                meta:{title:'简历'}
+            },{
+                path: '/article/*',
+                name: 'Article',
+                component:()=>import ('@/views/article/Article.vue'),
+                meta:{title:'简历'}
+            },{
+                path: '/test/demo1',
+                name: 'lengjing',
+                component:()=>import ('@/views/threedemo/threedemo1.vue'),
+                meta:{title:'three'}
+            }
+        ]
     }
-    
 ]

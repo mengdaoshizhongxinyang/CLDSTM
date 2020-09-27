@@ -13,7 +13,15 @@ const options = {
                 // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
                 languages: ['javascript', 'css', 'html', 'typescript', 'json'],
                 output: "./static/js/monaco-editor"
-            })
+            }),
+            new PrerenderSPAPlugin({
+                staticDir: path.join(__dirname, 'dist'),
+                routes: [ '/', '/article' ],
+                renderer: new Renderer({
+                  headless: false,
+                  renderAfterDocumentEvent: 'render-event'
+                })
+            }),
         ],
         externals: {
           'configs': 'configs',

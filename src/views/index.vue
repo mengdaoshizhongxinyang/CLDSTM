@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-09-24 16:44:37
+ * @LastEditTime: 2020-09-27 11:19:36
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -68,8 +68,8 @@ import {
 } from "@/components";
 
 import moment from "moment";
-
-
+import configs from "configs"
+console.log(configs)
 import * as THREE from "three";
 const pinyin = require("@/components/PinYin/index");
 import message from "@/components/Message/dialog.jsx";

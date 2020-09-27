@@ -16,6 +16,7 @@
     "mockjs2": "^1.0.8",
     "monaco-editor": "^0.20.0",
     "postprocessing": "^6.8.8",
+    "prerender-spa-plugin": "^3.4.0",
     "text-loader": "^0.0.1",
     "three": "^0.110.0",
     "ts-loader": "^8.0.4",
