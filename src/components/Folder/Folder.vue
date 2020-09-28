@@ -56,10 +56,9 @@
             @openApps="handleOpenApps(icon)"
             v-for="icon in folderList"
             :key="icon.name"
-            :name="icon.name"
-            :icon="icon.icon"
             style="color:#000"
             :iconStyle="iconStyle"
+            :iconInfo="icon"
           ></desktop-icon-base>
         </div>
       </div>

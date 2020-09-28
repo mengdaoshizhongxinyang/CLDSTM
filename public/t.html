@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function slove(s){
+      var morse={
+        '10':'a',
+        '0111':'b',
+        '0101':'c',
+        '011':'d',
+        '1':'e',
+        '1101':'f',
+        '001':'g',
+        '1111':'h',
+        '11':'i',
+        '1000':'j',
+        '010':'k',
+        '1011':'l',
+        '00':'m',
+        '01':'n',
+        '000':'o',
+        '1001':'p',
+        '0010':'q',
+        '101':'r',
+        '111':'s',
+        '0':'t',
+        '110':'u',
+        '1110':'v',
+        '100':'w',
+        '0110':'x',
+        '0100':'y',
+        '0011':'z'
+      }
+      var morse2={
+        '10':'a',
+        '1000':'b',
+        '1010':'c',
+        '100':'d',
+        '0':'e',
+        '0010':'f',
+        '110':'g',
+        '0000':'h',
+        '00':'i',
+        '0111':'j',
+        '101':'k',
+        '0100':'l',
+        '11':'m',
+        '10':'n',
+        '111':'o',
+        '0110':'p',
+        '1101':'q',
+        '010':'r',
+        '000':'s',
+        '1':'t',
+        '001':'u',
+        '0001':'v',
+        '011':'w',
+        '1001':'x',
+        '1011':'y',
+        '1100':'z'
+      }
+      var arr=s.split(' ');
+      var ans=''
+      var key=''
+      for(var i=0;i<arr.length;i++){
+        ans+=morse2[arr[i]]
+      }
+      var ks=''
+      for(var i=0;i<26;i++){
+        ks=''
+        var zl=''
+        for(var j=0;j<ans.length;j++){
+          ks+=String.fromCharCode(((ans.charCodeAt(j)+i)-97)%26+97)
+        }
+        // console.log(ks)
+        for(var j=0;j<ans.length;j+=2){
+          zl+=ks[j]
+        }
+        for(var j=1;j<ans.length;j+=2){
+          zl+=ks[j]
+        }
+      }
+    }
+    slove('1011 0100 0111 001 0010 1000 0111 001 0010 1101 0100 111 010 110 001 0010 011 0100 001 0010')
+  </script>
+</body>
+</html>

@@ -1,4 +1,7 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+const PrerenderSPAPlugin=require('prerender-spa-plugin')
+const path = require('path');
+const Renderer=PrerenderSPAPlugin.PuppeteerRenderer
 const vuecli= require('@vue/cli-service')
 const options = {
     publicPath: './',
@@ -14,14 +17,14 @@ const options = {
                 languages: ['javascript', 'css', 'html', 'typescript', 'json'],
                 output: "./static/js/monaco-editor"
             }),
-            new PrerenderSPAPlugin({
-                staticDir: path.join(__dirname, 'dist'),
-                routes: [ '/', '/article' ],
-                renderer: new Renderer({
-                  headless: false,
-                  renderAfterDocumentEvent: 'render-event'
-                })
-            }),
+            // new PrerenderSPAPlugin({
+            //     staticDir: path.join(__dirname, 'dist'),
+            //     routes: [ '/', '/article' ],
+            //     renderer: new Renderer({
+            //       headless: false,
+            //       renderAfterDocumentEvent: 'render-event'
+            //     })
+            // }),
         ],
         externals: {
           'configs': 'configs',
