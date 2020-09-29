@@ -95,14 +95,12 @@ export default {
     changeName() {
       let newName = this.$refs.input.textContent;
       const { iconInfo } = this;
-      console.log(2)
       this.$tstore.dispatch("renameFile", {
         name: newName,
         oldName: iconInfo.name,
         path: iconInfo.position,
       });
       this.type="show"
-      
     },
     handleIconMenu(e) {
       this.iconMenuOffset = {
