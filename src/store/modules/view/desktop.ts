@@ -53,6 +53,7 @@ const mutations = {
         state.desktopApps.apps[index].mini=!state.desktopApps.apps[index].mini
     },
     [CREATE_FILE](state :State,obj :any){
+        console.log(obj)
         let {type,path,name,icon,other}=obj
         let i=1;
         let tempName=''
@@ -67,7 +68,7 @@ const mutations = {
                 fileTree=fileTree[item]
             }
         })
-        fileTree[name+tempName]={type,name:name+tempName,path,icon,...other}
+        fileTree[name+tempName]={type,name:name+tempName,position:path,icon,...other}
         state.fileList=Object.assign({},state.fileList)
         state.fileList=JSON.parse(JSON.stringify(state.fileList))
     },
@@ -80,7 +81,7 @@ const mutations = {
     [UPDATE_FILENAME](state :State,info:{name:string,path:string,oldName:string}){
 
         let temp=state.fileList
-
+        console.log(info)
         info.path.split('/').forEach((name,index)=>{
             if(name){
                 temp=temp[name]
