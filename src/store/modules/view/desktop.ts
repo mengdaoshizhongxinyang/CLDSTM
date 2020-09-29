@@ -82,10 +82,11 @@ const mutations = {
         let temp=state.fileList
         
         info.path.split('/').forEach((name,index)=>{
-            if(name){
-                temp=temp[name]
+            if(index!=0){
+                temp=temp[name]['children']
             }
         })
+
         let content=Object.assign(temp[info.oldName])
         if(info.oldName == info.name){
             return;
