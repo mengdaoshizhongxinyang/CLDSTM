@@ -88,7 +88,9 @@ export default {
     },
     rename() {
       this.type = "input";
-      this.$refs.input.focus()
+      this.$nextTick(()=>{
+        this.$refs.input.focus()
+      })
     },
     changeName() {
       let newName = this.$refs.input.textContent;
