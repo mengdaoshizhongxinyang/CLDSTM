@@ -80,9 +80,8 @@ const mutations = {
     [UPDATE_FILENAME](state :State,info:{name:string,path:string,oldName:string}){
 
         let temp=state.fileList
-        
         info.path.split('/').forEach((name,index)=>{
-            if(index!=0){
+            if(index!=0 && name){
                 temp=temp[name]['children']
             }
         })
