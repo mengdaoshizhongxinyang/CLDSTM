@@ -65,7 +65,7 @@ export default {
         left: 0,
         top: 0,
       },
-      menuList: [{ label: "重命名", run: "rename" }],
+      menuList: [{ label: "重命名", run: "rename" },{ label: "属性", run: "attribute" }],
     };
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
     },
     handleMenuItemClick(menu){
       if(this[menu.run]){
-        this[menu.run]()
+        this[menu.run](menu)
       }
     },
     rename() {
@@ -92,13 +92,18 @@ export default {
         this.$refs.input.focus()
       })
     },
+    attribute(){
+      const {iconInfo}=this
+      let attribute={type:'attribute',icon:iconInfo.icon,name:iconInfo.name+" 属性",position:iconInfo.position,fileName:iconInfo.name}
+      this.$tstore.dispatch('openApps',attribute)
+    },
     changeName() {
       let newName = this.$refs.input.textContent;
       const { iconInfo } = this;
       this.$tstore.dispatch("renameFile", {
         name: newName,
         oldName: iconInfo.name,
-        path: iconInfo.position,
+        path: iconInfo.position
       });
       this.type="show"
     },
@@ -107,7 +112,6 @@ export default {
         left: e.x,
         top: e.y,
       };
-      console.log(e);
       this.iconShow = true;
     },
   },
