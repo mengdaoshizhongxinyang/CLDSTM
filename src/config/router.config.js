@@ -63,5 +63,10 @@ export let asyncRouterMap=[
         name: 'lengjing',
         component:()=>import ('@/views/threedemo/threedemo2.vue'),
         meta:{title:'three'}
+    },{
+        path: '/test/demo3',
+        name: 'lengjing',
+        component:()=>import ('@/views/threedemo/threedemo3.vue'),
+        meta:{title:'three'}
     }
 ]
