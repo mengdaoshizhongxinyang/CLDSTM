@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-09-29 17:47:41
+ * @LastEditTime: 2020-10-09 14:47:57
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -64,7 +64,8 @@ import {
   DesktopIcon,
   ArticleMd,
   Folder,
-  Desktop
+  Desktop,
+  Properties
 } from "@/components";
 
 import moment from "moment";
@@ -94,7 +95,8 @@ export default {
     DesktopIcon,
     Money,
     ArticleMd,
-    message
+    message,
+    Properties
   },
   computed:{
     ...mapGetters(['desktopApps']),

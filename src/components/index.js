@@ -1,7 +1,7 @@
 /*
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-09-01 16:07:46
+ * @LastEditTime: 2020-10-09 14:44:11
  * @LastEditors: Please set LastEditors
  * @Description: never bug
  * @FilePath: \CLDSTM\src\components\index.js
@@ -45,6 +45,7 @@ import ArticleMd from "@/components/Article"
 import Folder from "@/components/Folder"
 import Tree from "@/components/Tree"
 import Icon from "@/components/IconManage"
+import Properties from "@/components/PropertiesWindow";
 export{
     Tree,
     ArticleMd,
@@ -58,5 +59,6 @@ export{
     DesktopIcon,
     Money,
     Folder,
+    Properties,
     Icon
 }

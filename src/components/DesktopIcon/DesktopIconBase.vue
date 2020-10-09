@@ -1,6 +1,6 @@
 <template>
   <div class="desktop-icon" tabindex="-1">
-    <div @dblclick="e=>openApps(e)" @contextmenu="handleIconMenu">
+    <div @dblclick="(e) => openApps(e)" @contextmenu="handleIconMenu">
       <div class="desktop-icon-icon">
         <slot>
           <div class="desktop-icon-icon-default">
@@ -8,23 +8,27 @@
           </div>
         </slot>
       </div>
-      <div class="desktop-icon-text" v-if="type=='show'">{{iconInfo.name}}</div>
+      <div class="desktop-icon-text" v-if="type == 'show'">
+        {{ iconInfo.name }}
+      </div>
     </div>
     <div
       class="desktop-icon-input"
-      v-show="type=='input'"
+      v-show="type == 'input'"
       ref="input"
       tabindex="1"
       contenteditable="true"
       @keydown="handleKeypress"
       @mousedown.stop
       @blur="changeName"
-    >{{tempName}}</div>
+    >
+      {{ tempName }}
+    </div>
     <right-click-menu
       :menus="menuList"
       :show.sync="iconShow"
       :offset="iconMenuOffset"
-      style="text-align:left"
+      style="text-align: left"
       @menuItemClick="handleMenuItemClick"
     ></right-click-menu>
   </div>
@@ -65,7 +69,10 @@ export default {
         left: 0,
         top: 0,
       },
-      menuList: [{ label: "重命名", run: "rename" },{ label: "属性", run: "attribute" }],
+      menuList: [
+        { label: "重命名", run: "rename" },
+        { label: "属性", run: "attribute" },
+      ],
     };
   },
   methods: {
@@ -78,24 +85,31 @@ export default {
       if (e.key == "Enter") {
         e.preventDefault();
         // this.changeName();
-        this.$refs.input.blur()
+        this.$refs.input.blur();
       }
     },
-    handleMenuItemClick(menu){
-      if(this[menu.run]){
-        this[menu.run](menu)
+    handleMenuItemClick(menu) {
+      if (this[menu.run]) {
+        this[menu.run](menu);
       }
     },
     rename() {
       this.type = "input";
-      this.$nextTick(()=>{
-        this.$refs.input.focus()
-      })
+      this.$nextTick(() => {
+        this.$refs.input.focus();
+      });
     },
-    attribute(){
-      const {iconInfo}=this
-      let attribute={type:'attribute',icon:iconInfo.icon,name:iconInfo.name+" 属性",position:iconInfo.position,fileName:iconInfo.name}
-      this.$tstore.dispatch('openApps',attribute)
+    attribute() {
+      const { iconInfo } = this;
+      let attribute = {
+        type: "attribute",
+        icon: iconInfo.icon,
+        name: iconInfo.name + " 属性",
+        position: iconInfo.position,
+        fileName: iconInfo.name,
+        apps:'Properties'
+      };
+      this.$tstore.dispatch("openApps", attribute);
     },
     changeName() {
       let newName = this.$refs.input.textContent;
@@ -103,15 +117,25 @@ export default {
       this.$tstore.dispatch("renameFile", {
         name: newName,
         oldName: iconInfo.name,
-        path: iconInfo.position
+        path: iconInfo.position,
       });
-      this.type="show"
+      this.type = "show";
     },
     handleIconMenu(e) {
       this.iconMenuOffset = {
         left: e.x,
         top: e.y,
       };
+      let X=e.x,Y=e.y
+      let w=document.body.offsetWidth
+      let h=document.body.offsetHeight
+      while(X+320>=w){
+        X-=56
+      }
+      while(Y+480>=h){
+        Y-=88
+      }
+      this.$tstore.dispatch('setPosition',{X,Y})
       this.iconShow = true;
     },
   },

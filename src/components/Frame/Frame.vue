@@ -1,5 +1,5 @@
 <template>
-  <VueDraggableResizable
+  <vue-draggable-resizable
     class="filter-main"
     drag-handle=".header"
     :min-width="minWidth"
@@ -9,32 +9,45 @@
     :x="x"
     :y="y"
     :z="z"
-    @resizestop="(x,y,w,h)=>handleResizestop(x,y,w,h)"
-    @dragstop="(x,y)=>handleDragstop(x,y)"
+    :draggable="draggable"
+    @resizestop="(x, y, w, h) => handleResizestop(x, y, w, h)"
+    @dragstop="(x, y) => handleDragstop(x, y)"
     v-on="$listeners"
     @activated="active"
+    :resizable="resizable"
   >
     <div class="header" @dblclick="fullScrean">
-      <div class="header-content">{{getAppInfo(appsId).name || ""}}</div>
-      <div class="header-back" @mouseup="e=>rightClick(e,'headerMenu')">
-        <VueContextMenu :offset="contextMenuOffset" :show.sync="headerMenu" class="menu">
-          <div class="menu-item" @click="minimize">最小化</div>
-          <div class="menu-item" @click="fullScrean">最大化</div>
+      <div class="header-content">{{ getAppInfo(appsId).name || "" }}</div>
+      <div class="header-back" @mouseup="(e) => rightClick(e, 'headerMenu')">
+        <VueContextMenu
+          :offset="contextMenuOffset"
+          :show.sync="headerMenu"
+          class="menu"
+        >
+          <div class="menu-item" @click="minimize" v-if="allowMinimize">
+            最小化
+          </div>
+          <div class="menu-item" @click="fullScrean" v-if="allowEnlarge">
+            最大化
+          </div>
           <a-divider />
           <div class="menu-item" @click="close">关闭</div>
         </VueContextMenu>
       </div>
       <slot name="header"></slot>
       <div class="header-button-group">
-        <div class="header-button" @click="minimize">
+        <div class="header-button" @click="minimize" v-if="allowMinimize">
           <a-icon type="minus"></a-icon>
         </div>
-        <div class="header-button" v-if="isFull" @click="fullScrean">
-          <a-icon type="block"></a-icon>
-        </div>
-        <div class="header-button" v-else @click="fullScrean">
-          <a-icon type="border"></a-icon>
-        </div>
+        <template v-if="allowEnlarge">
+          <div class="header-button" v-if="isFull" @click="fullScrean">
+            <a-icon type="block"></a-icon>
+          </div>
+          <div class="header-button" v-else @click="fullScrean">
+            <a-icon type="border"></a-icon>
+          </div>
+        </template>
+
         <div class="header-button-close" @click="close">
           <a-icon type="close"></a-icon>
         </div>
@@ -42,69 +55,83 @@
     </div>
     <div
       class="content"
-      :style="`overflow-x:${scrollX?'auto':'hidden'};overflow-y:${scrollY?'auto':'hidden'}`"
+      :style="`overflow-x:${scrollX ? 'auto' : 'hidden'};overflow-y:${
+        scrollY ? 'auto' : 'hidden'
+      }`"
     >
       <slot></slot>
     </div>
-  </VueDraggableResizable>
+  </vue-draggable-resizable>
 </template>
 
 <script>
 import VueDraggableResizable from "@/components/BaseDraggable";
 import VueContextMenu from "@/components/RightClickMenu";
-import {
-  mapGetters,
-  mapState,
-  mapActions
-} from 'vuex'
+import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   components: {
     VueDraggableResizable,
-    VueContextMenu
+    VueContextMenu,
   },
-  computed:{
-    ...mapGetters(['getAppInfo'])
+  computed: {
+    ...mapGetters(["getAppInfo"]),
   },
   props: {
     scrollX: {
       type: Boolean,
-      default: true
+      default: true,
     },
     scrollY: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    minWidth:{
-      type:Number,
-      default:146
+    minWidth: {
+      type: Number,
+      default: 146,
     },
-    minHeight:{
-      type:Number,
-      default:32
+    minHeight: {
+      type: Number,
+      default: 32,
     },
-    initialW:{
-      type:Number,
-      default:246
+    initialW: {
+      type: Number,
+      default: 246,
     },
-    initialH:{
-      type:Number,
-      default:200
+    initialH: {
+      type: Number,
+      default: 200,
     },
-    initialX:{
-      type:Number,
-      default:0
+    initialX: {
+      type: Number,
+      default: 0,
     },
-    initialY:{
-      type:Number,
-      default:0
+    initialY: {
+      type: Number,
+      default: 0,
     },
-    z:{
-      type:Number,
-      default:0
+    z: {
+      type: Number,
+      default: 0,
     },
-    appsId:{
-      type:Number,
-      default:0
+    appsId: {
+      type: Number,
+      default: 0,
+    },
+    allowEnlarge: {
+      type: Boolean,
+      default: true,
+    },
+    allowMinimize: {
+      type: Boolean,
+      default: true,
+    },
+    draggable:{
+      type:Boolean,
+      default:true
+    },
+    resizable:{
+      type:Boolean,
+      default:true
     }
   },
   data() {
@@ -112,7 +139,7 @@ export default {
       headerMenu: false,
       contextMenuOffset: {
         left: 0,
-        top: 0
+        top: 0,
       },
       isFull: false,
       old_w: 0,
@@ -123,7 +150,7 @@ export default {
       h: 200,
       x: 0,
       y: 0,
-      title:""
+      title: "",
     };
   },
   methods: {
@@ -135,6 +162,9 @@ export default {
       }
     },
     fullScrean() {
+      if (!this.allowEnlarge) {
+        return;
+      }
       if (this.isFull === false) {
         let width = document.body.clientWidth;
         let height = document.body.clientHeight - 56;
@@ -156,9 +186,11 @@ export default {
       }
       this.$emit("resize", this.w, this.h);
     },
-    minimize(){
-      this.$store.dispatch('minimizeApps',this.appsId)
-      this.$emit('minimize')
+    minimize() {
+      if (this.allowMinimize) {
+        this.$store.dispatch("minimizeApps", this.appsId);
+        this.$emit("minimize");
+      }
     },
     handleResizestop(x, y, w, h) {
       this.x = x;
@@ -170,30 +202,30 @@ export default {
     handleDragstop(x, y) {
       this.x = x;
       this.y = y;
-      this.$emit('dragstop',x,y)
+      this.$emit("dragstop", x, y);
     },
-    close(){
-      this.$store.dispatch('closeApps',this.appsId)
-      this.$emit('close')
+    close() {
+      this.$store.dispatch("closeApps", this.appsId);
+      this.$emit("close");
     },
-    active(){
-      this.$store.dispatch('activeApps',this.appsId)
-    }
+    active() {
+      this.$store.dispatch("activeApps", this.appsId);
+    },
   },
-  created(){
-    const { initialW,initialH,initialX,initialY}=this
-    Object.assign(this,{
-      w:initialW,
-      h:initialH,
-      x:initialX,
-      y:initialY
-    })
-  }
+  created() {
+    const { initialW, initialH, initialX, initialY } = this;
+    Object.assign(this, {
+      w: initialW,
+      h: initialH,
+      x: initialX,
+      y: initialY,
+    });
+  },
 };
 </script>
 
 <style lang="less" scoped>
-@import '../Style/menu';
+@import "../Style/menu";
 .filter-main {
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.68);
   background: #fff;
@@ -213,7 +245,7 @@ export default {
       position: absolute;
       height: 100%;
       padding: 9px;
-      color:#000;
+      color: #000;
       line-height: 1em;
       top: 0;
     }
@@ -254,6 +286,4 @@ export default {
     height: calc(100% - 32px);
   }
 }
-
-
 </style>

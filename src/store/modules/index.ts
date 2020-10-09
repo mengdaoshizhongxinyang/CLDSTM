@@ -1,6 +1,6 @@
 
 export * from './core'
-import core from './core'
+import core,{coreModule} from './core'
 
 export * from './view'
 import view,{viewModule} from './view'
@@ -16,15 +16,19 @@ const modules = {
 export interface typeModules{
   state:{
     view:viewModule['state']
+    core:coreModule['state']
   }
   dispatch:(
     viewModule['dispatch']
+    & coreModule['dispatch']
   )
   commit:(
     viewModule['commit']
+    & coreModule['commit']
   )
   getters:(
     viewModule['getters']
+    & coreModule['getters']
   )
 }
 export default modules
