@@ -12,7 +12,14 @@
   >
     <div class="main">
       <div class="tab">
-        <div :class="`tab-item ${index==active?'tab-active':''}` " v-for="(tab,index) in tabs" :key="tab" @click="handleChangeActive(index)">{{tab}}</div>
+        <div
+          :class="`tab-item ${index == active ? 'tab-active' : ''}`"
+          v-for="(tab, index) in tabs"
+          :key="tab"
+          @click="handleChangeActive(index)"
+        >
+          {{ tab }}
+        </div>
       </div>
       <div class="content"></div>
       <div class="properties-button-group">
@@ -20,14 +27,13 @@
         <button>取消</button>
         <button>应用</button>
       </div>
-      
     </div>
   </frame-window>
 </template>
 
 <script>
 import FrameWindow from "@/components/Frame";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   created() {
     this.name = this.attributes.name;
@@ -35,14 +41,16 @@ export default {
   components: {
     FrameWindow,
   },
-  computed:{
+  computed: {
     ...mapState({
       /** @returns {Object} */
-      position(state){
-        console.log(state)
-        return {x:state.core.properties.clickPositionX,y:state.core.properties.clickPositionY}
-      }
-    })
+      position(state) {
+        return {
+          x: state.core.properties.clickPositionX,
+          y: state.core.properties.clickPositionY,
+        };
+      },
+    }),
   },
   props: {
     attributes: {
@@ -55,72 +63,73 @@ export default {
   data() {
     return {
       name: "",
-      tabs:[
-        '常规',
-        '详细'
-      ],
-      active:0
+      tabs: ["常规", "详细"],
+      active: 0,
     };
   },
-  methods:{
-    handleChangeActive(index){
-      this.active=index
-    }
-  }
+  methods: {
+    handleChangeActive(index) {
+      this.active = index;
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.main{
+/deep/.header {
+  background: #fff;
+}
+.main {
   background: #e1e1e1;
   height: 100%;
   padding: 8px;
-  .tab{
+
+  .tab {
     display: flex;
     // border-bottom: 1px solid rgba(0,0,0,0.2);
     cursor: default;
     height: 2em;
-    align-items:flex-end;
-    .tab-item{
+    align-items: flex-end;
+    .tab-item {
       min-width: 3.5em;
-      border: 1px solid rgba(0,0,0,0.2);
-      border-bottom: 0px solid rgb(255,255,255);
-      color:#000;
-      padding:0 4px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 0px solid rgb(255, 255, 255);
+      color: #000;
+      padding: 0 4px;
       margin-right: -1px;
-      &:hover{
+      &:hover {
         background: rgba(131, 195, 255, 0.2);
       }
       height: 1.7em;
     }
-    .tab-active{
+    .tab-active {
       background: #fff;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgb(255,255,255);
+      border-bottom: 1px solid rgb(255, 255, 255);
       height: 2em;
-      &:hover{
+      &:hover {
         background: #fff;
       }
     }
   }
-  .content{
+  .content {
     height: 470px;
     background: #fff;
     margin-top: -1px;
     margin-bottom: 16px;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
-  .properties-button-group{
+  .properties-button-group {
     display: flex;
     justify-content: flex-end;
-    button{
+    button {
       margin-left: 8px;
       width: 5.5em;
-      padding:6px 0;
+      padding: 6px 0;
       line-height: 1em;
       border-radius: 0px;
-      border: 1px solid rgba(0,0,0,0.6);
-      &:focus{
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      &:focus {
         border: 2px solid rgba(4, 0, 255, 0.849);
         border-radius: 0;
         padding: 5px 0;

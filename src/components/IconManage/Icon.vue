@@ -29,6 +29,7 @@ export default {
         antd: {
           folder: "folder",
           article: "file-markdown",
+          setting:"setting"
         },
         more: {
           vscode: "vscodeIcon",

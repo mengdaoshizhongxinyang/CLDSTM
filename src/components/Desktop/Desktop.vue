@@ -34,6 +34,7 @@ export default {
           name:"create",
           children: [{ label: "文件夹",run:"createFolder" }],
         },
+        { label: "个性化", name:"personalise",run:"personaliseFrame" },
       ],
     };
   },
@@ -53,8 +54,16 @@ export default {
       }
     },
     createFolder() {
-      this.$store.dispatch("createFile",{type:'folder',name:"新建文件夹",path:"/"});
+      this.$store.dispatch("createFile",{type:'folder',name:"新建文件夹",path:"/"})
     },
+    personaliseFrame(){
+      let PersonaliseSetting = {
+        apps:'Setting',
+        icon:'setting',
+        name:'设置'
+      }
+      this.$tstore.dispatch("openApps", PersonaliseSetting)
+    }
   },
   mounted() {
     this.list = configs.getActionsItem();
@@ -74,4 +83,5 @@ export default {
     position: relative;
   }
 }
+
 </style>
