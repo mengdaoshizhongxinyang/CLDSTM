@@ -1,7 +1,7 @@
 <template>
   <vue-draggable-resizable
     class="filter-main"
-    drag-handle=".header"
+    drag-handle=".header-back"
     :min-width="minWidth"
     :min-height="minHeight"
     :w="w"
@@ -17,7 +17,11 @@
     :resizable="resizable"
   >
     <div class="header" @dblclick="fullScrean">
+      <div class="header-slot">
+        <slot name="header"></slot>
+      </div>
       <div class="header-content">{{ getAppInfo(appsId).name || "" }}</div>
+
       <div class="header-back" @mouseup="(e) => rightClick(e, 'headerMenu')">
         <VueContextMenu
           :offset="contextMenuOffset"
@@ -34,7 +38,7 @@
           <div class="menu-item" @click="close">关闭</div>
         </VueContextMenu>
       </div>
-      <slot name="header"></slot>
+
       <div class="header-button-group">
         <div class="header-button" @click="minimize" v-if="allowMinimize">
           <a-icon type="minus"></a-icon>
@@ -53,14 +57,19 @@
         </div>
       </div>
     </div>
-    <div
-      class="content"
-      :style="`overflow-x:${scrollX ? 'auto' : 'hidden'};overflow-y:${
-        scrollY ? 'auto' : 'hidden'
-      }`"
-    >
-      <slot></slot>
-    </div>
+    <slot name="content">
+      <div class="main-space">
+        <div class="content-header"></div>
+        <div
+          class="content"
+          :style="`overflow-x:${scrollX ? 'auto' : 'hidden'};overflow-y:${
+            scrollY ? 'auto' : 'hidden'
+          }`"
+        >
+          <slot></slot>
+        </div>
+      </div>
+    </slot>
   </vue-draggable-resizable>
 </template>
 
@@ -125,14 +134,14 @@ export default {
       type: Boolean,
       default: true,
     },
-    draggable:{
-      type:Boolean,
-      default:true
+    draggable: {
+      type: Boolean,
+      default: true,
     },
-    resizable:{
-      type:Boolean,
-      default:true
-    }
+    resizable: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -228,62 +237,80 @@ export default {
 @import "../Style/menu";
 .filter-main {
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.68);
-  background: #fff;
+  display: flex;
+}
+.main-space {
+  position: relative;
   display: flex;
   flex-flow: column;
-  .header {
+  background: #fff;
+  height: 100%;
+  flex: 1;
+}
+.header {
+  height: 32px;
+  width: 100%;
+  position: absolute;
+  color: #e6e6e6;
+  .header-slot {
+    z-index: 0;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+  .header-back {
+    position: absolute;
     height: 32px;
     width: 100%;
-    position: relative;
-    color: #e6e6e6;
-    background: #e1e1e1;
-    .header-back {
+    z-index: 2;
+  }
+  .header-content {
+    position: absolute;
+    height: 100%;
+    padding: 9px;
+    color: #000;
+    line-height: 1em;
+    top: 0;
+    z-index: 1;
+  }
+  .header-button-group {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 16px;
+    color: #666666;
+    z-index: 3;
+    .header-button {
+      padding: 4px 12px;
       height: 32px;
-      width: 100%;
-    }
-    .header-content {
-      position: absolute;
-      height: 100%;
-      padding: 9px;
-      color: #000;
-      line-height: 1em;
-      top: 0;
-    }
-    .header-button-group {
-      background: #e1e1e1;
-      display: flex;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      font-size: 16px;
-      color: #666666;
-      .header-button {
-        padding: 4px 12px;
-        height: 32px;
-        width: 42px;
-        color: #000000;
-        background: rgba(0, 0, 0, 0);
-        &:hover {
-          background: rgba(0, 0, 0, 0.08);
-        }
+      width: 42px;
+      color: #000000;
+      background: rgba(0, 0, 0, 0);
+      &:hover {
+        background: rgba(0, 0, 0, 0.08);
       }
-      .header-button-close {
-        padding: 4px 12px;
-        height: 32px;
-        width: 42px;
-        color: #000000;
-        background: rgba(0, 0, 0, 0);
-        &:hover {
-          background: red;
-          color: #fff;
-        }
+    }
+    .header-button-close {
+      padding: 4px 12px;
+      height: 32px;
+      width: 42px;
+      color: #000000;
+      background: rgba(0, 0, 0, 0);
+      &:hover {
+        background: red;
+        color: #fff;
       }
     }
   }
-  .content {
-    overflow: auto;
-    position: relative;
-    height: calc(100% - 32px);
-  }
+}
+.content-header {
+  background: #e1e1e1;
+  height: 32px;
+}
+.content {
+  overflow: auto;
+  position: relative;
+  height: calc(100% - 32px);
 }
 </style>
