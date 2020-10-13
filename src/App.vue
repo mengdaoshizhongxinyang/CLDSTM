@@ -37,6 +37,7 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
+  user-select: none;
 }
 body {
   overflow: hidden;

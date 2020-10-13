@@ -1,8 +1,8 @@
 <template>
-  <setting-frame name="设置" v-on="$listeners" v-bind="$attrs">
+  <setting-frame name="设置" v-on="$listeners" v-bind="$attrs" @resizing="handleResize">
     <template #content>
       <div class="content">
-        <component :is="subComponents" class="sub-content"></component>
+        <component :is="subComponents" class="sub-content" :width="w"></component>
       </div>
     </template>
   </setting-frame>
@@ -20,6 +20,16 @@ export default {
     subComponents:{
       type:String,
       default:"SettingMain"
+    }
+  },
+  data(){
+    return{
+      w:500
+    }
+  },
+  methods:{
+    handleResize(x,y,w,h){
+      this.w=w
     }
   }
 };
