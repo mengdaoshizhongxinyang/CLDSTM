@@ -11,8 +11,10 @@
 <script>
 import SettingFrame from "@/components/Frame";
 import SettingMain from "./Main";
+import LanguageSetting from "./LanguageSetting";
 export default {
   components: {
+    LanguageSetting,
     SettingFrame,
     SettingMain
   },

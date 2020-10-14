@@ -1,7 +1,8 @@
 <template>
   <div class="setting-main">
-    <slot name="more"></slot>
+    <slot name="wideMore"></slot>
     <div class="setting-body">
+      <slot name="narrowMore"></slot>
       <div ref="body">
         <slot></slot>
       </div>
@@ -28,7 +29,6 @@ export default {
     flex: 1;
     &::-webkit-scrollbar{
       width:6px;
-      
     }
     &::-webkit-scrollbar-button{
       height:7px;

@@ -8,7 +8,7 @@
         :style="`width:${colNum > 1 ? colNum * 240 + 'px' : '100%'}`"
         ref="body"
       >
-        <div class="item" v-for="(item, index) in items" :key="index">
+        <div class="item" v-for="(item, index) in items" :key="index" @click="handleOpen(item)">
           <div class="item-ud-occlude occlude"></div>
           <div class="item-lr-occlude occlude"></div>
           <div class="item-content">
@@ -59,8 +59,8 @@ export default {
       x: 0,
       y: 0,
       items: [
-        { icon: "highlight", title: "个性化", desc: "颜色，背景" },
-        { icon: "global", title: "语言设置", desc: "语言" },
+        { icon: "highlight", title: "个性化", desc: "颜色，背景",component:'PersonaliseSetting' },
+        { icon: "global", title: "语言设置", desc: "语言",component:'LanguageSetting' },
         { icon: "exclamations-circle", title: "待定", desc: "待定" },
         { icon: "exclamations-circle", title: "待定", desc: "待定" },
         { icon: "exclamations-circle", title: "待定", desc: "待定" },
@@ -74,6 +74,9 @@ export default {
       this.x = e.clientX - this.$refs.body.getBoundingClientRect().x - 75;
       this.y = e.clientY - this.$refs.body.getBoundingClientRect().y - 75;
     },
+    handleOpen(item){
+      this.$emit('openSub',item.component)
+    }
   },
 };
 </script>
