@@ -2,7 +2,6 @@
   <setting-body>
     <div class="content" @mousemove="handleMousemove">
       <div class="title">设置</div>
-
       <div
         :class="`setting-item ${colNum > 1 ? 'widescreen' : 'narrowscreen'}`"
         :style="`width:${colNum > 1 ? colNum * 240 + 'px' : '100%'}`"
@@ -61,11 +60,11 @@ export default {
       items: [
         { icon: "highlight", title: "个性化", desc: "颜色，背景",component:'PersonaliseSetting' },
         { icon: "global", title: "语言设置", desc: "语言",component:'LanguageSetting' },
-        { icon: "exclamations-circle", title: "待定", desc: "待定" },
-        { icon: "exclamations-circle", title: "待定", desc: "待定" },
-        { icon: "exclamations-circle", title: "待定", desc: "待定" },
-        { icon: "exclamations-circle", title: "待定", desc: "待定" },
-        { icon: "exclamations-circle", title: "待定", desc: "待定" },
+        { icon: "exclamation-circle", title: "待定", desc: "待定" },
+        { icon: "exclamation-circle", title: "待定", desc: "待定" },
+        { icon: "exclamation-circle", title: "待定", desc: "待定" },
+        { icon: "exclamation-circle", title: "待定", desc: "待定" },
+        { icon: "exclamation-circle", title: "待定", desc: "待定" }
       ],
     };
   },

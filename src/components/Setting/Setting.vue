@@ -1,8 +1,35 @@
 <template>
-  <setting-frame name="设置" v-on="$listeners" v-bind="$attrs" @resizing="handleResize">
+  <setting-frame
+    name="设置"
+    v-on="$listeners"
+    v-bind="$attrs"
+    @resizing="handleResize"
+    :minWidth="300"
+    :initialW="300"
+    :drag-cancel="'.back-button'"
+  >
+    <template #header-name-more>
+      <div class="left-title">
+        <div
+          class="back-button"
+          v-if="operated.length"
+          @click.stop="handleBack"
+        >
+          <a-icon type="arrow-left"></a-icon>
+        </div>
+        <div>设置</div>
+      </div>
+    </template>
     <template #content>
       <div class="content">
-        <component :is="subComponents" class="sub-content" :width="w"></component>
+        <transition :name="actions">
+          <component
+            :is="component"
+            class="sub-content"
+            :width="w"
+            @openSub="handleOpenSub"
+          ></component>
+        </transition>
       </div>
     </template>
   </setting-frame>
@@ -12,40 +39,94 @@
 import SettingFrame from "@/components/Frame";
 import SettingMain from "./Main";
 import LanguageSetting from "./LanguageSetting";
+import PersonaliseSetting from "./PersonaliseSetting";
 export default {
   components: {
+    PersonaliseSetting,
     LanguageSetting,
     SettingFrame,
-    SettingMain
+    SettingMain,
   },
-  props:{
-    subComponents:{
-      type:String,
-      default:"SettingMain"
-    }
+  props: {
+    subComponents: {
+      type: String,
+      default: "SettingMain",
+    },
   },
-  data(){
-    return{
-      w:500
-    }
+  created() {
+    this.component = this.subComponents;
   },
-  methods:{
-    handleResize(x,y,w,h){
-      this.w=w
-    }
-  }
+  data() {
+    return {
+      w: 500,
+      component: "SettingMain",
+      operated: [],
+      actions:'push'
+    };
+  },
+  methods: {
+    handleResize(x, y, w, h) {
+      this.w = w;
+    },
+    handleOpenSub(name) {
+      if (name) {
+        this.operated.push(this.component);
+        this.component = name;
+      }
+    },
+    handleBack() {
+      console.log(1);
+      this.component = this.operated.pop();
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
-
-.content{
-  height:100%;
+.content {
+  height: 100%;
   width: 100%;
   display: flex;
-  .sub-content{
+  .sub-content {
     height: 100%;
     width: 100%;
+  }
+}
+.left-title {
+  display: flex;
+  line-height: 32px;
+  width: 104px;
+  color: #000000;
+  div {
+    padding: 0 12px;
+    line-height: 32px;
+  }
+  .back-button {
+    height: 32px;
+    width: 42px;
+    background: rgba(0, 0, 0, 0);
+    /deep/.anticon {
+      cursor: default;
+    }
+    &:hover {
+      color: #ffffff;
+      background: rgb(0, 120, 215);
+    }
+  }
+}
+.push-enter-active {
+  animation: bounce-in 0.5s;
+}
+.push-leave-active  /* .fade-leave-active below version 2.1.8 */ {
+  animation: bounce-in 0.5s;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.8);
+    overflow: hidden;
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

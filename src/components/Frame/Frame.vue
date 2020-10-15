@@ -15,14 +15,15 @@
     v-on="$listeners"
     @activated="active"
     :resizable="resizable"
+    :drag-cancel="dragCancel"
   >
     <div class="header" @dblclick="fullScrean">
       <div class="header-slot">
         <slot name="header"></slot>
       </div>
-      <div class="header-content">{{ getAppInfo(appsId).name || "" }}</div>
 
       <div class="header-back" @mouseup="(e) => rightClick(e, 'headerMenu')">
+        <slot name="header-name-more"><div class="header-title">{{ getAppInfo(appsId).name || "" }}</div></slot>
         <VueContextMenu
           :offset="contextMenuOffset"
           :show.sync="headerMenu"
@@ -142,6 +143,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    dragCancel:{
+      type:String,
+      default:''
+    }
   },
   data() {
     return {
@@ -263,16 +268,15 @@ export default {
     height: 32px;
     width: 100%;
     z-index: 2;
+    display: flex;
+    .header-title {
+      height: 100%;
+      padding:0 9px;
+      color: #000;
+      line-height: 32px;
+    }
   }
-  .header-content {
-    position: absolute;
-    height: 100%;
-    padding: 9px;
-    color: #000;
-    line-height: 1em;
-    top: 0;
-    z-index: 1;
-  }
+
   .header-button-group {
     display: flex;
     position: absolute;
