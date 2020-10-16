@@ -1,5 +1,5 @@
 <template>
-  <setting-body>
+  <setting-body :leftList="leftList" title="个性化">
     <template #more>
       <div class="left-main">
         
@@ -12,11 +12,18 @@
 import SettingBody from "./SettingBody";
   export default {
     components:{
-      SettingBody
+      SettingBody,
+    },
+    data(){
+      return{
+        leftList:[
+          {name:'语言',icon:'font-colors',component:'language'}
+        ]
+      }
     }
   }
 </script>
 
 <style lang="less" scoped>
-@import url('./left.less');
+
 </style>

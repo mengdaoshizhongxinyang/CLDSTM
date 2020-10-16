@@ -1,5 +1,5 @@
 <template>
-  <setting-body>
+  <setting-body :width="width">
     <div class="content" @mousemove="handleMousemove">
       <div class="title">设置</div>
       <div
@@ -70,13 +70,15 @@ export default {
   },
   methods: {
     handleMousemove(e) {
-      this.x = e.clientX - this.$refs.body.getBoundingClientRect().x - 75;
-      this.y = e.clientY - this.$refs.body.getBoundingClientRect().y - 75;
+      if(this.$refs.body){
+        this.x = e.clientX - this.$refs.body.getBoundingClientRect().x - 75;
+        this.y = e.clientY - this.$refs.body.getBoundingClientRect().y - 75;
+      }
     },
     handleOpen(item){
       this.$emit('openSub',item.component)
     }
-  },
+  }
 };
 </script>
 
@@ -87,6 +89,7 @@ export default {
   overflow: hidden;
   position: relative;
   align-items: center;
+  width:100%;
   .title {
     font-size: 24px;
     background: #fff;

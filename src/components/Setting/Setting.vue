@@ -75,10 +75,9 @@ export default {
       }
     },
     handleBack() {
-      console.log(1);
       this.component = this.operated.pop();
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -87,9 +86,11 @@ export default {
   height: 100%;
   width: 100%;
   display: flex;
+  position: relative;
   .sub-content {
     height: 100%;
     width: 100%;
+    position: absolute;
   }
 }
 .left-title {
@@ -118,12 +119,20 @@ export default {
   animation: bounce-in 0.5s;
 }
 .push-leave-active  /* .fade-leave-active below version 2.1.8 */ {
-  animation: bounce-in 0.5s;
+  animation: bounce-out 0.5s;
 }
 @keyframes bounce-in {
   0% {
     transform: scale(0.8);
     overflow: hidden;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes bounce-out {
+  0% {
+    transform: scale(1);
   }
   100% {
     transform: scale(1);
