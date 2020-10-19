@@ -27,6 +27,7 @@
             :is="component"
             class="sub-content"
             :width="w"
+            :height="h"
             @openSub="handleOpenSub"
           ></component>
         </transition>
@@ -50,8 +51,8 @@ export default {
   props: {
     subComponents: {
       type: String,
-      default: "SettingMain",
-    },
+      default: "SettingMain"
+    }
   },
   created() {
     this.component = this.subComponents;
@@ -59,6 +60,7 @@ export default {
   data() {
     return {
       w: 500,
+      h:500,
       component: "SettingMain",
       operated: [],
       actions:'push'
@@ -67,6 +69,7 @@ export default {
   methods: {
     handleResize(x, y, w, h) {
       this.w = w;
+      this.h=h
     },
     handleOpenSub(name) {
       if (name) {

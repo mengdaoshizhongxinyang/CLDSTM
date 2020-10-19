@@ -1,10 +1,6 @@
 <template>
   <setting-body :leftList="leftList" title="个性化">
-    <template #more>
-      <div class="left-main">
-        
-      </div>
-    </template>
+    <div class="main"></div>
   </setting-body>
 </template>
 
@@ -25,5 +21,7 @@ import SettingBody from "./SettingBody";
 </script>
 
 <style lang="less" scoped>
-
+.main{
+  padding-top:32px;
+}
 </style>

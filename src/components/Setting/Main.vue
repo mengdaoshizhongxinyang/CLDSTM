@@ -1,5 +1,5 @@
 <template>
-  <setting-body :width="width">
+  <setting-body :width="width" v-bind="$attrs">
     <div class="content" @mousemove="handleMousemove">
       <div class="title">设置</div>
       <div
@@ -90,6 +90,7 @@ export default {
   position: relative;
   align-items: center;
   width:100%;
+  padding-top:32px;
   .title {
     font-size: 24px;
     background: #fff;

@@ -1,22 +1,17 @@
 <template>
   <div class="setting-main">
-    <div class="wide-more" v-if="leftList.length > 0">
-      <left-moreItem>
-        <div class="left-more-list-content">
-          <a-icon type="home"></a-icon>主页
-        </div>
-      </left-moreItem>
-      <div class="more-title">{{title}}</div>
-      <left-moreItem v-for="item in leftList" :key="item.component">
-        <div class="left-more-list-content">
-          <a-icon :type="item.icon"></a-icon>{{item.name}}
-        </div>
-      </left-moreItem>
-    </div>
     <div class="setting-body">
-      <slot name="narrowMore"></slot>
-      <div>
+      <div class="setting-content" ref="content" @mousewheel="handleScroll">
         <slot></slot>
+      </div>
+      <div class="default-title" ref="title"></div>
+      <div class="scroll-bar">
+        <div
+          class="scroll-bar-thumb"
+          :style="{ height: scrollHeight + 'px', top: scrollTop + 'px' }"
+          @mousedown="handleScrollMouseDown"
+          @mouseup="handleScrollMouseUp"
+        ></div>
       </div>
     </div>
   </div>
@@ -39,15 +34,71 @@ export default {
         return [];
       },
     },
-    width:{
-      type:Number,
-      default:540
-    }
+    width: {
+      type: Number,
+      default: 540,
+    },
+    littleTitle: {
+      type: String,
+      default: "",
+    },
+    height: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
       subTitle: "",
+      scrollTop: 40,
+      scrollHeight: 0,
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.setScrollHeight();
+    });
+  },
+  methods: {
+    handleScroll(e) {
+      this.scrollTop =
+        (e.target.scrollTop / this.$refs.content.childNodes[0].clientHeight) *
+          (this.$refs.content.clientHeight -
+            this.$refs.title.clientHeight -
+            12) +
+        this.$refs.title.clientHeight +
+        6;
+    },
+    setScrollHeight() {
+      if (
+        this.$refs.content.clientHeight <
+        this.$refs.content.childNodes[0].clientHeight
+      ) {
+        this.scrollHeight = Math.floor(
+          (this.$refs.content.clientHeight *
+            (this.$refs.content.clientHeight -
+              this.$refs.title.clientHeight -
+              12)) /
+            this.$refs.content.childNodes[0].clientHeight
+        )
+      } else {
+        this.scrollHeight = 0;
+      }
+    },
+    handleScrollMouseDown(e) {
+      e.target.addEventListener("mousemove", this.handleScrollMouseMove)
+    },
+    handleScrollMouseMove(e) {
+      this.scrollTop = this.scrollTop + e.offsetY
+    },
+    handleScrollMouseUp(e) {
+      e.target.removeEventListener("mousemove", this.handleScrollMouseMove)
+    }
+  },
+  watch: {
+    height(old) {
+      this.setScrollHeight();
+    },
   },
 };
 </script>
@@ -55,7 +106,6 @@ export default {
 <style lang="less" scoped>
 @import url("../Style/default");
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  .wide-more,
   .narrow-more {
     backdrop-filter: @menu-dark-background-filter;
   }
@@ -64,49 +114,43 @@ export default {
   display: flex;
   height: 100%;
   width: 100%;
-  .wide-more {
-    width: 240px;
-    padding: 54px 0;
-    background-color: rgba(220, 220, 220, 0.65);
-    .more-title {
-      font-weight: 900;
-      color:#000;
-      padding:0 12px 12px;
-    }
-    .left-more-list-content {
-      padding: 0 12px;
-      /deep/.anticon {
-        font-size: 14px;
-        margin-right: 12px;
-      }
-    }
-
-    .left-more-list-content-actived {
-      padding-left: 6px;
-      border-left: 6px solid #1890ff;
-    }
-  }
+  overflow: hidden;
   .setting-body {
     background: #fff;
     position: relative;
-    overflow-x: hidden;
-    overflow-y: overlay;
-    height: 100%;
+
     flex: 1;
-    &::-webkit-scrollbar {
-      width: 6px;
+    .default-title {
+      padding: 16px;
+      width: 100%;
+      position: absolute;
+      background: #fff;
+      z-index: 1;
+      top: 0;
     }
-    &::-webkit-scrollbar-button {
-      height: 7px;
+    .scroll-bar {
+      right: 3px;
+      position: absolute;
+      width: 3px;
+      flex:1;
+      // height: 100%;
+      top: 32px;
+      z-index: 1;
+      .scroll-bar-thumb {
+        position: absolute;
+        right: 3px;
+        background: rgba(0, 0, 0, 0.55) 50%;
+      }
+      &:hover {
+        width: 9px;
+        right: 0px;
+      }
     }
-    &::-webkit-scrollbar-thumb {
-      width: 6px;
-      border-radius: 4px 10px 4px 2px;
-      background-image: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.55) 50%,
-        #fff 50%
-      );
+    .setting-content {
+      position: relative;
+      &::-webkit-scrollbar {
+        width: 0px;
+      }
     }
   }
 }
