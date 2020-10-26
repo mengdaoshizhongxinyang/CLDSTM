@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -31,11 +32,11 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.6",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "^2.0.0",
-    "@vue/test-utils": "^1.1.0",
+    "@vue/test-utils": "^1.0.3",
     "babel-plugin-import": "^1.13.0",
     "css-loader": "^3.6.0",
-    "jest": "^26.6.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "monaco-editor-webpack-plugin": "^1.9.0",

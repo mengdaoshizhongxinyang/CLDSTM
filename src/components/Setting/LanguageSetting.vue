@@ -6,22 +6,20 @@
 
 <script>
 import SettingBody from "./SettingBody";
-  export default {
-    components:{
-      SettingBody,
-    },
-    data(){
-      return{
-        leftList:[
-          {name:'语言',icon:'font-colors',component:'language'}
-        ]
-      }
-    }
-  }
+export default {
+  components: {
+    SettingBody,
+  },
+  data() {
+    return {
+      leftList: [{ name: "语言", icon: "font-colors", component: "language" }],
+    };
+  },
+};
 </script>
 
 <style lang="less" scoped>
-.main{
-  padding-top:32px;
+.main {
+  padding-top: 32px;
 }
 </style>

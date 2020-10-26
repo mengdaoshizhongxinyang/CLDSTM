@@ -1,18 +1,15 @@
 <template>
   <div class="setting-main">
     <div class="setting-body">
-      <div class="setting-content" ref="content" @mousewheel="handleScroll">
+      <div class="setting-content" ref="content" @scroll="handleScroll">
         <slot></slot>
       </div>
       <div class="default-title" ref="title"></div>
-      <div class="scroll-bar">
-        <div
-          class="scroll-bar-thumb"
-          :style="{ height: scrollHeight + 'px', top: scrollTop + 'px' }"
-          @mousedown="handleScrollMouseDown"
-          @mouseup="handleScrollMouseUp"
-        ></div>
-      </div>
+      <div
+        class="scroll-bar-thumb"
+        :style="{ height: scrollHeight + 'px', top: scrollTop + 'px' }"
+        @mousedown="handleScrollMouseDown"
+      ></div>
     </div>
   </div>
 </template>
@@ -71,29 +68,34 @@ export default {
     },
     setScrollHeight() {
       if (
+        this.$refs.content.childNodes[0] &&
         this.$refs.content.clientHeight <
-        this.$refs.content.childNodes[0].clientHeight
+          this.$refs.content.childNodes[0].clientHeight
       ) {
+        console.log(1);
         this.scrollHeight = Math.floor(
           (this.$refs.content.clientHeight *
             (this.$refs.content.clientHeight -
               this.$refs.title.clientHeight -
               12)) /
             this.$refs.content.childNodes[0].clientHeight
-        )
+        );
+        console.log(this.scrollHeight);
       } else {
         this.scrollHeight = 0;
       }
     },
     handleScrollMouseDown(e) {
       e.target.addEventListener("mousemove", this.handleScrollMouseMove)
+      document.addEventListener("mouseup",this.handleScrollMouseUp)
     },
     handleScrollMouseMove(e) {
-      this.scrollTop = this.scrollTop + e.offsetY
+      this.scrollTop = this.scrollTop + e.offsetY;
     },
     handleScrollMouseUp(e) {
       e.target.removeEventListener("mousemove", this.handleScrollMouseMove)
-    }
+      document.removeEventListener("mouseup",this.handleScrollMouseUp)
+    },
   },
   watch: {
     height(old) {
@@ -128,26 +130,23 @@ export default {
       z-index: 1;
       top: 0;
     }
-    .scroll-bar {
-      right: 3px;
+
+    .scroll-bar-thumb {
       position: absolute;
+      right: 3px;
+      background: rgba(0, 0, 0, 0.55) 50%;
       width: 3px;
-      flex:1;
-      // height: 100%;
-      top: 32px;
       z-index: 1;
-      .scroll-bar-thumb {
-        position: absolute;
-        right: 3px;
-        background: rgba(0, 0, 0, 0.55) 50%;
-      }
       &:hover {
         width: 9px;
         right: 0px;
       }
     }
+
     .setting-content {
       position: relative;
+      height: 100%;
+      overflow-x: hidden;
       &::-webkit-scrollbar {
         width: 0px;
       }
