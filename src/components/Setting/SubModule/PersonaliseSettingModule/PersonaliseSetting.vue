@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import SettingBody from "./SettingBody";
+import SettingBody from "../../SettingBody";
 export default {
   components: {
     SettingBody,

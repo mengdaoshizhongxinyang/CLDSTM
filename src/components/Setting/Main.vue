@@ -7,10 +7,10 @@
         :style="`width:${colNum > 1 ? colNum * 240 + 'px' : '100%'}`"
         ref="body"
       >
-        <div class="item" v-for="(item, index) in items" :key="index" @click="handleOpen(item)">
+        <div class="item" v-for="(item, index) in items" :key="index" >
           <div class="item-ud-occlude occlude"></div>
           <div class="item-lr-occlude occlude"></div>
-          <div class="item-content">
+          <div class="item-content" @click="handleOpen(item)">
             <div class="item-content-icon">
               <a-icon :type="item.icon"></a-icon>
             </div>

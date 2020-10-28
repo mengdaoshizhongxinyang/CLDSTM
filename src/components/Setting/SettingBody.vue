@@ -4,32 +4,27 @@
       <div class="setting-content" ref="content" @scroll="handleScroll">
         <slot></slot>
       </div>
-      <div class="default-title" ref="title"></div>
+      <div class="default-title" ref="title">
+        <slot name="title">
+          <div style="background:#fff;height:32px;"></div>
+        </slot>
+      </div>
       <div
         class="scroll-bar-thumb"
         :style="{ height: scrollHeight + 'px', top: scrollTop + 'px' }"
         @mousedown="handleScrollMouseDown"
+        tabindex="-1"
       ></div>
     </div>
   </div>
 </template>
 
 <script>
-import LeftMoreItem from "./LeftMoreItem";
 export default {
-  components: {
-    LeftMoreItem,
-  },
   props: {
     title: {
       type: String,
       default: "",
-    },
-    leftList: {
-      type: Array,
-      default: () => {
-        return [];
-      },
     },
     width: {
       type: Number,
@@ -49,7 +44,8 @@ export default {
       subTitle: "",
       scrollTop: 40,
       scrollHeight: 0,
-    };
+      clickXY: { x: 0, y: 0, top: 0 },
+    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -72,7 +68,6 @@ export default {
         this.$refs.content.clientHeight <
           this.$refs.content.childNodes[0].clientHeight
       ) {
-        console.log(1);
         this.scrollHeight = Math.floor(
           (this.$refs.content.clientHeight *
             (this.$refs.content.clientHeight -
@@ -80,27 +75,52 @@ export default {
               12)) /
             this.$refs.content.childNodes[0].clientHeight
         );
-        console.log(this.scrollHeight);
       } else {
         this.scrollHeight = 0;
       }
     },
     handleScrollMouseDown(e) {
-      e.target.addEventListener("mousemove", this.handleScrollMouseMove)
-      document.addEventListener("mouseup",this.handleScrollMouseUp)
+      this.clickXY = { x: e.e, y: e.y, top: this.scrollTop };
+      document.addEventListener("mousemove", this.handleScrollMouseMove);
+      document.addEventListener("mouseup", this.handleScrollMouseUp);
     },
     handleScrollMouseMove(e) {
-      this.scrollTop = this.scrollTop + e.offsetY;
+      const { y, top } = this.clickXY;
+      this.scrollTop = this.clickXY.top - (y - e.y);
+      if (this.scrollTop < 6 + this.$refs.title.clientHeight) {
+        this.scrollTop = 6 + this.$refs.title.clientHeight;
+      }
+      if (
+        this.scrollTop >
+        this.$refs.content.clientHeight - 6 - this.scrollHeight
+      ) {
+        this.scrollTop =
+          this.$refs.content.clientHeight - 6 - this.scrollHeight;
+      }
+      this.$refs.content.scrollTop =
+        ((this.scrollTop - 6 - this.$refs.title.clientHeight) /
+          (this.$refs.content.clientHeight -
+            this.$refs.title.clientHeight -
+            12)) *
+        this.$refs.content.childNodes[0].clientHeight;
     },
     handleScrollMouseUp(e) {
-      e.target.removeEventListener("mousemove", this.handleScrollMouseMove)
-      document.removeEventListener("mouseup",this.handleScrollMouseUp)
-    },
+      document.removeEventListener("mousemove", this.handleScrollMouseMove);
+      document.removeEventListener("mouseup", this.handleScrollMouseUp);
+    }
   },
   watch: {
-    height(old) {
+    height(val, oldVal) {
       this.setScrollHeight();
+      if (oldVal >= 500 && val < 500) {
+        this.$emit("widen", false);
+      } else if (oldVal < 500 && val >= 500) {
+        this.$emit("widen", true);
+      }
     },
+    width(val,oldVal){
+      this.setScrollHeight()
+    }
   },
 };
 </script>
@@ -123,10 +143,8 @@ export default {
 
     flex: 1;
     .default-title {
-      padding: 16px;
       width: 100%;
       position: absolute;
-      background: #fff;
       z-index: 1;
       top: 0;
     }
@@ -138,6 +156,10 @@ export default {
       width: 3px;
       z-index: 1;
       &:hover {
+        width: 9px;
+        right: 0px;
+      }
+      &:focus {
         width: 9px;
         right: 0px;
       }

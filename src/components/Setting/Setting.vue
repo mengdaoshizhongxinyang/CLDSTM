@@ -5,6 +5,7 @@
     v-bind="$attrs"
     @resizing="handleResize"
     :minWidth="300"
+    :minHeight="100"
     :initialW="300"
     :drag-cancel="'.back-button'"
   >
@@ -39,8 +40,8 @@
 <script>
 import SettingFrame from "@/components/Frame";
 import SettingMain from "./Main";
-import LanguageSetting from "./LanguageSetting";
-import PersonaliseSetting from "./PersonaliseSetting";
+import {LanguageSetting,LanguageModule} from "./SubModule/LanguageSettingModule";
+import {PersonaliseSetting} from "./SubModule/PersonaliseSettingModule";
 export default {
   components: {
     PersonaliseSetting,
