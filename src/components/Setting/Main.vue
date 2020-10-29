@@ -24,7 +24,7 @@
           <div class="item-lr-occlude occlude"></div>
           <div class="item-ud-occlude occlude"></div>
         </div>
-        <div v-for="i in colNum-(items.length%colNum)" :key="i+items.length" class="filling">
+        <div v-for="i in (colNum-(items.length%colNum))%colNum" :key="i+items.length" class="filling">
 
         </div>
         <div

@@ -44,7 +44,7 @@ export default {
       subTitle: "",
       scrollTop: 40,
       scrollHeight: 0,
-      clickXY: { x: 0, y: 0, top: 0 },
+      clickXY: { x: 0, y: 0, top: 0 }
     }
   },
   mounted() {
@@ -138,7 +138,7 @@ export default {
   width: 100%;
   overflow: hidden;
   .setting-body {
-    background: #fff;
+    
     position: relative;
 
     flex: 1;

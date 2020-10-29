@@ -5,7 +5,7 @@
     v-bind="$attrs"
     @resizing="handleResize"
     :minWidth="300"
-    :minHeight="100"
+    :minHeight="320"
     :initialW="300"
     :drag-cancel="'.back-button'"
   >
