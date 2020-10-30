@@ -6,7 +6,8 @@
     @resizing="handleResize"
     :minWidth="300"
     :minHeight="320"
-    :initialW="300"
+    :initialW="w"
+    :initialH="h"
     :drag-cancel="'.back-button'"
   >
     <template #header-name-more>
@@ -48,6 +49,7 @@ export default {
     LanguageSetting,
     SettingFrame,
     SettingMain,
+    LanguageModule
   },
   props: {
     subComponents: {
@@ -74,6 +76,7 @@ export default {
     },
     handleOpenSub(name) {
       if (name) {
+        console.log(name)
         this.operated.push(this.component);
         this.component = name;
       }

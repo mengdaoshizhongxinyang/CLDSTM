@@ -5,7 +5,7 @@
         v-for="item in list"
         :key="item.LanguageModule"
         class="menu-list-item"
-        @mousedown="handleMouseDown"
+        @click="handleClick(item)"
       >
         <div class="menu-list-item-label"></div>
         <div class="menu-list-item-content">
@@ -27,6 +27,11 @@ export default {
       },
     },
   },
+  methods:{
+    handleClick(item){
+      this.$emit('openSub',item.component)
+    }
+  }
 };
 </script>
 

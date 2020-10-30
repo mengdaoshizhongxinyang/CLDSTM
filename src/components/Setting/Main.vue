@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     colNum() {
-      return this.width >= 500 ? Math.floor((this.width - 24) / 240) : 1;
+      return this.width >= 500 ? (Math.floor((this.width - 24) / 240)>=5?5:Math.floor((this.width - 24) / 240)) : 1;
     },
   },
   props: {
@@ -91,6 +91,7 @@ export default {
   align-items: center;
   width:100%;
   padding-top:32px;
+  background: #fff;
   .title {
     font-size: 24px;
     background: #fff;

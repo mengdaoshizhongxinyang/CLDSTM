@@ -6,7 +6,7 @@
       </div>
     </template>
     <div class="main">
-      <menu-list :list="list"></menu-list>
+      <menu-list :list="list" v-on="$listeners"></menu-list>
     </div>
   </setting-body>
 </template>
