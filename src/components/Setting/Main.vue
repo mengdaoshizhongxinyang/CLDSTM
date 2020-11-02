@@ -92,6 +92,7 @@ export default {
   width:100%;
   padding-top:32px;
   background: #fff;
+  min-height: 100%;
   .title {
     font-size: 24px;
     background: #fff;

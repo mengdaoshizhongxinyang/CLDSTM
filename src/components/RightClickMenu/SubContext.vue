@@ -4,16 +4,19 @@ const SubContext = {
   components: {
     SubContext,
   },
-  created() {
-    this.menuList = [].concat(
-      this.menus.map((item) => {
-        return {
-          ...item,
-          hidden: false,
-        };
-      })
-    );
+  computed: {
+    menuList() {
+      return [].concat(
+        this.menus.map((item) => {
+          return {
+            ...item,
+            hidden: false,
+          };
+        })
+      );
+    },
   },
+
   props: {
     menus: {
       type: Array,
@@ -44,8 +47,7 @@ const SubContext = {
         x: 0,
         y: 0,
       },
-      direction: "right",
-      menuList: [],
+      direction: "right"
     };
   },
   watch: {
@@ -120,7 +122,7 @@ const SubContext = {
       }
     },
     renderChildren(menu) {
-      const {handleClick,$scopedSlots}=this
+      const { handleClick, $scopedSlots } = this;
       return menu.children && menu.children.length > 0 ? (
         <SubContext
           menus={menu.children}
@@ -145,7 +147,7 @@ const SubContext = {
       handleMouseleave,
       handleClick,
       $scopedSlots,
-      renderChildren
+      renderChildren,
     } = this;
     return (
       <transition name="contextmenu-fade">
@@ -162,7 +164,8 @@ const SubContext = {
                 {menu.name && $scopedSlots[menu.name] ? (
                   $scopedSlots[menu.name](menu).concat(renderChildren(menu))
                 ) : (
-                  <div class="menu-item-content">{menu.label}
+                  <div class="menu-item-content">
+                    {menu.label}
                     {renderChildren(menu)}
                   </div>
                 )}

@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop" @contextmenu="e=>rightClick(e)">
+  <div class="desktop" @contextmenu="(e) => rightClick(e)">
     <div class="desktp-rightmenu">
       <right-click-menu
         :offset="contextMenuOffset"
@@ -16,6 +16,30 @@
 import RightClickMenu from "../RightClickMenu";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
+  computed: {
+    ...mapState({
+      menus(state) {
+        let menuList = [
+          { label: "刷新", name: "refresh" },
+          {
+            label: "创建",
+            name: "create",
+            children: [{ label: "文件夹", run: "createFolder" }],
+          },
+          { label: "个性化", name: "personalise", run: "personaliseFrame" },
+        ];
+        let language =
+          state.core.language.language[state.core.language.languageSelected][
+            "desktop"
+          ]["contextMenu"];
+        return menuList.map((item) => {
+          return Object.assign(item,{
+            label: language[item.name] || item.label
+          });
+        });
+      },
+    }),
+  },
   components: {
     RightClickMenu,
   },
@@ -24,18 +48,9 @@ export default {
       headerMenu: false,
       contextMenuOffset: {
         left: 0,
-        top: 0
+        top: 0,
       },
       list: {},
-      menus: [
-        { label: "刷新", name:"refresh" },
-        {
-          label: "创建",
-          name:"create",
-          children: [{ label: "文件夹",run:"createFolder" }],
-        },
-        { label: "个性化", name:"personalise",run:"personaliseFrame" },
-      ],
     };
   },
   methods: {
@@ -49,21 +64,25 @@ export default {
       this.$store.dispatch(actions);
     },
     handleMenuItemClick(menu) {
-      if(this[menu.run]){
-        this[menu.run]()
+      if (this[menu.run]) {
+        this[menu.run]();
       }
     },
     createFolder() {
-      this.$store.dispatch("createFile",{type:'folder',name:"新建文件夹",path:"/"})
+      this.$store.dispatch("createFile", {
+        type: "folder",
+        name: "新建文件夹",
+        path: "/",
+      });
     },
-    personaliseFrame(){
+    personaliseFrame() {
       let PersonaliseSetting = {
-        apps:'Setting',
-        icon:'setting',
-        name:'设置'
-      }
-      this.$tstore.dispatch("openApps", PersonaliseSetting)
-    }
+        apps: "Setting",
+        icon: "setting",
+        name: "设置",
+      };
+      this.$tstore.dispatch("openApps", PersonaliseSetting);
+    },
   },
   mounted() {
     this.list = configs.getActionsItem();
@@ -83,5 +102,4 @@ export default {
     position: relative;
   }
 }
-
 </style>
