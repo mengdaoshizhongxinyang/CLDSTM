@@ -30,6 +30,7 @@
             class="sub-content"
             :width="w"
             :height="h"
+            :widen="widen"
             @openSub="handleOpenSub"
           ></component>
         </transition>
@@ -41,21 +42,24 @@
 <script>
 import SettingFrame from "@/components/Frame";
 import SettingMain from "./Main";
-import {LanguageSetting,LanguageModule} from "./SubModule/LanguageSettingModule";
-import {PersonaliseSetting} from "./SubModule/PersonaliseSettingModule";
+import {
+  LanguageSetting,
+  LanguageModule,
+} from "./SubModule/LanguageSettingModule";
+import { PersonaliseSetting } from "./SubModule/PersonaliseSettingModule";
 export default {
   components: {
     PersonaliseSetting,
     LanguageSetting,
     SettingFrame,
     SettingMain,
-    LanguageModule
+    LanguageModule,
   },
   props: {
     subComponents: {
       type: String,
-      default: "SettingMain"
-    }
+      default: "SettingMain",
+    },
   },
   created() {
     this.component = this.subComponents;
@@ -63,28 +67,38 @@ export default {
   data() {
     return {
       w: 500,
-      h:500,
+      h: 500,
       component: "SettingMain",
       operated: [],
-      actions:'push'
+      actions: "push",
+      widen: true,
     };
   },
   methods: {
     handleResize(x, y, w, h) {
       this.w = w;
-      this.h=h
+      this.h = h;
     },
     handleOpenSub(name) {
       if (name) {
-        console.log(name)
+        console.log(name);
         this.operated.push(this.component);
         this.component = name;
       }
     },
     handleBack() {
       this.component = this.operated.pop();
-    }
-  }
+    },
+  },
+  watch: {
+    w(val, oldVal) {
+      if (oldVal >= 500 && val < 500) {
+        this.widen=false
+      } else if (oldVal < 500 && val >= 500) {
+        this.widen=true
+      }
+    },
+  },
 };
 </script>
 

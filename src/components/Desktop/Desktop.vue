@@ -24,19 +24,28 @@ export default {
           {
             label: "创建",
             name: "create",
-            children: [{ label: "文件夹", run: "createFolder" }],
+            children: [{ label: "文件夹", run: "createFolder",name: "createFolder", }],
           },
           { label: "个性化", name: "personalise", run: "personaliseFrame" },
         ];
         let language =
-          state.core.language.language[state.core.language.languageSelected][
+          state.core.language.languageSelected[
             "desktop"
           ]["contextMenu"];
-        return menuList.map((item) => {
-          return Object.assign(item,{
-            label: language[item.name] || item.label
-          });
-        });
+        let queueMenus=[].concat(menuList)
+        while(queueMenus.length!=0){
+          let menu=queueMenus.pop()
+          menu.label=language[menu.name] || menu.label
+          if(menu.children && menu.children.length>0){
+            queueMenus=queueMenus.concat(menu.children)
+          }
+        }
+        return menuList
+        // return menuList.map((item) => {
+        //   return Object.assign(item,{
+        //     label: language[item.name] || item.label
+        //   });
+        // });
       },
     }),
   },

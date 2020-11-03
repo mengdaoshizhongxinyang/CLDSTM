@@ -6,7 +6,7 @@
       </div>
       <div class="default-title" ref="title">
         <slot name="title">
-          <div style="background:#fff;height:32px;"></div>
+          <div style="background: #fff; height: 32px"></div>
         </slot>
       </div>
       <div
@@ -44,8 +44,8 @@ export default {
       subTitle: "",
       scrollTop: 40,
       scrollHeight: 0,
-      clickXY: { x: 0, y: 0, top: 0 }
-    }
+      clickXY: { x: 0, y: 0, top: 0 },
+    };
   },
   mounted() {
     this.$nextTick(() => {
@@ -107,10 +107,13 @@ export default {
     handleScrollMouseUp(e) {
       document.removeEventListener("mousemove", this.handleScrollMouseMove);
       document.removeEventListener("mouseup", this.handleScrollMouseUp);
-    }
+    },
   },
   watch: {
     height(val, oldVal) {
+      this.setScrollHeight();
+    },
+    width(val, oldVal) {
       this.setScrollHeight();
       if (oldVal >= 500 && val < 500) {
         this.$emit("widen", false);
@@ -118,9 +121,6 @@ export default {
         this.$emit("widen", true);
       }
     },
-    width(val,oldVal){
-      this.setScrollHeight()
-    }
   },
 };
 </script>
@@ -138,7 +138,6 @@ export default {
   width: 100%;
   overflow: hidden;
   .setting-body {
-    
     position: relative;
 
     flex: 1;

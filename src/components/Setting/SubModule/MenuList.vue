@@ -47,7 +47,6 @@ export default {
   }
   .@{name}-list{
     font-size: 16px;
-    
     &-item{
       padding:1em 0;
       line-height: 18px;
