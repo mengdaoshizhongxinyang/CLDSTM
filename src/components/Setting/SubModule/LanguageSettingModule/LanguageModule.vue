@@ -1,28 +1,29 @@
 <template>
-  <setting-body v-bind="$attr">
-    <div class="language-main">
-      <div class="language-left" v-if="widen"></div>
-      <div class="language-right">
-        <info-title></info-title>
-        <div class="language-content">
-          <a-select
-            style="width: 100%"
-            @select="handleSelect"
-            :value="languageSelected.abbreviation"
+  <setting-body v-bind="$attrs" :widen="widen">
+    <div class="language-left" v-if="widen">
+      <menu-list v-on="$listeners" :widen="widen" from="language"></menu-list>
+    </div>
+    <div class="language-right" :style="`margin-left:${widen?240:0}px`">
+      <info-title></info-title>
+      <div class="language-content">
+        <a-select
+          style="width: 100%"
+          @select="handleSelect"
+          :value="languageSelected.abbreviation"
+        >
+          <a-select-option
+            :value="languageOption.abbreviation"
+            v-for="languageOption in languageList"
+            :key="languageOption.abbreviation"
           >
-            <a-select-option
-              :value="languageOption.abbreviation"
-              v-for="languageOption in languageList"
-              :key="languageOption.abbreviation"
-            >
-              {{ languageOption.name }}
-            </a-select-option>
-          </a-select>
-        </div>
+            {{ languageOption.name }}
+          </a-select-option>
+        </a-select>
       </div>
     </div>
+
     <template #title>
-      <div :class="`title ${widen ? 'widen-title' : ''}`">
+      <div :class="`title`">
         <div class="title-name">语言设置</div>
       </div>
     </template>
@@ -33,10 +34,12 @@
 import SettingBody from "../../SettingBody";
 import InfoTitle from "../InfoTitle.vue";
 import { mapState } from "vuex";
+import MenuList from "../MenuList";
 export default {
   components: {
     InfoTitle,
     SettingBody,
+    MenuList
   },
   props: {
     widen: {
@@ -55,7 +58,9 @@ export default {
     }),
   },
   data() {
-    return {};
+    return {
+      list: [{ name: "语言", icon: "font-colors", component: "LanguageModule" }],
+    };
   },
   methods: {
     handleSelect(item) {
@@ -67,17 +72,15 @@ export default {
 
 <style lang="less" scoped>
 @name:~"language";
-.@{name}-main{
-  height:100%;
-  background: #fff;
-  display: flex;
+
   .@{name}-left{
     width: 240px;
+    height: 100%;
+    position: absolute;
   }
   .@{name}-right{
-    position:relative;
-    
-    flex:1;
+    background: #fff;
+    min-height: 100%;
     .@{name}-content{
       padding: 96px 14px 14px 14px;
       width: 100%;
@@ -85,7 +88,6 @@ export default {
     }
   }
 
-}
   .title{
     padding-top:32px;
     background: #fff;
@@ -95,8 +97,5 @@ export default {
       font-weight: 900;
       color:#000;
     }
-  }
-  .widen-title{
-    margin-left:240px;
   }
 </style>

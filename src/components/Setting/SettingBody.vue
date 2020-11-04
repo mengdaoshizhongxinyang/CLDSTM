@@ -4,7 +4,7 @@
       <div class="setting-content" ref="content" @scroll="handleScroll">
         <slot></slot>
       </div>
-      <div class="default-title" ref="title">
+      <div :class="`${widen?'widen-default-title':'default-title'}`" ref="title">
         <slot name="title">
           <div style="background: #fff; height: 32px"></div>
         </slot>
@@ -38,6 +38,10 @@ export default {
       type: Number,
       default: 0,
     },
+    widen:{
+      type:Boolean,
+      default:false
+    }
   },
   data() {
     return {
@@ -142,12 +146,18 @@ export default {
 
     flex: 1;
     .default-title {
+      position: absolute;
+      z-index: 1;
+      top: 0;
       width: 100%;
+    }
+    .widen-default-title{
+      width:calc(100% - 240px);
+      left:240px;
       position: absolute;
       z-index: 1;
       top: 0;
     }
-
     .scroll-bar-thumb {
       position: absolute;
       right: 3px;
@@ -165,7 +175,6 @@ export default {
     }
 
     .setting-content {
-      position: relative;
       height: 100%;
       overflow-x: hidden;
       &::-webkit-scrollbar {

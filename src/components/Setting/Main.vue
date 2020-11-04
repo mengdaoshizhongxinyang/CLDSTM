@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import SettingBody from "./SettingBody";
 export default {
   components: {
@@ -46,6 +47,11 @@ export default {
     colNum() {
       return this.width >= 500 ? (Math.floor((this.width - 24) / 240)>=5?5:Math.floor((this.width - 24) / 240)) : 1;
     },
+    ...mapState({
+      items(state){
+        return state.core.setting.settings.main
+      }
+    })
   },
   props: {
     width: {
@@ -56,16 +62,7 @@ export default {
   data() {
     return {
       x: 0,
-      y: 0,
-      items: [
-        { icon: "highlight", title: "个性化", desc: "颜色，背景",component:'PersonaliseSetting' },
-        { icon: "global", title: "语言设置", desc: "语言",component:'LanguageSetting' },
-        { icon: "exclamation-circle", title: "待定", desc: "待定" },
-        { icon: "exclamation-circle", title: "待定", desc: "待定" },
-        { icon: "exclamation-circle", title: "待定", desc: "待定" },
-        { icon: "exclamation-circle", title: "待定", desc: "待定" },
-        { icon: "exclamation-circle", title: "待定", desc: "待定" }
-      ],
+      y: 0
     };
   },
   methods: {

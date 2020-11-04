@@ -6,7 +6,7 @@
       </div>
     </template>
     <div class="main">
-      <menu-list :list="list" v-on="$listeners"></menu-list>
+      <menu-list v-on="$listeners" from="language"></menu-list>
     </div>
   </setting-body>
 </template>
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      list: [{ name: "语言", icon: "font-colors", component: "LanguageModule" }],
+      list: [],
     }
   },
   methods:{
