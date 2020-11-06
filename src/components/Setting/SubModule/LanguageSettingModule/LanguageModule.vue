@@ -1,7 +1,7 @@
 <template>
   <setting-body v-bind="$attrs" :widen="widen">
     <div class="language-left" v-if="widen">
-      <menu-list v-on="$listeners" :widen="widen" from="language"></menu-list>
+      <menu-list v-on="$listeners" :widen="widen" from="Language"></menu-list>
     </div>
     <div class="language-right" :style="`margin-left:${widen?240:0}px`">
       <info-title></info-title>

@@ -41,24 +41,32 @@
 
 <script>
 import SettingFrame from "@/components/Frame";
-import SettingMain from "./Main";
+import Main from "./Main";
 import {
   LanguageSetting,
   LanguageModule,
 } from "./SubModule/LanguageSettingModule";
 import { PersonaliseSetting } from "./SubModule/PersonaliseSettingModule";
+import { mapState } from "vuex";
 export default {
   components: {
     PersonaliseSetting,
     LanguageSetting,
     SettingFrame,
-    SettingMain,
+    Main,
     LanguageModule,
+  },
+  computed: {
+    ...mapState({
+      settings(state) {
+        return state.core.setting.settings;
+      },
+    }),
   },
   props: {
     subComponents: {
       type: String,
-      default: "SettingMain",
+      default: "Main",
     },
   },
   created() {
@@ -68,7 +76,7 @@ export default {
     return {
       w: 500,
       h: 500,
-      component: "SettingMain",
+      component: "Main",
       operated: [],
       actions: "push",
       widen: true,
@@ -81,21 +89,35 @@ export default {
     },
     handleOpenSub(name) {
       if (name) {
-        console.log(name);
-        this.operated.push(this.component);
-        this.component = name;
+        if (name == this.component) {
+          return;
+        }
+        if (this.widen && name.indexOf("Setting") > -1) {
+          const { settings } = this;
+          this.handleOpenSub(settings[name][0].component);
+        } else {
+          this.operated.push(this.component);
+          this.component = name;
+        }
       }
     },
     handleBack() {
       this.component = this.operated.pop();
+      if (this.widen && this.component.indexOf("Setting") > -1) {
+        this.component = this.operated.pop();
+      }
     },
   },
   watch: {
     w(val, oldVal) {
       if (oldVal >= 500 && val < 500) {
-        this.widen=false
+        this.widen = false;
       } else if (oldVal < 500 && val >= 500) {
-        this.widen=true
+        this.widen = true;
+        if (this.component.indexOf("Setting") > -1) {
+          const { settings } = this;
+          this.handleOpenSub(settings[this.component][0].component);
+        }
       }
     },
   },

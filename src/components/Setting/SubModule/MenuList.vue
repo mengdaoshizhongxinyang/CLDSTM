@@ -23,7 +23,7 @@ export default {
   computed:{
     ...mapState({
       list(state){
-        let from=this.from
+        let from=this.from.charAt(0).toUpperCase()+this.from.slice(1);
         from+=from.indexOf('Setting')>-1?'':'Setting'
         return state.core.setting.settings[from]
       }

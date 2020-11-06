@@ -49,7 +49,7 @@ export default {
     },
     ...mapState({
       items(state){
-        return state.core.setting.settings.main
+        return state.core.setting.settings.Main
       }
     })
   },

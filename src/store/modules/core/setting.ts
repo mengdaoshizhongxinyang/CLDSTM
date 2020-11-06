@@ -5,10 +5,10 @@ const SET_SETTINGS = 'SET_SETTINGS'
 
 const state = {
   settings:{
-    languageSetting:[
+    LanguageSetting:[
       { name: "语言", icon: "font-colors", component: "LanguageModule" }
     ],
-    main:[
+    Main:[
       { icon: "highlight", title: "个性化", desc: "颜色，背景",component:'PersonaliseSetting' },
       { icon: "global", title: "语言设置", desc: "语言",component:'LanguageSetting' },
       { icon: "exclamation-circle", title: "待定", desc: "待定" },
