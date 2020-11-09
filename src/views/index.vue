@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-10-12 16:52:00
+ * @LastEditTime: 2020-11-09 10:42:31
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue

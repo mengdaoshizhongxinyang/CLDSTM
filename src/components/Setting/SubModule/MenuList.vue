@@ -1,5 +1,11 @@
 <template>
   <div :class="['menu-main', widen ? 'widen-menu' : 'narrow-menu']">
+    <div class="menu-title">
+      <div class="home-item">
+
+      </div>
+      <div class="title"></div>
+    </div>
     <div class="menu-list">
       <div
         v-for="item in list"
@@ -65,7 +71,16 @@ export default {
   padding-top:32px;
   display: flex;
   flex-flow: column;
- 
+  .@{name}-title{
+    .home-item{
+      padding:1em 0;
+      line-height: 18px;
+      display: flex;
+      &:hover{
+        background: rgba(200,200,200,.55);
+      }
+    }
+  }
   .@{name}-list{
     flex: 1;
     font-size: 16px;
