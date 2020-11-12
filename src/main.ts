@@ -1,21 +1,23 @@
-import Vue from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
+import Icon from '@ant-design/icons-vue';
 import router from './router'
 import './mock'
 import 'ant-design-vue/dist/antd.css' 
 import Directives from '@/utils/directives.js';
 import Storage from 'vue-ls';
- 
 let options = {
   namespace: 'vuejs__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
   storage: 'local', // storage name session, local, memory
 };
-Vue.use(Storage, options);
+const Vue=createApp(App).use(router).use(Storage,options);
+
+// Vue.use
 import store, { Store } from './store/index';
 
 Vue.use(Directives)
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 import {
   LocaleProvider,
   Layout,
@@ -33,7 +35,7 @@ import {
   Modal,
   Table,
   Tabs,
-  Icon,
+  // Icon,
   Badge,
   Popover,
   Dropdown,
@@ -82,7 +84,7 @@ Vue.use(Col)
 Vue.use(Modal)
 Vue.use(Table)
 Vue.use(Tabs)
-Vue.use(Icon)
+// Vue.use(Icon)
 Vue.use(Badge)
 Vue.use(Popover)
 Vue.use(Dropdown)
@@ -104,23 +106,22 @@ Vue.use(Progress)
 Vue.use(Skeleton)
 Vue.use(Popconfirm)
 // Vue.use(VueCropper)
+// app.config.globalProperties.$message = message;
+Vue.config.globalProperties.$confirm = Modal.confirm
+Vue.config.globalProperties.$message = message
+Vue.config.globalProperties.$notification = notification
+Vue.config.globalProperties.$info = Modal.info
+Vue.config.globalProperties.$success = Modal.success
+Vue.config.globalProperties.$error = Modal.error
+Vue.config.globalProperties.$warning = Modal.warning
+// const app=new Vue({
+//   router,
+//   store:store,
+//   render: h => h(App)
+// }).$mount('#app')
 
-Vue.prototype.$confirm = Modal.confirm
-Vue.prototype.$message = message
-Vue.prototype.$notification = notification
-Vue.prototype.$info = Modal.info
-Vue.prototype.$success = Modal.success
-Vue.prototype.$error = Modal.error
-Vue.prototype.$warning = Modal.warning
-const app=new Vue({
-  router,
-  store:store,
-  render: h => h(App)
-}).$mount('#app')
-
-Vue.prototype.$tstore = app.$store;
-app.$tstore.dispatch('initAll')
-Vue.prototype.$aemit = (that: any, mutationName: string, ...params: any) => {
+Vue.config.globalProperties.$tstore = Vue.config.globalProperties.$store
+Vue.config.globalProperties.$aemit = (that: any, mutationName: string, ...params: any) => {
   if (!mutationName) throw new Error('$aemit need mutationName param');
   return new Promise((resolve, reject) => {
     that.$emit(mutationName, ...params, {
@@ -129,6 +130,7 @@ Vue.prototype.$aemit = (that: any, mutationName: string, ...params: any) => {
     });
   });
 };
+Vue.mount('#app')
 declare module 'vue/types/vue' {
   interface Vue {
     $tstore: Store;

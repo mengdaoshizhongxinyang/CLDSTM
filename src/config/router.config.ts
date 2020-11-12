@@ -27,9 +27,9 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
+import {  RouteRecordRaw } from 'vue-router'
 
-
-export let asyncRouterMap=[
+export let asyncRouterMap : Array<RouteRecordRaw>=[
     {
         path: '/',
         name: 'index',
