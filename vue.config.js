@@ -1,9 +1,5 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const PrerenderSPAPlugin=require('prerender-spa-plugin')
-const HtmlWebpackPlugin=require("html-webpack-plugin")
-const path = require('path');
-const Renderer=PrerenderSPAPlugin.PuppeteerRenderer
-const vuecli= require('@vue/cli-service')
 const options = {
     publicPath: './',
     configureWebpack: {
