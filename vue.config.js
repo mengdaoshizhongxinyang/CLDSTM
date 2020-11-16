@@ -3,11 +3,6 @@ const PrerenderSPAPlugin=require('prerender-spa-plugin')
 const options = {
     publicPath: './',
     configureWebpack: {
-        resolve: {
-            alias: {
-                'vue$': 'vue/dist/vue.esm.js'
-            }
-        },
         plugins: [
             new MonacoWebpackPlugin({
                 // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options

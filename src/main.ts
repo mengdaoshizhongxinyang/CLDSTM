@@ -1,6 +1,6 @@
 import {createApp} from 'vue'
 import App from './App.vue'
-import Icon from '@ant-design/icons-vue';
+// import Icon from '@ant-design/icons-vue';
 import router from './router'
 import './mock'
 import 'ant-design-vue/dist/antd.css' 
@@ -11,7 +11,7 @@ let options = {
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
   storage: 'local', // storage name session, local, memory
 };
-const Vue=createApp(App).use(router).use(Storage,options);
+const Vue=createApp(App).use(router)//.use(Storage,options);
 
 // Vue.use
 import store, { Store } from './store/index';
@@ -71,7 +71,7 @@ Vue.use(Layout)
 Vue.use(Carousel)
 
 Vue.use(Input)
-Vue.use(InputNumber)
+// Vue.use(InputNumber)
 Vue.use(Button)
 Vue.use(Switch)
 Vue.use(Radio)
@@ -120,7 +120,7 @@ Vue.config.globalProperties.$warning = Modal.warning
 //   render: h => h(App)
 // }).$mount('#app')
 
-Vue.config.globalProperties.$tstore = Vue.config.globalProperties.$store
+// Vue.config.globalProperties.$tstore = Vue.config.globalProperties.$store
 Vue.config.globalProperties.$aemit = (that: any, mutationName: string, ...params: any) => {
   if (!mutationName) throw new Error('$aemit need mutationName param');
   return new Promise((resolve, reject) => {
@@ -133,7 +133,7 @@ Vue.config.globalProperties.$aemit = (that: any, mutationName: string, ...params
 Vue.mount('#app')
 declare module 'vue/types/vue' {
   interface Vue {
-    $tstore: Store;
+    // $tstore: Store;
     $aemit:<T>(that: any, mutationName: string, ...params: any) => Promise<T>;
   }
 }

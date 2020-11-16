@@ -6,30 +6,25 @@
   </a-config-provider>
 </template>
 
-<script>
+<script lang="ts">
 import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
-
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   name: "app",
-      data() {
-      return {
-        locale: zhCN
-      };
-    },
-  components: {
-
+  data() {
+    return {
+      locale: zhCN,
+    };
   },
-  methods:{
-    handleKeyDown(e){
+  methods: {
+    handleKeyDown(e:KeyboardEvent) {
       e.preventDefault();
-    }
+    },
   },
-  mounted(){
+  mounted() {
     // document.onkeydown=this.handleKeyDown
-    
-
-  }
-};
+  },
+});
 </script>
 
 <style>
