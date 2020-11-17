@@ -75,9 +75,9 @@ export default {
         setPosition:this.handleSetPosition,
         menuItemClick:this.handleSetPosition
       },
-      scopedSlots:this.$scopedSlots
+      scopedSlots:this.$slots
     }
-    const scopedSlots=this.$scopedSlots
+    const scopedSlots=this.$slots
     return (
       <div
         class="context-menu"

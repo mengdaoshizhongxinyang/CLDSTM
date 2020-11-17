@@ -122,7 +122,7 @@ const SubContext = {
       }
     },
     renderChildren(menu) {
-      const { handleClick, $scopedSlots } = this;
+      const { handleClick, $slots } = this;
       return menu.children && menu.children.length > 0 ? (
         <SubContext
           menus={menu.children}
@@ -131,7 +131,7 @@ const SubContext = {
             menu.show = val;
           }}
           onMenuItemClick={handleClick}
-          scopedSlots={{ ...$scopedSlots }}
+          scopedSlots={{ ...$slots }}
         ></SubContext>
       ) : (
         ""
@@ -146,7 +146,7 @@ const SubContext = {
       handleMouseenter,
       handleMouseleave,
       handleClick,
-      $scopedSlots,
+      $slots,
       renderChildren,
     } = this;
     return (
@@ -155,14 +155,15 @@ const SubContext = {
           {menuList.map((menu, index) => {
             return (
               <div
+                
                 class="menu-item"
                 key={index}
                 onmouseenter={() => handleMouseenter(menu)}
                 onmouseleave={() => handleMouseleave(menu)}
                 onClick={() => handleClick(menu)}
               >
-                {menu.name && $scopedSlots[menu.name] ? (
-                  $scopedSlots[menu.name](menu).concat(renderChildren(menu))
+                {menu.name && $slots[menu.name] ? (
+                  $slots[menu.name](menu).concat(renderChildren(menu))
                 ) : (
                   <div class="menu-item-content">
                     {menu.label}

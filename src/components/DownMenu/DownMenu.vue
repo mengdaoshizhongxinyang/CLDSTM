@@ -33,11 +33,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import moment from "moment";
-import { mapGetters } from "vuex";
+import { useStore } from "vuex";
 import  Icon from "@/components/IconManage";
 import DownMenuRightMenu from "./DownMenuRightMenu";
+import {Store} from "@/types/store";
 export default {
   components:{
     DownMenuRightMenu,
@@ -53,9 +54,14 @@ export default {
       showIndex:-1
     };
   },
-  computed:{
-    ...mapGetters(['desktopApps'])
+  setup(){
+    const store:Store=useStore();
+    const desktopApps=()=>{
+      return store.getters.desktopApps
+    }
+    return {desktopApps}
   },
+
   methods: {
     clock() {
       this.date = moment().format("YYYY/MM/DD/周dd");

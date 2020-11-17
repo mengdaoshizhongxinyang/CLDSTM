@@ -1,10 +1,10 @@
 <template>
   <div class="desktop" @contextmenu="(e) => rightClick(e)">
-    <div class="desktp-rightmenu">
+    <div class="desktop-rightmenu">
       <right-click-menu
         :offset="contextMenuOffset"
-        :show.sync="headerMenu"
-        :menus="menus"
+        v-model:show="headerMenu"
+        :menus="menus()"
         @menuItemClick="handleMenuItemClick"
       >
       </right-click-menu>
@@ -12,42 +12,73 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import RightClickMenu from "../RightClickMenu";
-import { mapGetters, mapState, mapActions } from "vuex";
-export default {
-  computed: {
-    ...mapState({
-      menus(state) {
-        let menuList = [
-          { label: "刷新", name: "refresh" },
-          {
-            label: "创建",
-            name: "create",
-            children: [{ label: "文件夹", run: "createFolder",name: "createFolder", }],
-          },
-          { label: "个性化", name: "personalise", run: "personaliseFrame" },
-        ];
-        let language =
-          state.core.language.languageSelected[
-            "desktop"
-          ]["contextMenu"];
-        let queueMenus=[].concat(menuList)
-        while(queueMenus.length!=0){
-          let menu=queueMenus.pop()
-          menu.label=language[menu.name] || menu.label
-          if(menu.children && menu.children.length>0){
-            queueMenus=queueMenus.concat(menu.children)
-          }
+import { useStore } from "vuex";
+import { Store } from "@/types/store";
+import { Events } from "vue";
+import { defineComponent } from "vue";
+type typeMenu = {
+  label: string;
+  name: string;
+  children?: Array<typeMenu>;
+  run?: string;
+};
+export default defineComponent({
+  computed:{
+    // menus(){
+    //   this
+    // }
+  },
+  setup() {
+    const store:Store = useStore();
+    
+    const menus = () => {
+      let language =
+        store.state.core.language.languageSelected.desktop.contextMenu;
+      type languageContextMenu = typeof language;
+
+      let menuList: Array<typeMenu> = [
+        { label: "刷新", name: "refresh" },
+        {
+          label: "创建",
+          name: "create",
+          children: [
+            { label: "文件夹", run: "createFolder", name: "createFolder" },
+          ],
+        },
+        { label: "个性化", name: "personalise", run: "personaliseFrame" },
+      ];
+
+      let queueMenus = menuList.concat([]);
+      while (queueMenus.length != 0) {
+        let menu: typeMenu = queueMenus.pop() as typeMenu;
+        menu.label =
+          language[menu.name as keyof languageContextMenu] || menu.label;
+        if (menu.children && menu.children.length > 0) {
+          queueMenus = queueMenus.concat(menu.children);
         }
-        return menuList
-        // return menuList.map((item) => {
-        //   return Object.assign(item,{
-        //     label: language[item.name] || item.label
-        //   });
-        // });
+      }
+      return menuList;
+    };
+    const createFile = (info: any) => {
+      store.dispatch("createFile", info);
+    };
+    const runEvent = {
+      createFolder: () => {
+        createFile({
+          type: "folder",
+          name: "新建文件夹",
+          path: "/",
+        });
       },
-    }),
+    };
+    const handleMenuItemClick = (menu: typeMenu) => {
+      if (runEvent[menu.run as keyof typeof runEvent]) {
+        runEvent[menu.run as keyof typeof runEvent]();
+      }
+    };
+    return { menus, createFile, ...runEvent };
   },
   components: {
     RightClickMenu,
@@ -63,26 +94,10 @@ export default {
     };
   },
   methods: {
-    rightClick(e) {
+    rightClick(e: MouseEvent) {
       this.contextMenuOffset.left = e.x;
       this.contextMenuOffset.top = e.y;
       this.headerMenu = true;
-    },
-    handleItemClick(actions) {
-      this.headerMenu = false;
-      this.$store.dispatch(actions);
-    },
-    handleMenuItemClick(menu) {
-      if (this[menu.run]) {
-        this[menu.run]();
-      }
-    },
-    createFolder() {
-      this.$store.dispatch("createFile", {
-        type: "folder",
-        name: "新建文件夹",
-        path: "/",
-      });
     },
     personaliseFrame() {
       let PersonaliseSetting = {
@@ -96,7 +111,7 @@ export default {
   mounted() {
     this.list = configs.getActionsItem();
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-16 16:25:59
+ * @LastEditTime: 2020-11-17 17:10:45
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -80,7 +80,8 @@ import {
   mapGetters,
   mapState,
   mapActions,
-  useStore
+  useStore,
+  StoreOptions
 } from 'vuex'
 import { Store } from "@/store/index";
 import Proton from "./proton.js";
@@ -104,7 +105,7 @@ export default  defineComponent({
     Setting
   },
   computed:{
-    ...mapGetters(['desktopApps']),
+    // ...mapGetters(['desktopApps']),
     // ...mapState({
     //   /** @returns {Object} */
     //   desktopIcons(state ){
@@ -114,11 +115,22 @@ export default  defineComponent({
     // })
   },
   setup(){
-    const store:Store=useStore()
+    const store=useStore()
+    console.log(store)
     const desktopIcons =()=>{
       return store.state.view.desktop.fileList
     }
-    return {desktopIcons}
+    const desktopApps=()=>{
+      // console.log(store.getters.desktopApps)
+      return store.getters.desktopApps
+    }
+    const openApps=(icon:any)=>{
+      store.dispatch('openApps',icon)
+    }
+    const activeApps=(index:any)=>{
+      store.dispatch('activeApps',index)
+    }
+    return {desktopIcons,desktopApps,openApps,activeApps}
   },
   created() {
     this.desktopIconNum=Math.floor(document.body.offsetHeight/88)
@@ -131,12 +143,14 @@ export default  defineComponent({
   },
   methods: {
     moment,
-    handleOpenApps(icon) {
-      this.$store.dispatch("openApps",icon)
+    handleOpenApps(icon:any) {
+      this.openApps(icon);
+      // this.$store.dispatch("openApps",icon)
     },
-    handleActived(item, index) {
-      this.$store.commit("activeApps",index)
-      this.$forceUpdate();
+    handleActived(item:any, index:any) {
+      this.activeApps(index);
+      // this.$store.commit("activeApps",index)
+      // this.$forceUpdate();
     },
     addScene() {
       camera = new THREE.PerspectiveCamera(
@@ -153,7 +167,8 @@ export default  defineComponent({
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id="background"
-      document.body.appendChild(renderer.domElement);
+      console.log(document.getElementById('app'))
+      document.getElementById('app').appendChild(renderer.domElement);
       window.addEventListener("resize", this.onWindowResize, false);
     },
     addProton() {

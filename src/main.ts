@@ -15,7 +15,7 @@ const Vue=createApp(App).use(router)//.use(Storage,options);
 
 // Vue.use
 import store, { Store } from './store/index';
-
+Vue.use(store)
 Vue.use(Directives)
 // Vue.config.productionTip = false
 import {
@@ -133,7 +133,7 @@ Vue.config.globalProperties.$aemit = (that: any, mutationName: string, ...params
 Vue.mount('#app')
 declare module 'vue/types/vue' {
   interface Vue {
-    // $tstore: Store;
+    $store: Store;
     $aemit:<T>(that: any, mutationName: string, ...params: any) => Promise<T>;
   }
 }

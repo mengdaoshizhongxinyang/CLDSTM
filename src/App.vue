@@ -1,13 +1,13 @@
 <template>
   <a-config-provider :locale="locale">
-    <div id="app" @contextmenu.prevent>
+    <div id="nav" @contextmenu.prevent>
       <router-view></router-view>
     </div>
   </a-config-provider>
 </template>
 
 <script lang="ts">
-import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: "app",
@@ -28,7 +28,7 @@ export default defineComponent({
 </script>
 
 <style>
-#app {
+#nav {
   width: 100%;
   height: 100%;
   position: fixed;

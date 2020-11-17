@@ -14,7 +14,7 @@ const view = {
 export interface coreModule{
   state:{
     properties:typeof properties.state
-    language:typeof properties.state
+    language:typeof language.state
     setting:typeof setting.state
   },
   commit:(
