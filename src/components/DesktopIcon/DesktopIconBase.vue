@@ -26,7 +26,7 @@
     </div>
     <right-click-menu
       :menus="menuList"
-      :show.sync="iconShow"
+      v-model:show="iconShow"
       :offset="iconMenuOffset"
       style="text-align: left"
       @menuItemClick="handleMenuItemClick"
@@ -36,14 +36,14 @@
 
 <script>
 import Icon from "@/components/IconManage";
-import RightClickMenu from "@/components/RightClickMenu";
+import {RightClickMenu} from "@/components";
 export default {
   created() {
     this.tempName = this.iconInfo.name;
   },
   components: {
     Icon,
-    RightClickMenu,
+    RightClickMenu
   },
   props: {
     iconStyle: {

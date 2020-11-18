@@ -12,7 +12,6 @@
     :draggable="draggable"
     @resizestop="(x, y, w, h) => handleResizestop(x, y, w, h)"
     @dragstop="(x, y) => handleDragstop(x, y)"
-    v-on="$listeners"
     @activated="active"
     :resizable="resizable"
     :drag-cancel="dragCancel"
@@ -26,7 +25,7 @@
         <slot name="header-name-more"><div class="header-title">{{ getAppInfo(appsId).name || "" }}</div></slot>
         <VueContextMenu
           :offset="contextMenuOffset"
-          :show.sync="headerMenu"
+          v-model:show="headerMenu"
           class="menu"
         >
           <div class="menu-item" @click="minimize" v-if="allowMinimize">
@@ -76,12 +75,12 @@
 
 <script>
 import VueDraggableResizable from "@/components/BaseDraggable";
-import VueContextMenu from "@/components/RightClickMenu";
+import { RightClickMenu } from "@/components";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   components: {
     VueDraggableResizable,
-    VueContextMenu,
+    VueContextMenu:RightClickMenu,
   },
   computed: {
     ...mapGetters(["getAppInfo"]),

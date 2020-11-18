@@ -1,7 +1,10 @@
 
-<script>
-import SubContext from "./SubContext.vue";
-export default {
+//{/* <script lang="ts"> */}
+
+import SubContext from "./SubContext";
+import { defineComponent,h } from "vue";
+import "./contextMenu.less"
+export default defineComponent({
   name: "right-click-menu",
   components: {
     SubContext,
@@ -10,6 +13,9 @@ export default {
     return {
       style: {},
     };
+  },
+  setup(){
+
   },
   props: {
     offset: {
@@ -30,11 +36,10 @@ export default {
     },
   },
   watch: {
-    show(show) {
+    show(show :Boolean) {
       if (show) {
         // this.$nextTick(this.setPosition)
         document.body.addEventListener("mousedown", this.clickDocumentHandler);
-        this.$forceUpdate()
       } else {
         document.body.removeEventListener(
           "mousedown",
@@ -59,51 +64,20 @@ export default {
       this.$emit("menuItemClick", menu);
     },
   },
-  render(h) {
+  render() {
     let  {show,menus,offset,handleSetPosition,handleClick}=this
-    const on = {
-      mousedown: (event) => {
-        event.stopPropagation();
-      },
-    };
-    let sub={
-      props:{
-        menus:this.menus,
-        show:this.show
-      },
-      on:{
-        setPosition:this.handleSetPosition,
-        menuItemClick:this.handleSetPosition
-      },
-      scopedSlots:this.$slots
-    }
     const scopedSlots=this.$slots
     return (
       <div
         class="context-menu"
         v-show={show}
         style={`left:${offset.left}px;top:${offset.top}px`}
-        on={on}
+        onMousemove={(event : MouseEvent)=>{ event.stopPropagation()}}
       >
         <SubContext menus={menus} show={show} onSetPosition={handleSetPosition} onMenuItemClick={handleClick} scopedSlots={{...scopedSlots}}>
-          
         </SubContext>
-
       </div>
     );
   },
-};
-</script>
-<style lang="less" scoped>
-.context-menu {
-  z-index: 30000000;
-  // display: block;
-  // background: #fff;
-  // border: 1px solid #a5a5a5;
-  // box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
-  // padding: 4px 2px;
-  // line-height: 1em;
-  position: fixed;
-  // min-width: 160px;
-}
-</style>
+});
+//</script>

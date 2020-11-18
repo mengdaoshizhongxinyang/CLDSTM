@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import RightClickMenu from "../RightClickMenu";
+import {RightClickMenu} from "@/components";
 import { useStore } from "vuex";
 import { Store } from "@/types/store";
 import { Events } from "vue";
