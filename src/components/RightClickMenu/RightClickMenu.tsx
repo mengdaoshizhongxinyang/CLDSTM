@@ -2,20 +2,29 @@
 //{/* <script lang="ts"> */}
 
 import SubContext from "./SubContext";
-import { defineComponent,h } from "vue";
+import { defineComponent,DefineComponent, watch, computed, ref, nextTick, reactive } from "vue";
 import "./contextMenu.less"
-export default defineComponent({
+interface thisProps{
+  offset?:{left:Number,top:Number},
+  show?:Boolean,
+  menu?:typeMenu
+}
+interface typeMenu {
+  label?: string,
+  name?: string,
+  children?: Array<typeMenu>,
+  show?: Boolean,
+  function?:Function
+}
+const rightClickMenu= defineComponent({
   name: "right-click-menu",
   components: {
     SubContext,
   },
-  data() {
-    return {
-      style: {},
-    };
-  },
-  setup(){
-
+  setup(p,{emit,attrs,slots}){
+    let data=reactive({style:{}})
+    let props=p as thisProps
+    return {style:data.style}
   },
   props: {
     offset: {
@@ -35,6 +44,11 @@ export default defineComponent({
       },
     },
   },
+  // data(){
+  //   return{
+  //     style:{}
+  //   }
+  // },
   watch: {
     show(show :Boolean) {
       if (show) {
@@ -59,7 +73,7 @@ export default defineComponent({
     handleSetPosition(style) {
       this.style = style;
     },
-    handleClick(menu) {
+    handleClick(menu:typeMenu) {
       this.$emit("update:show", false);
       this.$emit("menuItemClick", menu);
     },
@@ -74,10 +88,11 @@ export default defineComponent({
         style={`left:${offset.left}px;top:${offset.top}px`}
         onMousemove={(event : MouseEvent)=>{ event.stopPropagation()}}
       >
-        <SubContext menus={menus} show={show} onSetPosition={handleSetPosition} onMenuItemClick={handleClick} scopedSlots={{...scopedSlots}}>
+        <SubContext menus={menus} show={show} onSetPosition={handleSetPosition} onMenuItemClick={handleClick} v-slots={{...scopedSlots}}>
         </SubContext>
       </div>
     );
   },
 });
 //</script>
+export default rightClickMenu

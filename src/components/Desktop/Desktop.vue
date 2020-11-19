@@ -78,7 +78,7 @@ export default defineComponent({
         runEvent[menu.run as keyof typeof runEvent]();
       }
     };
-    return { menus, createFile, ...runEvent };
+    return { menus, createFile, ...runEvent,handleMenuItemClick };
   },
   components: {
     RightClickMenu,

@@ -1,6 +1,5 @@
 import "./subContext.less";
-import { Transition, defineComponent, watch, computed, ref, nextTick,RendererElement } from "vue";
-import { state } from '@/store';
+import { Transition, defineComponent, watch, ref, nextTick,h, reactive, DefineComponent } from "vue";
 interface typeMenu {
   label?: string,
   name?: string,
@@ -20,24 +19,16 @@ interface thisProps {
   show: Boolean,
   direction: "left" | "right"
 }
-const SubContext = defineComponent({
+const SubContext:DefineComponent = defineComponent({
   name: "SubContext",
   components: {
     Transition
   },
-  setup(p, { emit, slots, attrs }) {
-    let style= {}
-    let subStyle={
-      x: 0,
-      y: 0,
-    }
-    console.log(attrs)
+  setup(p, { emit, slots }) {
     let props = p as thisProps
-    let menuList = computed(() => {
-      return props.menus?.concat([]);
-    })
+    let data= reactive({menuList:props.menus.concat(),style:{}})
+
     let direction=props.direction
-    const watchedShow = ref(props.show);
     const handleMouseenter=(menu:typeMenu)=>{
       menu.show = true;
     }
@@ -52,35 +43,37 @@ const SubContext = defineComponent({
         emit("update", true);
       }
     }
+    let root=ref<HTMLDivElement>()
     const setPosition=()=>{
+      const ele =root.value!.parentElement!
       const {
         x,
         y,
         width,
         height,
-      } = this.$el.parentElement.getBoundingClientRect();
+      } = ele.getBoundingClientRect()
       let topover, leftover;
       let docHeight = document.documentElement.clientHeight;
       let docWidth = document.documentElement.clientWidth;
-      let menuHeight = this.$el.getBoundingClientRect().height;
-      let menuWidth = this.$el.getBoundingClientRect().width;
+      let menuHeight = ele.getBoundingClientRect().height;
+      let menuWidth = ele.getBoundingClientRect().width;
       topover =
         y + height + menuHeight <= docHeight ? y : y + height - menuHeight;
-      if (this.$parent.direction == "left") {
+      if (direction == "left") {
         leftover = x - menuWidth;
       } else {
         leftover =
           x + width + menuWidth <= docWidth ? x + width : x - menuWidth;
         if (x + width + menuWidth > docWidth) {
-          direction = "left";
+          direction = "right";
         }
       }
-      style = {
+      data.style = {
         left: `${leftover}px`,
         top: `${topover}px`,
       };
 
-      emit("setPosition", style);
+      emit("setPosition", data.style);
     }
     const handleClick=(menu:typeMenu)=>{
       if (!menu.children) {
@@ -91,21 +84,23 @@ const SubContext = defineComponent({
       }
     }
     const renderChildren=(menu:typeMenu)=>{
-      return menu.children && menu.children.length > 0 ? (
+      return menu.children && menu.children.length > 0 ? h(
         <SubContext
+          direction={direction}
           menus={menu.children}
           show={menu.show}
           onUpdate={(val:Boolean) => {
             menu.show = val;
           }}
+          
           onMenuItemClick={handleClick}
-          scopedSlots={{ ...slots }}
+          v-slots={{ ...slots }}
         ></SubContext>
       ) : (
           ""
         );
     }
-    watch(watchedShow, (val, oldVal) => {
+    watch(()=>props.show, (val) => {
       if (val) {
         nextTick(setPosition);
         document.body.addEventListener("mousedown", clickDocumentHandler);
@@ -115,15 +110,15 @@ const SubContext = defineComponent({
           "mousedown",
           clickDocumentHandler
         );
-        menuList.value.forEach((item) => {
+        data.menuList.forEach((item) => {
           item.show = false;
         });
       }
     })
-    return (
+    return ()=>h(
       <Transition name="contextmenu-fade">
-        <div class="menu" style={style} v-show={show}>
-          {menuList.value.map((menu, index) => {
+        <div class="menu" style={data.style} v-show={props.show} ref={root}>
+          {data.menuList.map((menu, index) => {
             return (
               <div
 
@@ -148,8 +143,6 @@ const SubContext = defineComponent({
       </Transition>
     );
   },
-
-
   props: {
     menus: {
       type: Array,
@@ -179,5 +172,3 @@ const SubContext = defineComponent({
   }
 })
 export default SubContext;
-
-
