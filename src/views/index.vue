@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-18 16:27:32
+ * @LastEditTime: 2020-11-20 16:13:14
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -33,6 +33,7 @@
 <template>
   <div class="main">
     <desktop></desktop>
+    {{Object.keys(desktopIcons)}}
     <desktop-icon
       v-for="(icon,index) in Object.keys(desktopIcons)"
       :x="Math.floor(index/desktopIconNum)*70"
@@ -69,10 +70,10 @@ import {
   Setting
 } from "@/components";
 
-import { defineComponent } from "vue"
+import { defineComponent,computed } from "vue"
 
 import moment from "moment";
-import configs from "configs"
+
 import * as THREE from "three";
 const pinyin = require("@/components/PinYin/index");
 import message from "@/components/Message/dialog.jsx";
@@ -114,16 +115,15 @@ export default  defineComponent({
     //   }
     // })
   },
-  setup(){
+  setup(props){
     const store=useStore()
-    console.log(store)
-    const desktopIcons =()=>{
-      return store.state.view.desktop.fileList
-    }
-    const desktopApps=()=>{
+    const desktopIcons =computed(()=>{
+        return store.state.view.desktop.fileList
+    })
+    const desktopApps=computed(()=>
       // console.log(store.getters.desktopApps)
-      return store.getters.desktopApps
-    }
+      store.getters.desktopApps
+    )
     const openApps=(icon:any)=>{
       store.dispatch('openApps',icon)
     }
@@ -168,7 +168,7 @@ export default  defineComponent({
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id="background"
       console.log(document.getElementById('app'))
-      document.getElementById('app').appendChild(renderer.domElement);
+      document.getElementById('app')!.appendChild(renderer.domElement);
       window.addEventListener("resize", this.onWindowResize, false);
     },
     addProton() {
@@ -249,7 +249,7 @@ export default  defineComponent({
   height: 100%;
 }
 
-/deep/.ant-fullcalendar-content {
+::v-deep(.ant-fullcalendar-content) {
   position: static;
 }
 </style>

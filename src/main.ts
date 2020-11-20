@@ -5,13 +5,13 @@ import router from './router'
 import './mock'
 import 'ant-design-vue/dist/antd.css' 
 import Directives from '@/utils/directives.js';
-import Storage from 'vue-ls';
+import Storage from '@/utils/localstorage';
 let options = {
   namespace: 'vuejs__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
   storage: 'local', // storage name session, local, memory
 };
-const Vue=createApp(App).use(router)//.use(Storage,options);
+const Vue=createApp(App).use(Storage,options).use(router);
 
 // Vue.use
 import store, { Store } from './store/index';

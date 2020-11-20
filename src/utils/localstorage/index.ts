@@ -2,7 +2,6 @@ import { MemoryStorage, WebStorage } from './storage';
 import {App} from "vue"
 // eslint-disable-next-line
 const _global = (typeof window !== 'undefined' ? window : global || {});
-
 /**
  * @type {{install: (function(Object, Object): WebStorage)}}
  */
@@ -10,8 +9,7 @@ interface options{
   storage?:string,
   name?:string
 }
-
-let webStorage :any
+let webStorage:any
 const VueStorage = {
   /**
    * Install plugin
@@ -56,14 +54,14 @@ const VueStorage = {
       // eslint-disable-next-line
       console.error(`Vue-ls: Storage "${_options.storage}" is not supported your system, use memory storage`);
     }
-
+    console.log(store)
     webStorage = new WebStorage(store);
 
     webStorage.setOptions(Object.assign(webStorage.options, {
       namespace: '',
     }, _options || {}));
 
-    Vue.config.globalProperties[_options.name] = ls; // eslint-disable-line
+    Vue.config.globalProperties[_options.name] = webStorage; // eslint-disable-line
     Object.defineProperty(Vue.config.globalProperties, `$${_options.name}`, {
       /**
        * Define $ls property

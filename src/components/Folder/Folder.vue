@@ -231,7 +231,7 @@ export default {
       flex: 1;
     }
     &-input-suffix,
-    &-input /deep/.ant-input {
+    &-input ::v-deep(.ant-input) {
       border-radius: 0;
       border: 1px solid #d9d9d9;
       &:focus {
@@ -249,7 +249,7 @@ export default {
     &-search {
       margin-left: 12px;
       width: 112px;
-      /deep/.ant-input {
+      ::v-deep(.ant-input) {
         border-radius: 0;
       }
     }
@@ -297,7 +297,7 @@ export default {
     }
   }
 }
-/deep/.ant-input {
+::v-deep(.ant-input) {
   &:focus {
     box-shadow: none;
   }

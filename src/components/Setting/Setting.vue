@@ -149,7 +149,7 @@ export default {
     height: 32px;
     width: 42px;
     background: rgba(0, 0, 0, 0);
-    /deep/.anticon {
+    ::v-deep(.anticon) {
       cursor: default;
     }
     &:hover {

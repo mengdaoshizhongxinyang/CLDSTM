@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/.header {
+::v-deep(.header) {
   background: #fff;
 }
 .main {

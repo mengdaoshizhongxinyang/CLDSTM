@@ -4,11 +4,10 @@
     :w="76"
     :h="88"
     :parent="true"
-    :active.sync="actived"
-    v-on="$listeners"
+    v-model:active="actived"
     v-bind="$attrs"
   >
-    <desktop-icon-base v-bind="$attrs" v-on="$listeners">
+    <desktop-icon-base v-bind="$attrs">
         <template>
             <slot></slot>
         </template>

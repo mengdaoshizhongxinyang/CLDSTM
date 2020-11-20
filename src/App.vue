@@ -7,17 +7,25 @@
 </template>
 
 <script lang="ts">
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import { defineComponent } from 'vue';
+import zhCN from "ant-design-vue/es/locale/zh_CN";
+import { defineComponent, nextTick } from "vue";
+import { useStore } from "vuex";
+import { Store } from "@/types/store";
 export default defineComponent({
   name: "app",
+  setup(){
+
+      const store: Store = useStore();
+      store.dispatch("initFolderStatus");
+
+  },
   data() {
     return {
       locale: zhCN,
     };
   },
   methods: {
-    handleKeyDown(e:KeyboardEvent) {
+    handleKeyDown(e: KeyboardEvent) {
       e.preventDefault();
     },
   },

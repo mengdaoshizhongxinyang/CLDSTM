@@ -3,7 +3,7 @@
     <div class="main">
       <div class="appmenu" tabindex="-1" @focus="openMenu" @blur="closeMenu">
         <div class="appmenu-open" v-show="openMenuStatus"></div>
-        <a-icon type="windows" style="color:#fff;fontSize:24px;"></a-icon>
+        <windows-outlined  type="windows" style="color:#fff;fontSize:24px;" />
       </div>
       <div class="task-menu">
         <div class="task-menu-item" v-for="(item, index) in desktopApps.apps" :key="index" >
@@ -35,6 +35,7 @@
 
 <script lang="ts">
 import moment from "moment";
+import { WindowsOutlined } from '@ant-design/icons-vue';
 import { useStore } from "vuex";
 import  Icon from "@/components/IconManage";
 import DownMenuRightMenu from "./DownMenuRightMenu";
@@ -42,7 +43,8 @@ import {Store} from "@/types/store";
 export default {
   components:{
     DownMenuRightMenu,
-    Icon
+    Icon,
+    WindowsOutlined
   },
   data() {
     return {

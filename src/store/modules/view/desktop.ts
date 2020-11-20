@@ -35,8 +35,9 @@ const mutations = {
         state.fileList=item
     },
     [SET_RUNING_APPS](state :State, item:Object) {
+        console.log(item)
         state.desktopApps.apps.push({
-            apps: state.apps[item.type],
+            apps: state.apps[item.type as keyof typeof state.apps],
             ...item,
             mini:false,
             id: ++state.desktopApps.id,
@@ -97,7 +98,7 @@ const mutations = {
             }
             modal.confirm({
                 title: `要将"${info.oldName}"重命名为"${info.name}(${i})"吗`,
-                message: `此位置包含同名文件`,
+                message: "此位置包含同名文件",
                 onOk() {
                     delete temp[info.oldName]
                     temp[`${info.name}(${i})`]=Object.assign(content,{name:`${info.name}(${i})`});

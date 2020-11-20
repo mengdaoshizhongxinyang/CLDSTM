@@ -1,14 +1,17 @@
 <template>
-  <a-icon :type="iconList.antd[icon]" v-bind="iconStyle" v-if="iconList.antd[icon]" />
+  <icon :type="iconList.antd[icon]" v-bind="iconStyle" v-if="iconList.antd[icon]" />
   <component :is="iconList.more[icon]" v-bind="iconStyle" v-else-if="iconList.more[icon]" />
-  <a-icon type="file-unknown" v-bind="iconStyle" v-else />
+  <file-unknown-outlined type="file-unknown" v-bind="iconStyle" v-else />
 </template>
 
 <script>
 import vscodeIcon from "./vscodeIcon";
+import Icon,{FileUnknownOutlined} from '@ant-design/icons-vue';
 export default {
   components: {
     vscodeIcon,
+    FileUnknownOutlined,
+    Icon
   },
   props: {
     icon: {

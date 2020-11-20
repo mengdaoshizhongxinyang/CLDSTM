@@ -1,5 +1,5 @@
 import { WebStorageEvent } from './WebStorageEvent';
-
+import {storage} from "./storage";
 /**
  * Storage Bridge
  */
@@ -11,11 +11,11 @@ export class WebStorage {
     namespace?:string,
     events?:Array<string>
   }
+  length:Number=0
+  storage:storage
 
-  storage:any
-
-  constructor(storage) {
-    this.storage = storage;
+  constructor(storage:Object) {
+    this.storage = storage as storage;
     this.options = {
       namespace: '',
       events: ['storage'],
@@ -61,10 +61,10 @@ export class WebStorage {
    * @param {*} value
    * @param {number} expire - seconds
    */
-  set(name, value, expire = null) {
+  set(name:string, value:any, expire = null) {
     const stringifyValue = JSON.stringify({
       value,
-      expire: expire !== null ? new Date().getTime() + expire : null,
+      expire: expire !== null ? new Date().getTime() + expire! : null,
     });
 
     this.storage.setItem(this.options.namespace + name, stringifyValue);
@@ -77,7 +77,7 @@ export class WebStorage {
    * @param {*} def - default value
    * @returns {*}
    */
-  get(name, def = null) {
+  get(name :string, def = null) {
     const item = this.storage.getItem(this.options.namespace + name);
 
     if (item !== null) {
@@ -107,7 +107,7 @@ export class WebStorage {
    * @param {number} index
    * @return {*}
    */
-  key(index) {
+  key(index :Number) {
     return this.storage.key(index);
   }
 
@@ -117,7 +117,7 @@ export class WebStorage {
    * @param {string} name
    * @return {boolean}
    */
-  remove(name) {
+  remove(name:string) {
     return this.storage.removeItem(this.options.namespace + name);
   }
 
@@ -153,7 +153,7 @@ export class WebStorage {
    * @param {string} name
    * @param {Function} callback
    */
-  on(name, callback) {
+  on(name:string, callback:Function) {
     WebStorageEvent.on(this.options.namespace + name, callback);
   }
 
@@ -163,7 +163,7 @@ export class WebStorage {
    * @param {string} name
    * @param {Function} callback
    */
-  off(name, callback) {
+  off(name:string, callback:Function) {
     WebStorageEvent.off(this.options.namespace + name, callback);
   }
 }
