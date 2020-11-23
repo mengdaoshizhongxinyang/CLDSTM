@@ -8,9 +8,7 @@
     v-bind="$attrs"
   >
     <desktop-icon-base v-bind="$attrs">
-        <template>
-            <slot></slot>
-        </template>
+
     </desktop-icon-base>
   </base-draggable>
 </template>

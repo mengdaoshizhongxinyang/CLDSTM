@@ -6,7 +6,7 @@
       </div>
     </template>
     <div class="main">
-      <menu-list v-on="$listeners" from="Language"></menu-list>
+      <menu-list v-bind="$attrs" from="Language"></menu-list>
     </div>
   </setting-body>
 </template>

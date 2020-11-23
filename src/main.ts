@@ -6,6 +6,8 @@ import './mock'
 import 'ant-design-vue/dist/antd.css' 
 import Directives from '@/utils/directives.js';
 import Storage from '@/utils/localstorage';
+import { useStore } from "vuex";
+import { Store } from "@/types/store";
 let options = {
   namespace: 'vuejs__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
@@ -14,7 +16,7 @@ let options = {
 const Vue=createApp(App).use(Storage,options).use(router);
 
 // Vue.use
-import store, { Store } from './store/index';
+import store from './store/index';
 Vue.use(store)
 Vue.use(Directives)
 // Vue.config.productionTip = false
@@ -131,9 +133,10 @@ Vue.config.globalProperties.$aemit = (that: any, mutationName: string, ...params
   });
 };
 Vue.mount('#app')
-declare module 'vue/types/vue' {
-  interface Vue {
-    $store: Store;
-    $aemit:<T>(that: any, mutationName: string, ...params: any) => Promise<T>;
-  }
-}
+
+
+// declare module 'vue/types/vue' {
+//   interface Vue {
+//     $aemit:<T>(that: any, mutationName: string, ...params: any) => Promise<T>;
+//   }
+// }

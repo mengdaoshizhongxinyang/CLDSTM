@@ -1,16 +1,16 @@
 <template>
-  <icon :type="iconList.antd[icon]" v-bind="iconStyle" v-if="iconList.antd[icon]" />
-  <component :is="iconList.more[icon]" v-bind="iconStyle" v-else-if="iconList.more[icon]" />
-  <file-unknown-outlined type="file-unknown" v-bind="iconStyle" v-else />
+  <component :is="`${iconList.antd[icon]}${type[iconStyle]}`" v-if="iconList.antd[icon]" />
+  <component :is="iconList.more[icon]" v-else-if="iconList.more[icon]" />
+  <file-unknown-outlined type="file-unknown" v-else />
 </template>
 
 <script>
 import vscodeIcon from "./vscodeIcon";
-import Icon,{FileUnknownOutlined} from '@ant-design/icons-vue';
+import Icon,{FileUnknownOutlined,FolderOutlined,FolderFilled,PlusOutlined} from '@ant-design/icons-vue';
 export default {
   components: {
     vscodeIcon,
-    FileUnknownOutlined,
+    FileUnknownOutlined,FolderOutlined,FolderFilled,PlusOutlined,
     Icon
   },
   props: {
@@ -19,26 +19,29 @@ export default {
       default: "file-unknown",
     },
     iconStyle: {
-      type: Object,
-      default: () => {
-        return { theme: "filled" };
-      },
+      type: String,
+      default:"outlined"
     },
   },
 
   data() {
     return {
+      type:{
+        filled:"Filled",
+        outlined:"Outlined",
+        twoTone:"TwoTone"
+      },
       iconList: {
         antd: {
-          folder: "folder",
-          article: "file-markdown",
-          setting:"setting"
+          folder: "Folder",
+          article: "FileMarkdown",
+          setting:"Setting"
         },
         more: {
           vscode: "vscodeIcon",
         },
       },
     };
-  },
+  }
 };
 </script>

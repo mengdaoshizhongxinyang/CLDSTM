@@ -4,7 +4,7 @@
       <div class="desktop-icon-icon">
         <slot>
           <div class="desktop-icon-icon-default">
-            <icon :icon="iconInfo.icon" v-bind="iconStyle"></icon>
+            <icon-manage :icon="iconInfo.icon" :iconStyle="iconStyle"></icon-manage>
           </div>
         </slot>
       </div>
@@ -35,22 +35,21 @@
 </template>
 
 <script>
-import Icon from "@/components/IconManage";
+import IconManage from "@/components/IconManage";
 import {RightClickMenu} from "@/components";
 export default {
   created() {
+    console.log(IconManage)
     this.tempName = this.iconInfo.name;
   },
   components: {
-    Icon,
+    IconManage,
     RightClickMenu
   },
   props: {
     iconStyle: {
-      type: Object,
-      default: () => {
-        return { theme: "filled" };
-      },
+      type: String,
+      default: "filled"
     },
     iconInfo: {
       type: Object,

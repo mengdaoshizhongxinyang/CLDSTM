@@ -1,6 +1,5 @@
 <template>
   <Frame
-    v-on="$listeners"
     v-bind="$attrs"
     @resize="handleResize"
     @dragstop="handleDragstop"

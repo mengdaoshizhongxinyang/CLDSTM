@@ -41,19 +41,19 @@
 
       <div class="header-button-group">
         <div class="header-button" @click="minimize" v-if="allowMinimize">
-          <a-icon type="minus"></a-icon>
+          <icon-manage icon="minus" iconStyle="outlined"></icon-manage>
         </div>
         <template v-if="allowEnlarge">
           <div class="header-button" v-if="isFull" @click="fullScrean">
-            <a-icon type="block"></a-icon>
+            <icon-manage type="block" iconStyle="outlined"></icon-manage>
           </div>
           <div class="header-button" v-else @click="fullScrean">
-            <a-icon type="border"></a-icon>
+            <icon-manage type="border" iconStyle="outlined"></icon-manage>
           </div>
         </template>
 
         <div class="header-button-close" @click="close">
-          <a-icon type="close"></a-icon>
+          <icon-manage type="close" iconStyle="outlined"></icon-manage>
         </div>
       </div>
     </div>
@@ -75,10 +75,11 @@
 
 <script>
 import VueDraggableResizable from "@/components/BaseDraggable";
-import { RightClickMenu } from "@/components";
+import { RightClickMenu,IconManage } from "@/components";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   components: {
+    IconManage,
     VueDraggableResizable,
     VueContextMenu:RightClickMenu,
   },

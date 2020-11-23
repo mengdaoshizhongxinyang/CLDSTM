@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-20 16:13:14
+ * @LastEditTime: 2020-11-23 15:30:29
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -33,7 +33,6 @@
 <template>
   <div class="main">
     <desktop></desktop>
-    {{Object.keys(desktopIcons)}}
     <desktop-icon
       v-for="(icon,index) in Object.keys(desktopIcons)"
       :x="Math.floor(index/desktopIconNum)*70"
@@ -70,7 +69,7 @@ import {
   Setting
 } from "@/components";
 
-import { defineComponent,computed } from "vue"
+import { defineComponent,computed, nextTick } from "vue"
 
 import moment from "moment";
 
@@ -116,7 +115,11 @@ export default  defineComponent({
     // })
   },
   setup(props){
-    const store=useStore()
+    
+    const store:Store=useStore()
+    nextTick(()=>{
+      store.dispatch('initAll')
+    })
     const desktopIcons =computed(()=>{
         return store.state.view.desktop.fileList
     })
@@ -167,7 +170,6 @@ export default  defineComponent({
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id="background"
-      console.log(document.getElementById('app'))
       document.getElementById('app')!.appendChild(renderer.domElement);
       window.addEventListener("resize", this.onWindowResize, false);
     },

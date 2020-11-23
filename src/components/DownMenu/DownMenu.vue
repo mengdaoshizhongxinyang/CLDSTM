@@ -38,7 +38,7 @@ import moment from "moment";
 import { WindowsOutlined } from '@ant-design/icons-vue';
 import { useStore } from "vuex";
 import  Icon from "@/components/IconManage";
-import DownMenuRightMenu from "./DownMenuRightMenu";
+import DownMenuRightMenu from "./DownMenuRightMenu.vue";
 import {Store} from "@/types/store";
 export default {
   components:{

@@ -19,6 +19,7 @@ const VueStorage = {
    * @returns {WebStorage}
    */
   install(Vue:App, options:options = {}) {
+    console.log(Vue)
     const _options = Object.assign({}, options, {
       storage: options.storage || 'local',
       name: options.name || 'ls',
@@ -48,7 +49,7 @@ const VueStorage = {
         store = MemoryStorage;
         break;
     }
-
+    console.log(111)
     if (!store) {
       store = MemoryStorage;
       // eslint-disable-next-line
@@ -76,7 +77,10 @@ const VueStorage = {
 };
 
 _global.VueStorage = VueStorage;
+let ws=()=>{
+  return webStorage
+}
 export {
-  webStorage
+  ws
 }
 export default VueStorage;
