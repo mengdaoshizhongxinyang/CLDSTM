@@ -21,22 +21,14 @@
         <slot name="header"></slot>
       </div>
 
-      <div class="header-back" @mouseup="(e) => rightClick(e, 'headerMenu')">
+      <div class="header-back" @contextmenu="(e) => rightClick(e, 'headerMenu')">
         <slot name="header-name-more"><div class="header-title">{{ getAppInfo(appsId).name || "" }}</div></slot>
-        <VueContextMenu
+        <right-click-menu
           :offset="contextMenuOffset"
           v-model:show="headerMenu"
-          class="menu"
         >
-          <div class="menu-item" @click="minimize" v-if="allowMinimize">
-            最小化
-          </div>
-          <div class="menu-item" @click="fullScrean" v-if="allowEnlarge">
-            最大化
-          </div>
-          <a-divider />
-          <div class="menu-item" @click="close">关闭</div>
-        </VueContextMenu>
+          <contextMenuOffset></contextMenuOffset>
+        </right-click-menu>
       </div>
 
       <div class="header-button-group">
@@ -77,11 +69,12 @@
 import VueDraggableResizable from "@/components/BaseDraggable";
 import { RightClickMenu,IconManage } from "@/components";
 import { mapGetters, mapState, mapActions } from "vuex";
+console.log(IconManage)
 export default {
   components: {
     IconManage,
     VueDraggableResizable,
-    VueContextMenu:RightClickMenu,
+    RightClickMenu,
   },
   computed: {
     ...mapGetters(["getAppInfo"]),
@@ -169,11 +162,7 @@ export default {
   },
   methods: {
     rightClick(e, button) {
-      if (e.button === 2) {
-        this.contextMenuOffset.left = e.x;
-        this.contextMenuOffset.top = e.y;
-        this[button] = true;
-      }
+      this.headerMenu=true
     },
     fullScrean() {
       if (!this.allowEnlarge) {

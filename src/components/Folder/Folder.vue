@@ -13,7 +13,7 @@
       <div class="floder-address">
         <a-button
           size="small"
-          icon="arrow-left"
+          icon="arrow-left-outlined"
           class="floder-address-button"
           :disabled="backStack.length==0"
           @click="handleBack"
@@ -34,9 +34,10 @@
         </a-input>
         <a-button
           size="small"
-          icon="redo"
           class="floder-address-button floder-address-input-suffix"
-        ></a-button>
+        >
+          <icon-manage icon="redo"></icon-manage>
+        </a-button>
         <a-input-search
           size="small"
           class="floder-address-search"
@@ -67,7 +68,7 @@
 
 <script>
 import Tree from "../Tree";
-import { DesktopIcon, Frame } from "@/components";
+import { DesktopIcon, Frame,IconManage } from "@/components";
 import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 import { SET_RUNING_APPS } from "@/store/modules";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
@@ -97,6 +98,7 @@ export default {
     DesktopIcon,
     Tree,
     Frame,
+    IconManage
   },
   data() {
     return {

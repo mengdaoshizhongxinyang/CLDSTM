@@ -1,5 +1,4 @@
 import { ReturnGetters, Store, ActionContext } from '@/types/store';
-import Vue from "vue";
 import { ws } from "@/utils/localstorage/index";
 
 export const FOLDER_STATUS_INIT = 'FOLDER_STATUS_INIT'
@@ -22,16 +21,15 @@ const mutations = {
       status.x=0
     }
     Object.assign(state.folderStatus,status)
-    ws().ls.set('folderStatus',state.folderStatus)
+    ws().set('folderStatus',state.folderStatus)
   }
 }
 
 
 const actions = {
   initFolderStatus({commit}: ActionContext<State, Getters>){
-    let lsStatus=ws().ls.get('folderStatus')
+    let lsStatus=ws().get('folderStatus')
     let status=Object.assign({x:0,y:0,w:200,h:200},lsStatus)
-
     commit(FOLDER_STATUS_INIT,status)
   },
   updateFolderStatus({commit}:ActionContext<State, Getters>,data :any){
@@ -41,7 +39,7 @@ const actions = {
 
 
 const getters = {
-  getFolderStatus(state: State, getters: any, rootState: Store['state'], rootGetters: any){
+  getFolderStatus(state: State){
     return state.folderStatus
   }
 }

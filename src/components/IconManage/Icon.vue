@@ -6,11 +6,28 @@
 
 <script>
 import vscodeIcon from "./vscodeIcon";
-import Icon,{FileUnknownOutlined,FolderOutlined,FolderFilled,PlusOutlined} from '@ant-design/icons-vue';
+import Icon,{
+  FileUnknownOutlined,
+  FolderOutlined,
+  FolderFilled,
+  PlusOutlined,
+  RedoOutlined,
+  BorderOutlined,
+  MinusOutlined,
+  BlockOutlined,
+  CloseOutlined
+} from '@ant-design/icons-vue';
 export default {
   components: {
-    vscodeIcon,
-    FileUnknownOutlined,FolderOutlined,FolderFilled,PlusOutlined,
+    FileUnknownOutlined,
+    FolderOutlined,
+    FolderFilled,
+    PlusOutlined,
+    RedoOutlined,
+    BorderOutlined,
+    MinusOutlined,
+    BlockOutlined,
+    CloseOutlined,
     Icon
   },
   props: {
@@ -35,7 +52,12 @@ export default {
         antd: {
           folder: "Folder",
           article: "FileMarkdown",
-          setting:"Setting"
+          setting:"Setting",
+          redo:"Redo",
+          minus:"Minus",
+          block:"Block",
+          border:"Border",
+          close:"Close"
         },
         more: {
           vscode: "vscodeIcon",
