@@ -1,7 +1,7 @@
 /*
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-18 11:36:41
+ * @LastEditTime: 2020-11-25 10:02:44
  * @LastEditors: Please set LastEditors
  * @Description: never bug
  * @FilePath: \CLDSTM\src\components\index.js
@@ -37,8 +37,8 @@ import DownMenu from "@/components/DownMenu";
 import Frame from "@/components/Frame";
 import IconManage from "@/components/IconManage";
 import vscode from "@/components/VsCode";
-import RightClickMenu from "@/components/RightClickMenu/index.ts";
-import Money from "@/components/Money"
+import RightClickMenu from "@/components/RightClickMenu";
+// import Money from "@/components/Money"
 import DesktopIcon from "@/components/DesktopIcon";
 import Desktop from "@/components/Desktop";
 import ArticleMd from "@/components/Article"
@@ -58,7 +58,7 @@ export{
     vscode,
     Desktop,
     DesktopIcon,
-    Money,
+    // Money,
     Folder,
     Properties,
     Setting,

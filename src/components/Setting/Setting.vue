@@ -1,7 +1,6 @@
 <template>
   <setting-frame
     name="设置"
-    v-on="$listeners"
     v-bind="$attrs"
     @resizing="handleResize"
     :minWidth="300"
@@ -17,7 +16,7 @@
           v-if="operated.length"
           @click.stop="handleBack"
         >
-          <a-icon type="arrow-left"></a-icon>
+          <icon-manage icon="arrowLeft"></icon-manage>
         </div>
         <div>设置</div>
       </div>
@@ -40,7 +39,9 @@
 </template>
 
 <script>
-import SettingFrame from "@/components/Frame";
+// import SettingFrame from "@/components/Frame";
+import { Frame as SettingFrame,IconManage } from "@/components";
+import { Transition } from "vue";
 import Main from "./Main";
 import {
   LanguageSetting,
@@ -50,6 +51,8 @@ import { PersonaliseSetting } from "./SubModule/PersonaliseSettingModule";
 import { mapState } from "vuex";
 export default {
   components: {
+    IconManage,
+    Transition,
     PersonaliseSetting,
     LanguageSetting,
     SettingFrame,

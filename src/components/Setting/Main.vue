@@ -12,7 +12,7 @@
           <div class="item-lr-occlude occlude"></div>
           <div class="item-content" @click="handleOpen(item)">
             <div class="item-content-icon">
-              <a-icon :type="item.icon"></a-icon>
+              <icon-manage :icon="item.icon"></icon-manage>
             </div>
             <div class="item-content-title">
               {{ item.title }}
@@ -39,9 +39,11 @@
 <script>
 import { mapState } from 'vuex';
 import SettingBody from "./SettingBody";
+import { IconManage } from "@/components";
 export default {
   components: {
     SettingBody,
+    IconManage
   },
   computed: {
     colNum() {

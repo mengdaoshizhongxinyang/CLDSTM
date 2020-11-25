@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { Transition } from "vue";
 export default {
   props: {
     level: {
@@ -33,6 +34,7 @@ export default {
     },
   },
   components: {
+    Transition,
     TreeItem: () => import("./TreeItem.vue"),
   },
   data() {
@@ -42,6 +44,7 @@ export default {
   },
   methods: {
     handleShowChildren() {
+      console.log(this.node)
       this.showChildren = !this.showChildren;
     },
     enter(el) {

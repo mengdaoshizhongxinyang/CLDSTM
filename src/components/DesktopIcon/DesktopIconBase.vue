@@ -37,7 +37,27 @@
 <script>
 import IconManage from "@/components/IconManage";
 import {RightClickMenu} from "@/components";
-export default {
+import { defineComponent, reactive } from "vue";
+import { useStore } from 'vuex';
+export default defineComponent({
+  setup(){
+    const data=reactive({
+      actived: false,
+      type: "show",
+      tempName: "",
+      iconShow: false,
+      iconMenuOffset: {
+        left: 0,
+        top: 0,
+      },
+      menuList: [
+        { label: "重命名", run: "rename" },
+        { label: "属性", run: "attribute" },
+      ],
+    })
+    const store=useStore();
+
+  },
   created() {
     console.log(IconManage)
     this.tempName = this.iconInfo.name;
@@ -49,7 +69,7 @@ export default {
   props: {
     iconStyle: {
       type: String,
-      default: "filled"
+      default: "outlined"
     },
     iconInfo: {
       type: Object,
@@ -108,12 +128,12 @@ export default {
         fileName: iconInfo.name,
         apps:'Properties'
       };
-      this.$tstore.dispatch("openApps", attribute);
+      this.$store.dispatch("openApps", attribute);
     },
     changeName() {
       let newName = this.$refs.input.textContent;
       const { iconInfo } = this;
-      this.$tstore.dispatch("renameFile", {
+      this.$store.dispatch("renameFile", {
         name: newName,
         oldName: iconInfo.name,
         path: iconInfo.position,
@@ -134,11 +154,11 @@ export default {
       while(Y+480>=h){
         Y-=88
       }
-      this.$tstore.dispatch('setPosition',{X,Y})
+      this.$store.dispatch('setPosition',{X,Y})
       this.iconShow = true;
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

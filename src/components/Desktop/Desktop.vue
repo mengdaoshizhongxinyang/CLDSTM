@@ -72,6 +72,14 @@ export default defineComponent({
           path: "/",
         });
       },
+      personaliseFrame() {
+        let PersonaliseSetting = {
+          apps: "Setting",
+          icon: "setting",
+          name: "设置",
+        };
+        store.dispatch("openApps", PersonaliseSetting);
+      },
     };
     const handleMenuItemClick = (menu: typeMenu) => {
       if (runEvent[menu.run as keyof typeof runEvent]) {

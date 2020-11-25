@@ -1,6 +1,5 @@
 <template>
   <tree-branch v-if="node && node.children && Object.keys(node.children).length" :node="node" :level="level+1"></tree-branch>
-  <!-- <tree-node v-else :node="node" :level="level+1"></tree-node> -->
 </template>
 
 <script>
@@ -22,6 +21,9 @@ import TreeNode from "./TreeNode";
         type:Number,
         default:0
       }
+    },
+    mounted(){
+      console.log(this.node)
     }
   }
 </script>

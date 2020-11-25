@@ -15,7 +15,7 @@
       >
         <div class="menu-list-item-label"></div>
         <div class="menu-list-item-content">
-          <a-icon :type="item.icon"></a-icon>
+          <icon-manage :icon="item.icon"></icon-manage>
           {{ item.name }}
         </div>
       </div>
@@ -25,7 +25,11 @@
 
 <script>
 import { mapState } from 'vuex';
+import { IconManage } from "@/components";
 export default {
+  components:{
+    IconManage
+  },
   computed:{
     ...mapState({
       list(state){

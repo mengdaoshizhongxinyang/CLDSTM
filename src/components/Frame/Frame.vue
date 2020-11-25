@@ -23,12 +23,11 @@
 
       <div class="header-back" @contextmenu="(e) => rightClick(e, 'headerMenu')">
         <slot name="header-name-more"><div class="header-title">{{ getAppInfo(appsId).name || "" }}</div></slot>
-        <right-click-menu
+        <RightClickMenu
           :offset="contextMenuOffset"
           v-model:show="headerMenu"
         >
-          <contextMenuOffset></contextMenuOffset>
-        </right-click-menu>
+        </RightClickMenu>
       </div>
 
       <div class="header-button-group">
@@ -37,15 +36,15 @@
         </div>
         <template v-if="allowEnlarge">
           <div class="header-button" v-if="isFull" @click="fullScrean">
-            <icon-manage type="block" iconStyle="outlined"></icon-manage>
+            <icon-manage icon="block" iconStyle="outlined"></icon-manage>
           </div>
           <div class="header-button" v-else @click="fullScrean">
-            <icon-manage type="border" iconStyle="outlined"></icon-manage>
+            <icon-manage icon="border" iconStyle="outlined"></icon-manage>
           </div>
         </template>
 
         <div class="header-button-close" @click="close">
-          <icon-manage type="close" iconStyle="outlined"></icon-manage>
+          <icon-manage icon="close" iconStyle="outlined"></icon-manage>
         </div>
       </div>
     </div>
@@ -67,14 +66,15 @@
 
 <script>
 import VueDraggableResizable from "@/components/BaseDraggable";
-import { RightClickMenu,IconManage } from "@/components";
+import RightClickMenu from "@/components/RightClickMenu";
+import IconManage from "@/components/IconManage";
 import { mapGetters, mapState, mapActions } from "vuex";
 console.log(IconManage)
 export default {
   components: {
     IconManage,
     VueDraggableResizable,
-    RightClickMenu,
+    RightClickMenu
   },
   computed: {
     ...mapGetters(["getAppInfo"]),

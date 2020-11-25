@@ -13,23 +13,29 @@
       <div class="floder-address">
         <a-button
           size="small"
-          icon="arrow-left-outlined"
           class="floder-address-button"
           :disabled="backStack.length==0"
           @click="handleBack"
-        ></a-button>
+        >
+          <icon-manage icon="arrowLeft"></icon-manage>
+        </a-button>
         <a-button
           size="small"
-          icon="arrow-right"
           class="floder-address-button"
           :disabled="nextStack==0"
           @click="handleNext"
-        ></a-button>
-        <a-button size="small" icon="down" class="floder-address-button" disabled></a-button>
-        <a-button size="small" icon="arrow-up" class="floder-address-button" disabled></a-button>
-        <a-input size="small" class="floder-address-input" v-model="path">
+        >
+          <icon-manage icon="arrowRight"></icon-manage>
+        </a-button>
+        <a-button size="small" class="floder-address-button" disabled>
+          <icon-manage icon="down"></icon-manage>
+        </a-button>
+        <a-button size="small" class="floder-address-button" disabled>
+          <icon-manage icon="arrowUp"></icon-manage>
+        </a-button>
+        <a-input size="small" class="floder-address-input" v-model:value="path">
           <template #prefix>
-            <a-icon :type="icon" />
+            <icon-manage :icon="icon" />
           </template>
         </a-input>
         <a-button
@@ -40,9 +46,9 @@
         </a-button>
         <a-input-search
           size="small"
-          class="floder-address-search"
+          style="width:112px"
           @search="handleSearch"
-          v-model="search"
+          v-model:value="search"
         ></a-input-search>
       </div>
       <div class="floder-content">
@@ -108,13 +114,8 @@ export default {
       path: "",
       search: "",
       cacheSearch: "",
-      iconStyle: {
-        theme: "filled",
-        style: {
-          color: "#000",
-        },
-      },
-    };
+      iconStyle:"filled",
+    }
   },
   computed: {
     ...mapGetters(["desktopApps"]),
@@ -231,18 +232,22 @@ export default {
       border-radius: 0;
       flex: 1;
     }
-    &-input-suffix,
+    &-input-suffix{
+      border: 1px solid #d9d9d9;
+      height:22px;
+      border-radius: 0;
+      margin-right: 12px;
+    }
     &-input ::v-deep(.ant-input) {
       border-radius: 0;
-      border: 1px solid #d9d9d9;
       &:focus {
-        // outline: 0;
-        border: 1px solid #1890ff;
+        outline: 0;
         box-shadow: none;
       }
     }
     &-input {
       flex: 1;
+      border-radius: 0;
     }
     &-input-suffix {
       border-left: 0;

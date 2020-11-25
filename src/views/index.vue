@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-23 15:30:29
+ * @LastEditTime: 2020-11-25 16:53:02
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -39,6 +39,7 @@
       :y="Math.floor(index%desktopIconNum)*88"
       :key="desktopIcons[icon].name"
       :iconInfo="desktopIcons[icon]"
+      iconStyle="filled"
       @openApps="handleOpenApps(desktopIcons[icon])"
     ></desktop-icon>
 
@@ -60,14 +61,14 @@ import {
   vscode,
   Frame,
   DownMenu,
-  Money,
+  // Money,
   DesktopIcon,
   ArticleMd,
   Folder,
   Desktop,
   Properties,
   Setting
-} from "@/components";
+} from "@/components/index.ts";
 
 import { defineComponent,computed, nextTick } from "vue"
 
@@ -98,7 +99,7 @@ export default  defineComponent({
     vscode,
     Desktop,
     DesktopIcon,
-    Money,
+    // Money,
     ArticleMd,
     message,
     Properties,
@@ -121,6 +122,7 @@ export default  defineComponent({
       store.dispatch('initAll')
     })
     const desktopIcons =computed(()=>{
+      console.log(store.state.view.desktop.fileList)
         return store.state.view.desktop.fileList
     })
     const desktopApps=computed(()=>
@@ -147,6 +149,7 @@ export default  defineComponent({
   methods: {
     moment,
     handleOpenApps(icon:any) {
+      console.log(icon)
       this.openApps(icon);
       // this.$store.dispatch("openApps",icon)
     },

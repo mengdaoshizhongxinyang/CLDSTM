@@ -9,7 +9,7 @@ export interface WS{
   set:(name:string,value:any,expire?:Date)=> void,
   setOptions:(any)=>void,
   key:(key:string)=>any,
-  remove:(name:string)=>void,
+  remove:(name:string)=>Boolean,
   clear:()=>void,
   on:(name:string,callback:Function)=>void,
   off:(name:string,callback:Function)=>void

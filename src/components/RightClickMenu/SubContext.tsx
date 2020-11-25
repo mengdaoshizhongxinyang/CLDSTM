@@ -75,7 +75,8 @@ const SubContext:DefineComponent = defineComponent({
 
       emit("setPosition", data.style);
     }
-    const handleClick=(menu:typeMenu)=>{
+    const handleClick=(e:MouseEvent,menu:typeMenu)=>{
+      e.preventDefault()
       if (!menu.children) {
         if (menu.function) {
           menu.function();
@@ -126,7 +127,8 @@ const SubContext:DefineComponent = defineComponent({
                 key={index}
                 onMouseenter={() => handleMouseenter(menu)}
                 onMouseleave={() => handleMouseleave(menu)}
-                onClick={() => handleClick(menu)}
+                onMousedown={(e)=>{e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}}
+                onClick={(e) => handleClick(e,menu)}
               >
                 {menu.name && slots[menu.name] ? (
                   slots[menu.name](menu).concat(renderChildren(menu))
