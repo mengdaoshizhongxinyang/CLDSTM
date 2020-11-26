@@ -14,7 +14,7 @@ export const UPDATE_FILENAME='UPDATE_FILENAME'
 
 const state = {
     desktopApps: {
-        apps: [] as any,
+        apps: [] as Array<any>,
         maxZindex: 0,
         id: 0
     },
@@ -35,7 +35,6 @@ const mutations = {
         state.fileList=item
     },
     [SET_RUNING_APPS](state :State, item:Object) {
-        console.log(item)
         state.desktopApps.apps.push({
             apps: state.apps[item.type as keyof typeof state.apps],
             ...item,

@@ -602,6 +602,15 @@ export default {
   },
   computed: {
     style () {
+      console.log({
+        position: 'absolute',
+        top: this.top + 'px',
+        left: this.left + 'px',
+        width: this.width + 'px',
+        height: this.height + 'px',
+        zIndex: this.zIndex,
+        ...(this.dragging && this.disableUserSelect ? userSelectNone : userSelectAuto)
+      })
       return {
         position: 'absolute',
         top: this.top + 'px',
@@ -781,6 +790,7 @@ export default {
       this.maxH = val
     },
     w () {
+      console.log(this.w)
       if (this.resizing || this.dragging) {
         return
       }

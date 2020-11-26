@@ -2,7 +2,6 @@ let fs = require("fs")
 let data = fs.readdirSync('./static')
 let config = fs.readFileSync('./config.js').toString()
 let articleList = "//article start//\n    var article={"
-console.log(data)
 function getFileTreeContent(res,now) {
     let ans=""
     if (res.split('.').length > 1) {

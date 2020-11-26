@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     handleShowChildren() {
-      console.log(this.node)
       this.showChildren = !this.showChildren;
     },
     enter(el) {

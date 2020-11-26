@@ -88,11 +88,6 @@ export default {
         },
       },
     };
-  },
-  mounted(){
-    if(!this.type[this.iconStyle]){
-      console.log(this.iconStyle)
-    }
   }
 };
 </script>

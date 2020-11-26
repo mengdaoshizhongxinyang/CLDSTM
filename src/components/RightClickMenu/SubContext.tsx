@@ -131,7 +131,7 @@ const SubContext:DefineComponent = defineComponent({
                 onClick={(e) => handleClick(e,menu)}
               >
                 {menu.name && slots[menu.name] ? (
-                  slots[menu.name](menu).concat(renderChildren(menu))
+                  slots[menu.name]!(menu).concat(renderChildren(menu))
                 ) : (
                     <div class="menu-item-content">
                       {menu.label}

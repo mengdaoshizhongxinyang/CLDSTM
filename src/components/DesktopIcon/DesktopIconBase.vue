@@ -59,7 +59,6 @@ export default defineComponent({
 
   },
   created() {
-    console.log(IconManage)
     this.tempName = this.iconInfo.name;
   },
   components: {

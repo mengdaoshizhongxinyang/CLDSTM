@@ -69,7 +69,6 @@ import VueDraggableResizable from "@/components/BaseDraggable";
 import RightClickMenu from "@/components/RightClickMenu";
 import IconManage from "@/components/IconManage";
 import { mapGetters, mapState, mapActions } from "vuex";
-console.log(IconManage)
 export default {
   components: {
     IconManage,
