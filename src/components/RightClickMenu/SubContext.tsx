@@ -86,7 +86,7 @@ const SubContext:DefineComponent = defineComponent({
     }
     const renderChildren=(menu:typeMenu)=>{
       return menu.children && menu.children.length > 0 ? h(
-        <SubContext
+        <sub-context
           direction={direction}
           menus={menu.children}
           show={menu.show}
@@ -96,7 +96,7 @@ const SubContext:DefineComponent = defineComponent({
           
           onMenuItemClick={handleClick}
           v-slots={{ ...slots }}
-        ></SubContext>
+        ></sub-context>
       ) : (
           ""
         );
