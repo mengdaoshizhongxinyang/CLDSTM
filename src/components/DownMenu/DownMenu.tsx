@@ -14,6 +14,7 @@ export default defineComponent({
     Transition
   },
   setup() {
+    console.log('111');
     const data = reactive({
       date: "",
       time: "",
@@ -25,6 +26,7 @@ export default defineComponent({
     const context = ref<HTMLElement>();
     const store: Store = useStore();
     const desktopApps = computed(() => {
+      console.log(store.getters.desktopApps)
       return store.getters.desktopApps
     })
     const clock = () => {

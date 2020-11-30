@@ -5,7 +5,7 @@
       @click="handleShowChildren"
       :style="`padding-left:${4*level}px`"
     >{{node.name}}</div>
-    <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave">
+    <transition @enter="enter" @afterEnter="afterEnter" @leave="leave" @afterLeave="afterLeave" name="fade">
       <div class="folder-tree-node-content" v-show="showChildren">
         <tree-item
           v-for="item in node.children"

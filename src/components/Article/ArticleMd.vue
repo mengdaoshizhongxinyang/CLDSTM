@@ -1,5 +1,5 @@
 <template>
-  <Frame v-on="$listeners" v-bind="$attrs" :initialH="600" :initialW="1000">
+  <Frame v-bind="$attrs" :initialH="600" :initialW="1000">
     <article-base :content="content"></article-base>
   </Frame>
 </template>

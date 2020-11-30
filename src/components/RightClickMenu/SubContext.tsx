@@ -98,7 +98,7 @@ const SubContext:DefineComponent = defineComponent({
           v-slots={{ ...slots }}
         ></sub-context>
       ) : (
-          ""
+          null
         );
     }
     watch(()=>props.show, (val) => {

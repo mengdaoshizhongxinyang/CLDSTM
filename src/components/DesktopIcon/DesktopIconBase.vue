@@ -35,8 +35,7 @@
 </template>
 
 <script>
-import IconManage from "@/components/IconManage";
-import {RightClickMenu} from "@/components";
+import {IconManage,RightClickMenu} from "@/components";
 import { defineComponent, reactive } from "vue";
 import { useStore } from 'vuex';
 export default defineComponent({

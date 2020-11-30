@@ -7,6 +7,7 @@
     :initialW="folderStatus.w"
     :initialX="folderStatus.x"
     :initialY="folderStatus.y"
+    @resizing="handleResizing"
   >
     <div class="floder">
       <div class="floder-menu"></div>
@@ -195,6 +196,9 @@ export default {
     },
     handleDragstop(x, y) {
       this.$store.dispatch('updateFolderStatus',{x:x+20, y:y+20})
+    },
+    handleResizing(l,t,w,h){
+      console.log(w,h)
     }
   },
   mounted() {
