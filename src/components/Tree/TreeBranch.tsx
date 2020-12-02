@@ -1,10 +1,14 @@
 import { defineComponent,h,reactive,Transition } from "vue";
 import style from "./tree.module.less"
-interface thisProps{
-  level?:number,
-  node?:{name:string}
+interface node{
+  name:string,
+  children:{[key : string]:node}
 }
-export default defineComponent({
+interface thisProps{
+  level:number,
+  node:node
+}
+export default defineComponent<thisProps>({
   setup(props){
     const data=reactive({showChildren: false})
     const handleShowChildren=()=>{
@@ -40,33 +44,20 @@ export default defineComponent({
         <transition onEnter={enter} onAfterEnter={afterEnter} onLeave={leave} onAfterLeave={afterLeave} name="fade">
           <div class={style["folder-tree-node-content"]} v-show={data.showChildren}>
             {
-              props.node.children.map(item=>{
-                return (
-                  <tree-item
-                    key={item.name}
-                    node={item}
-                    level={props.level+1}
-                  ></tree-item>
-                )
+              Object.keys(props.node.children).map(item=>{
+                let t=props.node.children[item]
+
+                return (<tree-item
+                  key={props.node.children[item].name}
+                  node={item}
+                  level={props.level+1}
+                ></tree-item>)
               })
             }
-            
           </div>
         </transition>
       </div>
     )
-  },
-  props: {
-    level: {
-      type: Number,
-      default: 1,
-    },
-    node: {
-      type: Object,
-      default: () => {
-        return {};
-      },
-    },
   },
   components: {
     Transition,
