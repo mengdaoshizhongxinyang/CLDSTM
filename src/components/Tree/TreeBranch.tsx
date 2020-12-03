@@ -1,14 +1,11 @@
-import { defineComponent,h,reactive,Transition } from "vue";
+import { defineComponent,h,PropType,reactive,Transition } from "vue";
 import style from "./tree.module.less"
-interface node{
-  name:string,
-  children:{[key : string]:node}
-}
+
 interface thisProps{
   level:number,
   node:node
 }
-export default defineComponent<thisProps>({
+export default defineComponent({
   setup(props){
     const data=reactive({showChildren: false})
     const handleShowChildren=()=>{
@@ -62,5 +59,15 @@ export default defineComponent<thisProps>({
   components: {
     Transition,
     TreeItem: () => import("./TreeItem"),
+  },
+  props:{
+    level:{
+      type:Number,
+      default:0
+    },
+    node:{
+      type:Object,
+      default:{}
+    }
   }
 })

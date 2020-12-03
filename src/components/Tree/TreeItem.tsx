@@ -9,6 +9,7 @@ export default defineComponent({
   setup(props) {
     return () => h(
       <>
+        {props.level}
         {
           (props.node && props.node.children && Object.keys(props.node.children).length) ?
             <tree-branch node={props.node} level={props.level+1}></tree-branch> : null
