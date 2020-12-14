@@ -39,35 +39,35 @@ export let asyncRouterMap : Array<RouteRecordRaw>=[
             
         ]
     },
-    // {
-    //     path: '/resume/:key',
-    //     name: 'Resume',
-    //     component:()=>import ('@/views/resume/Resume.vue'),
-    //     meta:{title:'简历'}
-    // },{ 
-    //     path: '/resume',
-    //     name: 'Resume',
-    //     component:()=>import ('@/views/resume/Resume.vue'),
-    //     meta:{title:'简历'}
-    // },{
-    //     path: '/article/*',
-    //     name: 'Article',
-    //     component:()=>import ('@/views/article/Article.vue'),
-    //     meta:{title:'简历'}
-    // },{
-    //     path: '/test/demo1',
-    //     name: 'lengjing',
-    //     component:()=>import ('@/views/threedemo/threedemo1.vue'),
-    //     meta:{title:'three'}
-    // },{
-    //     path: '/test/demo2',
-    //     name: 'lengjing',
-    //     component:()=>import ('@/views/threedemo/threedemo2.vue'),
-    //     meta:{title:'three'}
-    // },{
-    //     path: '/test/demo3',
-    //     name: 'lengjing',
-    //     component:()=>import ('@/views/threedemo/threedemo3.vue'),
-    //     meta:{title:'three'}
-    // }
+    {
+        path: '/resume/:key',
+        name: 'Resume',
+        component:()=>import ('@/views/resume/Resume.vue'),
+        meta:{title:'简历'}
+    },{ 
+        path: '/resume',
+        name: 'Resume',
+        component:()=>import ('@/views/resume/Resume.vue'),
+        meta:{title:'简历'}
+    },{
+        path: '/article/*',
+        name: 'Article',
+        component:()=>import ('@/views/article/Article.vue'),
+        meta:{title:'简历'}
+    },{
+        path: '/test/demo1',
+        name: 'lengjing',
+        component:()=>import ('@/views/threedemo/threedemo1.vue'),
+        meta:{title:'three'}
+    },{
+        path: '/test/demo2',
+        name: 'lengjing',
+        component:()=>import ('@/views/threedemo/threedemo2.vue'),
+        meta:{title:'three'}
+    },{
+        path: '/test/demo3',
+        name: 'lengjing',
+        component:()=>import ('@/views/threedemo/threedemo3.vue'),
+        meta:{title:'three'}
+    }
 ]
