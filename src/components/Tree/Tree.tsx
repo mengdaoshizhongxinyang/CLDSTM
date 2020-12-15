@@ -8,7 +8,6 @@ export default defineComponent({
   setup() {
     const data = reactive({ desktopIcons: {} })
     data.desktopIcons = configs.getDesktopIcon()
-    console.log(data)
     return () => h(
       <div class="tree">
         {
@@ -26,7 +25,7 @@ export default defineComponent({
   },
   props: {
     treeData: {
-      type: Object as PropType<node>,
+      type: Object ,
       default: () => {
         return {};
       },

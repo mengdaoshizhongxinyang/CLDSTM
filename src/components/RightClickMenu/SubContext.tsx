@@ -65,14 +65,13 @@ const SubContext:DefineComponent = defineComponent({
         leftover =
           x + width + menuWidth <= docWidth ? x + width : x - menuWidth;
         if (x + width + menuWidth > docWidth) {
-          direction = "right";
+          direction = "left";
         }
       }
       data.style = {
         left: `${leftover}px`,
         top: `${topover}px`,
       };
-
       emit("setPosition", data.style);
     }
     const handleClick=(e:MouseEvent,menu:typeMenu)=>{
@@ -98,8 +97,8 @@ const SubContext:DefineComponent = defineComponent({
           v-slots={{ ...slots }}
         ></sub-context>
       ) : (
-          null
-        );
+        null
+      );
     }
     watch(()=>props.show, (val) => {
       if (val) {
@@ -116,13 +115,13 @@ const SubContext:DefineComponent = defineComponent({
         });
       }
     })
+    console.log(direction)
     return ()=>h(
       <Transition name="contextmenu-fade">
         <div class="menu" style={data.style} v-show={props.show} ref={root}>
           {data.menuList.map((menu, index) => {
             return (
               <div
-
                 class="menu-item"
                 key={index}
                 onMouseenter={() => handleMouseenter(menu)}
@@ -131,7 +130,7 @@ const SubContext:DefineComponent = defineComponent({
                 onClick={(e) => handleClick(e,menu)}
               >
                 {menu.name && slots[menu.name] ? (
-                  slots[menu.name]!(menu).concat(renderChildren(menu))
+                  slots[menu.name]!().concat(renderChildren(menu))
                 ) : (
                     <div class="menu-item-content">
                       {menu.label}

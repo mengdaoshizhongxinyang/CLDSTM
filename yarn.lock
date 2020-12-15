@@ -1359,6 +1359,13 @@
   dependencies:
     source-map "^0.6.1"
 
+"@types/vue-markdown@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.npm.taobao.org/@types/vue-markdown/download/@types/vue-markdown-2.2.1.tgz#dd302c67349e0e591d3fcb84e924eb8bf9314fea"
+  integrity sha1-3TAsZzSeDlkdP8uE6STri/kxT+o=
+  dependencies:
+    vue "^2.5.16"
+
 "@types/webpack-dev-server@^3.11.0":
   version "3.11.1"
   resolved "https://registry.npm.taobao.org/@types/webpack-dev-server/download/@types/webpack-dev-server-3.11.1.tgz#f8f4dac1da226d530bd15a1d5dc34b23ba766ccb"
@@ -5102,7 +5109,12 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.npm.taobao.org/hex-color-regex/download/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
 
-highlight.js@^9.12.0, highlight.js@^9.4.0, highlight.js@^9.6.0:
+highlight.js@^9.12.0:
+  version "9.18.5"
+  resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
+  integrity sha1-0Yo1mGfzeME41oGe38KorNXymCU=
+
+highlight.js@^9.4.0, highlight.js@^9.6.0:
   version "9.18.3"
   resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-9.18.3.tgz#a1a0a2028d5e3149e2380f8a865ee8516703d634"
   integrity sha1-oaCiAo1eMUniOA+Khl7oUWcD1jQ=
@@ -6902,7 +6914,7 @@ markdown-it-toc-and-anchor@^4.1.2:
 
 markdown-it@^6.0.1:
   version "6.1.1"
-  resolved "https://registry.npm.taobao.org/markdown-it/download/markdown-it-6.1.1.tgz#ced037f4473ee9f5153ac414f77dc83c91ba927c"
+  resolved "https://registry.npm.taobao.org/markdown-it/download/markdown-it-6.1.1.tgz?cache=0&sync_timestamp=1607373322105&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmarkdown-it%2Fdownload%2Fmarkdown-it-6.1.1.tgz#ced037f4473ee9f5153ac414f77dc83c91ba927c"
   integrity sha1-ztA39Ec+6fUVOsQU933IPJG6knw=
   dependencies:
     argparse "^1.0.7"
@@ -10335,6 +10347,11 @@ vue-types@^3.0.0:
   integrity sha1-IOm6roZz3oCT0KmJI0aV0I1US+A=
   dependencies:
     is-plain-object "3.0.1"
+
+vue@^2.5.16:
+  version "2.6.12"
+  resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.12.tgz?cache=0&sync_timestamp=1606946460885&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
+  integrity sha1-9evU+mvShpQD4pqJau1JBEVskSM=
 
 vue@^3.0.0:
   version "3.0.2"

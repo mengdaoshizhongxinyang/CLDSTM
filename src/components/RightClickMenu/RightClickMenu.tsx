@@ -70,16 +70,13 @@ const rightClickMenu= defineComponent({
         this.$emit("update:show", true);
       }
     },
-    handleSetPosition(style) {
-      this.style = style;
-    },
     handleClick(menu:typeMenu) {
       this.$emit("update:show", false);
       this.$emit("menuItemClick", menu);
     },
   },
   render() {
-    let  {show,menus,offset,handleSetPosition,handleClick}=this
+    let  {show,menus,offset,handleClick}=this
     const scopedSlots=this.$slots
     return (
       <div
@@ -88,7 +85,7 @@ const rightClickMenu= defineComponent({
         style={`left:${offset.left}px;top:${offset.top}px`}
         onMousemove={(event : MouseEvent)=>{ event.stopPropagation()}}
       >
-        <SubContext menus={menus} show={show} onSetPosition={handleSetPosition} onMenuItemClick={handleClick} v-slots={{...scopedSlots}}>
+        <SubContext menus={menus} show={show} onMenuItemClick={handleClick} v-slots={{...scopedSlots}}>
         </SubContext>
       </div>
     );

@@ -1,7 +1,7 @@
 /*
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-25 10:02:44
+ * @LastEditTime: 2020-12-15 14:27:46
  * @LastEditors: Please set LastEditors
  * @Description: never bug
  * @FilePath: \CLDSTM\src\components\index.js
@@ -35,6 +35,7 @@
 import BaseDraggable from "@/components/BaseDraggable";
 import DownMenu from "@/components/DownMenu";
 import Frame from "@/components/Frame";
+import AppFrame from "@/components/Frame";
 import IconManage from "@/components/IconManage";
 import vscode from "@/components/VsCode";
 import RightClickMenu from "@/components/RightClickMenu";
@@ -58,6 +59,7 @@ export{
     vscode,
     Desktop,
     DesktopIcon,
+    AppFrame,
     // Money,
     Folder,
     Properties,

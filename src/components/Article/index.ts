@@ -1,2 +1,2 @@
-import ArticleMd from "./ArticleMd.vue";
+import ArticleMd from "./ArticleMd";
 export default ArticleMd
