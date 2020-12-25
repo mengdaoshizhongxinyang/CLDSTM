@@ -1,7 +1,7 @@
 import { defineComponent, h } from "vue";
-import VueMd from "vue-markdown";
-import Frame from "@/components/Frame";
-//TODO rewrite VueMd
+import VueMd from "markdown-vue-next";
+import "./ArticleBase.less"
+
 export default defineComponent({
   components:{
     VueMd

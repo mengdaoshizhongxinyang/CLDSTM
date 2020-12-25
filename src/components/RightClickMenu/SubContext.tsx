@@ -1,5 +1,5 @@
 import "./subContext.less";
-import { Transition, defineComponent, watch, ref, nextTick,h, reactive, DefineComponent } from "vue";
+import { Transition, defineComponent, watch, ref, nextTick,h, reactive, DefineComponent, PropType } from "vue";
 interface typeMenu {
   label?: string,
   name?: string,
@@ -19,13 +19,13 @@ interface thisProps {
   show: Boolean,
   direction: "left" | "right"
 }
-const SubContext:DefineComponent = defineComponent({
+const SubContext =defineComponent({
   name: "SubContext",
   components: {
     Transition
   },
-  setup(p, { emit, slots }) {
-    let props = p as thisProps
+  setup(props:thisProps, { emit, slots }) {
+
     let data= reactive({menuList:props.menus.concat(),style:{}})
 
     let direction=props.direction
@@ -92,7 +92,6 @@ const SubContext:DefineComponent = defineComponent({
           onUpdate={(val:Boolean) => {
             menu.show = val;
           }}
-          
           onMenuItemClick={handleClick}
           v-slots={{ ...slots }}
         ></sub-context>
@@ -146,13 +145,13 @@ const SubContext:DefineComponent = defineComponent({
   },
   props: {
     menus: {
-      type: Array,
+      type: Array as PropType<thisProps['menus']>,
       default: () => {
         return [];
       },
     },
     basePosition: {
-      type: Object,
+      type: Object as PropType<thisProps['basePosition']>,
       default: function () {
         return {
           left: 0,
@@ -167,7 +166,7 @@ const SubContext:DefineComponent = defineComponent({
       default: false,
     },
     direction: {
-      type: String,
+      type: String as PropType<thisProps['direction']>,
       default: "right"
     }
   }

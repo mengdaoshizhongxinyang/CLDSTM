@@ -1,4 +1,4 @@
-import ArticleBase from "./ArticleBase.vue";
+import ArticleBase from "./ArticleBase";
 import { AppFrame } from "@/components";
 import { defineComponent, h } from "vue";
 export default defineComponent({
@@ -8,9 +8,9 @@ export default defineComponent({
   },
   setup(props,{attrs}){
     return ()=>h(
-      <AppFrame {...attrs} initialH={600} initialW={1000}>
+      <app-frame {...attrs} initialH={600} initialW={1000}>
         <article-base content={props.content}></article-base>
-      </AppFrame>
+      </app-frame>
     )
   },
   props: {

@@ -68,7 +68,7 @@ import {
   Desktop,
   Properties,
   Setting
-} from "@/components/index.ts";
+} from "@/components";
 
 import { defineComponent,computed, nextTick } from "vue"
 
@@ -117,7 +117,7 @@ export default  defineComponent({
   },
   setup(props){
     
-    const store:Store=useStore()
+    const store :Store=useStore()
     nextTick(()=>{
       store.dispatch('initAll')
     })
@@ -125,10 +125,10 @@ export default  defineComponent({
       console.log(store.state.view.desktop.fileList)
         return store.state.view.desktop.fileList
     })
-    const desktopApps=computed(()=>
+    const desktopApps=computed(()=>{
       // console.log(store.getters.desktopApps)
-      store.getters.desktopApps
-    )
+      return store.getters.desktopApps
+    })
     const openApps=(icon:any)=>{
       store.dispatch('openApps',icon)
     }

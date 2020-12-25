@@ -21,7 +21,7 @@ const storeOptions = {
   actions,
   getters:modulesGetters
 };
-export default createStore(storeOptions)
+
 type State = (
   typeModules['state']
 )
@@ -46,17 +46,18 @@ type DispatchFuncs = (
 interface Dispatch {
   <T extends keyof DispatchFuncs>(type: T, payload?: Parameters<DispatchFuncs[T]>[1]): Promise<any>;
 }
-
+const vuexStore=createStore(storeOptions)
 interface Commit {
   <T extends keyof CommitFuncs>(type: T, payload?: Parameters<CommitFuncs[T]>[1]): void;
 }
-export const { state } = storeOptions;
-export const { getters }: { getters: Getters } = storeOptions;
-export const { commit }: { commit: Commit } = storeOptions;
-export const { dispatch }: { dispatch: Dispatch } = storeOptions;
+// export const { state } = storeOptions;
+// export const { getters }: { getters: Getters } = storeOptions;
+// export const { commit }: { commit: Commit } = storeOptions;
+// export const { dispatch }: { dispatch: Dispatch } = storeOptions;
 export interface Store {
   state: State;
   getters: Getters;
   commit: Commit;
   dispatch: Dispatch;
 }
+export default vuexStore
