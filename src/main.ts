@@ -6,7 +6,6 @@ import './mock'
 import 'ant-design-vue/dist/antd.css' 
 import Directives from '@/utils/directives.js';
 import Storage from '@/utils/localstorage';
-import { useStore } from "vuex";
 import { Store } from "@/types/store";
 let options = {
   namespace: 'vuejs__', // key prefix

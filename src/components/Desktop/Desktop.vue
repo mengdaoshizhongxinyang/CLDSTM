@@ -13,9 +13,8 @@
 </template>
 
 <script lang="ts">
-import {RightClickMenu} from "@/components";
-import { useStore } from "vuex";
-import { Store } from "@/types/store";
+import { RightClickMenu } from "@/components";
+import { useStore } from "@/store";
 import { Events } from "vue";
 import { defineComponent } from "vue";
 type typeMenu = {
@@ -31,7 +30,7 @@ export default defineComponent({
     // }
   },
   setup() {
-    const store:Store = useStore();
+    const store = useStore();
     
     const menus = () => {
       let language =
@@ -52,7 +51,7 @@ export default defineComponent({
 
       let queueMenus = menuList.concat([]);
       while (queueMenus.length != 0) {
-        let menu: typeMenu = queueMenus.pop() as typeMenu;
+        let menu = queueMenus.pop() as typeMenu;
         menu.label =
           language[menu.name as keyof languageContextMenu] || menu.label;
         if (menu.children && menu.children.length > 0) {
@@ -113,7 +112,7 @@ export default defineComponent({
         icon: "setting",
         name: "设置",
       };
-      this.$tstore.dispatch("openApps", PersonaliseSetting);
+      this.$store.dispatch("openApps", PersonaliseSetting);
     },
   },
   mounted() {

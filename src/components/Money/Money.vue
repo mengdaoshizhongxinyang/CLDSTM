@@ -5,7 +5,6 @@
     :minHeight="832"
     :initialH="832"
     :initialW="400"
-    v-on="$listeners"
     v-bind="$attrs"
   >
     <div tabindex="-1" @keydown="keydownOpitions" class="money-main" ref="body">

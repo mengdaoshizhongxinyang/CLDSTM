@@ -81,9 +81,9 @@ import {
   mapGetters,
   mapState,
   mapActions,
-  useStore,
   StoreOptions
 } from 'vuex'
+import {useStore} from "@/store"
 import { Store } from "@/store/index";
 import Proton from "./proton.js";
 
@@ -117,12 +117,11 @@ export default  defineComponent({
   },
   setup(props){
     
-    const store :Store=useStore()
+    const store=useStore()
     nextTick(()=>{
       store.dispatch('initAll')
     })
     const desktopIcons =computed(()=>{
-      console.log(store.state.view.desktop.fileList)
         return store.state.view.desktop.fileList
     })
     const desktopApps=computed(()=>{
@@ -149,7 +148,6 @@ export default  defineComponent({
   methods: {
     moment,
     handleOpenApps(icon:any) {
-      console.log(icon)
       this.openApps(icon);
       // this.$store.dispatch("openApps",icon)
     },

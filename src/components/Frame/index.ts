@@ -1,2 +1,2 @@
-import Frame from "./Frame.vue"
+import Frame from "./Frame"
 export default Frame

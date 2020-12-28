@@ -85,8 +85,8 @@ const rightClickMenu= defineComponent({
         style={`left:${offset.left}px;top:${offset.top}px`}
         onMousemove={(event : MouseEvent)=>{ event.stopPropagation()}}
       >
-        <SubContext menus={menus} show={show} onMenuItemClick={handleClick} v-slots={{...scopedSlots}}>
-        </SubContext>
+        <sub-context menus={menus} show={show} onMenuItemClick={handleClick} v-slots={{...scopedSlots}}>
+        </sub-context>
       </div>
     );
   },

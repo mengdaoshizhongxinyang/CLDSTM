@@ -1,5 +1,5 @@
 import {ActionContext} from "@/types/store";
-import {createStore} from "vuex";
+import {createStore,Store as VuexStore} from "vuex";
 import modules,{SET_FILELIST,typeModules} from '@/store/modules/index'
 
 const mutations = {
@@ -21,7 +21,6 @@ const storeOptions = {
   actions,
   getters:modulesGetters
 };
-
 type State = (
   typeModules['state']
 )
@@ -54,10 +53,13 @@ interface Commit {
 // export const { getters }: { getters: Getters } = storeOptions;
 // export const { commit }: { commit: Commit } = storeOptions;
 // export const { dispatch }: { dispatch: Dispatch } = storeOptions;
-export interface Store {
+export type Store=Omit<VuexStore<State>,'getters'|'commit'|'dispatch'|'state'>&{
   state: State;
   getters: Getters;
   commit: Commit;
   dispatch: Dispatch;
+}
+export function useStore() {
+  return vuexStore as Store
 }
 export default vuexStore

@@ -170,7 +170,6 @@ import * as THREE from "three"
 					var vx = ( (ax+680) / 680 );
 					var vy = ( (ay+300) / 300 );
 					var vz = ( z / n ) + 0.5;
-					console.log(vx,vy,vz)
 					color.setRGB( (vx-vy)+1.2, 1.5, 2);
 
 					colors[ i ] = color.r;

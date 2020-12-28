@@ -781,7 +781,6 @@ export default {
       this.maxH = val
     },
     w () {
-      console.log(this.w)
       if (this.resizing || this.dragging) {
         return
       }

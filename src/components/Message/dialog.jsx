@@ -86,7 +86,6 @@ export default {
   render() {
     let el = document.createElement('div');
     let self=this
-    console.log(this.$root.constructor)
     return new this.$root.constructor(new Vue({
       el,
       parent: self,

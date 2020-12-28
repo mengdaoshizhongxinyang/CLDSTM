@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import FrameWindow from "@/components/Frame";
+import {Frame as FrameWindow} from "@/components";
 import { mapState } from "vuex";
 export default {
   created() {

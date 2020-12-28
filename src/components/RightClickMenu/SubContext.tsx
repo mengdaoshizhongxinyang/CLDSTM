@@ -45,13 +45,13 @@ const SubContext =defineComponent({
     }
     let root=ref<HTMLDivElement>()
     const setPosition=()=>{
-      const ele =root.value!.parentElement!
+      const ele =root.value!
       const {
         x,
         y,
         width,
         height,
-      } = ele.getBoundingClientRect()
+      } = ele.parentElement!.getBoundingClientRect()
       let topover, leftover;
       let docHeight = document.documentElement.clientHeight;
       let docWidth = document.documentElement.clientWidth;
@@ -114,7 +114,6 @@ const SubContext =defineComponent({
         });
       }
     })
-    console.log(direction)
     return ()=>h(
       <Transition name="contextmenu-fade">
         <div class="menu" style={data.style} v-show={props.show} ref={root}>

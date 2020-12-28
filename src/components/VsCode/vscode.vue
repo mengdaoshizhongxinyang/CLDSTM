@@ -21,7 +21,7 @@
 
 <script>
 import * as monaco from "monaco-editor";
-import Frame from "@/components/Frame";
+import {Frame} from "@/components";
 
 export default {
   name: "Monaco",

@@ -21,7 +21,6 @@ export default {
     ...mapGetters(["fileList"]),
     articles() {
       // return this.fileList['static']['ProjectRecord']
-      console.log(this.fileList["static"])
       return Object.values(this.fileList["static"].children['project'].children).filter(item=>{
         return item.type=='article'
       });

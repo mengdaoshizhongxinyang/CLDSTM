@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, nextTick, onMounted, reactive, ref,Transition } from "vue";
 import moment from "moment";
 import { WindowsOutlined } from '@ant-design/icons-vue';
-import { useStore } from "vuex";
+import { useStore } from "@/store";
 import Icon from "@/components/IconManage";
 import DownMenuRightMenu from "./DownMenuRightMenu";
 import { Store } from "@/types/store";
@@ -14,7 +14,6 @@ export default defineComponent({
     Transition
   },
   setup() {
-    console.log('111');
     const data = reactive({
       date: "",
       time: "",
@@ -24,9 +23,8 @@ export default defineComponent({
       showIndex: -1
     })
     const context = ref<HTMLElement>();
-    const store: Store = useStore();
+    const store = useStore();
     const desktopApps = computed(() => {
-      console.log(store.getters.desktopApps)
       return store.getters.desktopApps
     })
     const clock = () => {
@@ -47,7 +45,6 @@ export default defineComponent({
     const handleItemClick = (e: MouseEvent, app: any, index: number) => {
       e.stopPropagation();
       e.stopImmediatePropagation();
-      console.log(e)
       if (e.button === 0) {
         resetMini(app, index)
       } else if (e.button === 2) {

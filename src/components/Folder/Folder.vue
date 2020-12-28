@@ -8,6 +8,7 @@
     :initialX="folderStatus.x"
     :initialY="folderStatus.y"
     @resizing="handleResizing"
+    :minWidth="400"
   >
     <div class="floder">
       <div class="floder-menu"></div>

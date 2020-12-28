@@ -147,7 +147,7 @@ const getters = {
         return state.fileList
     },
     getAppInfo(state:State){
-        return (id :string)=>{
+        return (id :number)=>{
             return state.desktopApps.apps[id] || {name:""}
         }
     }

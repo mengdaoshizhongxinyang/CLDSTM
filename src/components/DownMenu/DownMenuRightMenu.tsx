@@ -2,7 +2,6 @@ import { defineComponent, nextTick, onMounted, reactive, ref,h } from "vue";
 import style from "./DownMenuRightMenu.module.less"
 export default defineComponent({
   setup(p, { emit,slots }) {
-    console.log(slots)
     const data = reactive({
       x: 0,
       wzX: 0,

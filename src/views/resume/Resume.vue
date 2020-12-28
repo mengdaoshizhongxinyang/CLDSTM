@@ -213,10 +213,10 @@ export default {
     ::v-deep(.ant-list-item-meta-description){
       color:#afafaf;
     }
-    /deep/.ant-list-items{
+    ::v-deep(.ant-list-items){
       color:#afafaf;
     }
-    /deep/.ant-tabs{
+    ::v-deep(.ant-tabs){
       color:#fff;
     }
     .module{

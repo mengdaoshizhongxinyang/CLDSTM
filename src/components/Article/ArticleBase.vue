@@ -6,11 +6,9 @@
 
 <script>
 import VueMd from "markdown-vue-next";
-import Frame from "@/components/Frame";
 export default {
   components: {
     VueMd,
-    Frame,
   },
   props: {
     content: {

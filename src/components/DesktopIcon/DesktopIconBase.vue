@@ -37,7 +37,7 @@
 <script>
 import {IconManage,RightClickMenu} from "@/components";
 import { defineComponent, reactive } from "vue";
-import { useStore } from 'vuex';
+import { useStore } from '@/store';
 export default defineComponent({
   setup(){
     const data=reactive({
