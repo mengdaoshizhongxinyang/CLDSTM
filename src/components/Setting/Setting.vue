@@ -7,6 +7,8 @@
     :minHeight="320"
     :initialW="w"
     :initialH="h"
+    :initialX="0"
+    :initialY="0"
     :drag-cancel="'.back-button'"
   >
     <template #header-name-more>

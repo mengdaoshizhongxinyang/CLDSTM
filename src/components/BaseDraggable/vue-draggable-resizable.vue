@@ -602,6 +602,7 @@ export default {
   },
   computed: {
     style () {
+      console.log(this.width)
       return {
         position: 'absolute',
         top: this.top + 'px',

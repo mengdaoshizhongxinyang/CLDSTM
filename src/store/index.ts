@@ -43,7 +43,7 @@ type DispatchFuncs = (
 )
 
 interface Dispatch {
-  <T extends keyof DispatchFuncs>(type: T, payload?: Parameters<DispatchFuncs[T]>[1]): Promise<any>;
+  <T extends keyof DispatchFuncs>(type: T, payload?: Parameters<DispatchFuncs[T]>[1]): DispatchFuncs[T];
 }
 const vuexStore=createStore(storeOptions)
 interface Commit {

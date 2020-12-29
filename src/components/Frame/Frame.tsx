@@ -45,6 +45,7 @@ export default defineComponent({
       y: props.initialY,
       title: "",
     })
+    console.log(data.w,data.h)
     const store = useStore()
     const getAppInfo = computed(() => store.getters.getAppInfo)
     const rightClick = (e: MouseEvent, button: string) => {
