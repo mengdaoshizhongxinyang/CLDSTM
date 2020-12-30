@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import { App } from "@/types";
 import { RightClickMenu } from "@/components";
 import { useStore } from "@/store";
 import { Events } from "vue";
@@ -72,10 +73,11 @@ export default defineComponent({
         });
       },
       personaliseFrame() {
-        let PersonaliseSetting = {
-          apps: "Setting",
+        let PersonaliseSetting:App = {
+          apps: 'Setting',
           icon: "setting",
           name: "设置",
+          type:"setting"
         };
         store.dispatch("openApps", PersonaliseSetting);
       },

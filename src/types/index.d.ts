@@ -5,9 +5,14 @@
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
 import { Store } from '@/store'
-
+import { App,AppRun } from "./gather";
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $store: Store
   }
+}
+
+export {
+  App,
+  AppRun
 }

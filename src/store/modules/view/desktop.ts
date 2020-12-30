@@ -1,7 +1,6 @@
 
-import { ReturnGetters, Store, ActionContext } from '@/types/store';
+import { ReturnGetters, ActionContext } from '@/types/store';
 import modal  from 'ant-design-vue/lib/modal';
-import { ActionTree } from 'vuex';
 export const SET_RUNING_APPS = 'SET_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
@@ -22,7 +21,8 @@ const state = {
         'article': 'ArticleMd',
         'Money': 'Money',
         'folder': 'Folder',
-        'vscode':'vscode'
+        'vscode':'vscode',
+        'setting':'setting'
     },
     fileList:{} as App,
     fileTypes:{}
@@ -173,5 +173,8 @@ const vuexModule = {
     actions:actions,
     getters
 }
-
+export {
+    App,
+    AppRun
+}
 export default vuexModule
