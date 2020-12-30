@@ -8,5 +8,5 @@ export interface ActionContext<S, G> {
   state: S;
   getters: G;
   rootState: Store['state'];
-  rootGetters: any; // 会出现类型循环引用问题
+  rootGetters: Store['getters']; // 会出现类型循环引用问题
 }

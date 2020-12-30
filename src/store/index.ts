@@ -6,7 +6,7 @@ const mutations = {
 }
 
 const actions = {
-  initAll({ dispatch, commit } :ActionContext<State,Getters>){
+  initAll({ dispatch, commit,rootGetters } :ActionContext<State,Getters>){
     commit(SET_FILELIST,configs.getDesktopIcon())
     dispatch('initFolderStatus')
     // commit(MERGE_APPS,)

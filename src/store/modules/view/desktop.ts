@@ -14,7 +14,7 @@ export const UPDATE_FILENAME='UPDATE_FILENAME'
 
 const state = {
     desktopApps: {
-        apps: [] as Array<any>,
+        apps: [] as Array<AppRun>,
         maxZindex: 0,
         id: 0
     },
@@ -24,18 +24,32 @@ const state = {
         'folder': 'Folder',
         'vscode':'vscode'
     },
-    fileList:{} as any,
+    fileList:{} as App,
     fileTypes:{}
 }
-type State=typeof state
 
+type State=typeof state
+type App={
+    type:keyof State['apps']
+    name?:string
+    path?:string
+    icon?:string
+    [key:string]:any
+}
+type AppRun=App&{
+    mini:boolean
+    id:number
+    zindex:number
+    apps:State['apps'][keyof State['apps']]
+}
+type actions=ActionContext<State,Getters>
 const mutations = {
-    [SET_FILELIST](state :State,item :Object){
+    [SET_FILELIST](state :State,item :App){
         state.fileList=item
     },
-    [SET_RUNING_APPS](state :State, item:Object) {
+    [SET_RUNING_APPS](state :State, item:App) {
         state.desktopApps.apps.push({
-            apps: state.apps[item.type as keyof typeof state.apps],
+            apps: state.apps[item.type],
             ...item,
             mini:false,
             id: ++state.desktopApps.id,
@@ -51,7 +65,7 @@ const mutations = {
     [MINIMIZE_APPS](state :State,index :number){
         state.desktopApps.apps[index].mini=!state.desktopApps.apps[index].mini
     },
-    [CREATE_FILE](state :State,obj :any){
+    [CREATE_FILE](state :State,obj :App){
         let {type,path,name,icon,other}=obj
         let i=1;
         let tempName=''
@@ -60,7 +74,7 @@ const mutations = {
             tempName=(++i).toString()
         }
         let fileTree :any=state.fileList
-        let pathArray=path.split('/')
+        let pathArray=path!.split('/')
         pathArray.forEach(item=>{
             if(item){
                 fileTree=fileTree[item]
@@ -96,7 +110,7 @@ const mutations = {
             }
             modal.confirm({
                 title: `要将"${info.oldName}"重命名为"${info.name}(${i})"吗`,
-                message: "此位置包含同名文件",
+                content: "此位置包含同名文件",
                 onOk() {
                     delete temp[info.oldName]
                     temp[`${info.name}(${i})`]=Object.assign(content,{name:`${info.name}(${i})`});
@@ -114,26 +128,25 @@ const mutations = {
 
 
 const actions = {
-    openApps({ commit }: ActionContext<State, Getters>, icon :any) {
+    openApps({ commit }: actions, icon :App) {
         commit(SET_RUNING_APPS, icon)
     },
-    closeApps({commit}: ActionContext<State, Getters>,index:any){
+    closeApps({commit}: actions,index:any){
         commit(CLOSE_RUNING_APPS,index)
     },
-    minimizeApps({commit}: ActionContext<State, Getters>,index:number){
+    minimizeApps({commit}: actions,index:number){
         commit(MINIMIZE_APPS,index)
     },
-    updateApps({commit}: ActionContext<State, Getters>,data:any){
+    updateApps({commit}: actions,data:any){
         commit(CLOSE_RUNING_APPS,data)
     },
-    activeApps({commit}: ActionContext<State, Getters>,index:any){
+    activeApps({commit}: actions,index:any){
         commit(ACTIVE_RUNING_APPS,index)
     },
-    createFile({commit}: ActionContext<State, Getters>,{path,type,name}:any){
+    createFile({commit}: actions,{path,type,name}:any){
         commit(CREATE_FILE,{path,type,name,icon:'folder',other:{children:{}}})
     },
-    renameFile({commit,dispatch}:ActionContext<State,Getters>,{name,path,oldName}:{name:string,path:string,oldName:string}){
-
+    renameFile({commit}:actions,{name,path,oldName}:{name:string,path:string,oldName:string}){
         commit(UPDATE_FILENAME,{name,path,oldName})
     }
 }
