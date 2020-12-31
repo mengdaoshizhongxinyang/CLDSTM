@@ -33,6 +33,62 @@ interface props{
   onDragStart:Function
   onResizeStart:Function
 }
+const events = {
+  mouse: {
+    start: 'mousedown',
+    move: 'mousemove',
+    stop: 'mouseup'
+  },
+  touch: {
+    start: 'touchstart',
+    move: 'touchmove',
+    stop: 'touchend'
+  }
+}
+
+const userSelectNone = {
+  userSelect: 'none',
+  MozUserSelect: 'none',
+  WebkitUserSelect: 'none',
+  MsUserSelect: 'none'
+}
+
+const userSelectAuto = {
+  userSelect: 'auto',
+  MozUserSelect: 'auto',
+  WebkitUserSelect: 'auto',
+  MsUserSelect: 'auto'
+}
+const data=reactive({
+  rawWidth: 0,
+  rawHeight: 0,
+  rawLeft: 0,
+  rawTop: 0,
+  rawRight: null,
+  rawBottom: null,
+
+  left: 0,
+  top: 0,
+  right: null,
+  bottom: null,
+
+  aspectFactor: 0 / 0,
+
+  parentWidth: null,
+  parentHeight: null,
+
+  minW: 0,
+  minH: 0,
+
+  maxW: 0,
+  maxH: 0,
+
+  handle: null,
+  enabled: false,
+  resizing: false,
+  dragging: false,
+  zIndex: 0 as number | string
+})
 export default defineComponent({
   name:'vue-draggable-resizable',
   props: {
@@ -177,36 +233,18 @@ export default defineComponent({
     }
   },
   setup(props:props){
-    const data=reactive({
-      rawWidth: props.w,
-      rawHeight: props.h,
-      rawLeft: props.x,
-      rawTop: props.y,
-      rawRight: null,
-      rawBottom: null,
-
-      left: props.x,
-      top: props.y,
-      right: null,
-      bottom: null,
-
-      aspectFactor: props.w / props.h,
-
-      parentWidth: null,
-      parentHeight: null,
-
-      minW: props.minWidth,
-      minH: props.minHeight,
-
-      maxW: props.maxWidth,
-      maxH: props.maxHeight,
-
-      handle: null,
-      enabled: props.active,
-      resizing: false,
-      dragging: false,
-      zIndex: props.z
-    })
-    
+    data.rawWidth=props.w
+    data.rawHeight=props.h
+    data.rawLeft=props.x
+    data.rawTop=props.y
+    data.left=props.x
+    data.top=props.y
+    data.aspectFactor=props.w/props.h
+    data.minW=props.minWidth
+    data.minH=props.minHeight
+    data.maxW=props.maxWidth
+    data.maxH=props.maxHeight
+    data.enabled=props.active
+    data.zIndex=props.z
   }
 })
