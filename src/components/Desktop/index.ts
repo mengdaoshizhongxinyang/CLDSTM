@@ -1,2 +1,2 @@
-import Desktop from "./Desktop.vue";
+import Desktop from "./desktop";
 export default Desktop
