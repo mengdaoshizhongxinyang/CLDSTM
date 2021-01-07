@@ -529,6 +529,7 @@ export default {
       }
     },
     elementMove (e) {
+      console.log(e)
       const axis = this.axis
       const grid = this.grid
       const mouseClickPosition = this.mouseClickPosition

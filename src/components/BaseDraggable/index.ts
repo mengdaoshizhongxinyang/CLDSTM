@@ -1,2 +1,2 @@
-import VueDraggableResizable from "./vue-draggable-resizable.vue";
+import VueDraggableResizable from "./VueDraggableResizable";
 export default VueDraggableResizable
