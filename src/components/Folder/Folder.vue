@@ -199,7 +199,7 @@ export default {
       this.$store.dispatch('updateFolderStatus',{x:x+20, y:y+20})
     },
     handleResizing(l,t,w,h){
-      console.log(w,h)
+      
     }
   },
   mounted() {

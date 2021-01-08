@@ -15,7 +15,7 @@ declare namespace configs{
       name:string
       icon:string
       position?:string
-      children?:fileTypes
+      children?:fileType
       [key:string]:any
     }
   }
