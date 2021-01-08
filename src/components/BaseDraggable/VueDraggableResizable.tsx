@@ -1,5 +1,7 @@
 import { matchesSelectorToParentElements, addEvent, removeEvent } from './utils';
 import { defineComponent, PropType, reactive, getCurrentInstance, ref, computed, onBeforeMount, watch, onMounted, h, StyleHTMLAttributes, nextTick } from "vue";
+import style from "./vueDraggableResizable.module.less"
+
 interface props {
   className: string
   classNameDraggable: string
@@ -205,7 +207,6 @@ export default defineComponent({
     }
   },
   setup(props: props, { emit,slots }) {
-    console.log('a')
     const data = reactive({
       rawWidth: props.w,
       rawHeight: props.h,
@@ -265,7 +266,7 @@ export default defineComponent({
     const height = computed(() => {
       return data.parentHeight! - data.top - data.bottom!
     })
-    const style = computed(() => {
+    const bodyStyle = computed(() => {
       return {
         position: 'absolute',
         top: data.top + 'px',
@@ -502,7 +503,6 @@ export default defineComponent({
     }
     const getParentSize = () => {
       if (props.parent) {
-        console.log(el)
         const style = window.getComputedStyle(el.parentNode! as Element, null)
 
         return [
@@ -817,26 +817,28 @@ export default defineComponent({
       removeEvent(window, 'resize', checkParentSize)
     })
 
-    onMounted(async () => {
-      await nextTick()
-      console.log(el)
-      if (!props.enableNativeDrag) {
-          el.ondragstart = () => false
-      }
+    onMounted(() => {
 
-      [data.parentWidth, data.parentHeight] = getParentSize()
+        el=root.value!
+        if (!props.enableNativeDrag) {
+            root.value!.ondragstart = () => false
+        }
 
-      data.rawRight = data.parentWidth! - data.rawWidth - data.rawLeft
-      data.rawBottom = data.parentHeight! - data.rawHeight - data.rawTop
+        [data.parentWidth, data.parentHeight] = getParentSize()
 
-      addEvent(document.documentElement, 'mousedown', deselect)
-      addEvent(document.documentElement, 'touchend touchcancel', deselect)
+        data.rawRight = data.parentWidth! - data.rawWidth - data.rawLeft
+        data.rawBottom = data.parentHeight! - data.rawHeight - data.rawTop
 
-      addEvent(window, 'resize', checkParentSize)
+        addEvent(document.documentElement, 'mousedown', deselect)
+        addEvent(document.documentElement, 'touchend touchcancel', deselect)
+
+        addEvent(window, 'resize', checkParentSize)
+
+      
     })
     return () => h(
       <div
-        style={style.value}
+        style={bodyStyle.value}
         class={[{
           [props.classNameActive]: data.enabled,
           [props.classNameDragging]: data.dragging,
@@ -852,16 +854,16 @@ export default defineComponent({
             return (
               <div
                 key={item}
-                class={[props.classNameHandle,props.classNameHandle + '-' + data.handle]}
+                class={`${style[props.classNameHandle]} ${style[props.classNameHandle + '-' + item]}`}
                 style={{display:data.enabled?"block":"none",}}
                 onMousedown={(e)=>{
                   e.stopPropagation();
                   e.preventDefault();
-                  handleDown(data.handle!,e)
+                  handleDown(item,e)
                 }}
               >
                 {
-                  slots[data.handle!]?slots[data.handle!]!():null
+                  slots[item]?slots[item]!():null
                 }
               </div>
             )
