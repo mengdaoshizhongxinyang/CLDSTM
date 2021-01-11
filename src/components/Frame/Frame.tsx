@@ -74,7 +74,7 @@ export default defineComponent({
         data.h = data.old_h;
         data.isFull = false;
       }
-      emit("resize", data.w, data.h)
+      emit("resize", data.w, data.h,data.x,data.y)
     }
     const minimize = () => {
       if (props.allowMinimize) {

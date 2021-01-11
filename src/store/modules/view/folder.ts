@@ -5,7 +5,7 @@ export const FOLDER_STATUS_INIT = 'FOLDER_STATUS_INIT'
 export const FOLDER_STATUS_UPDATE = 'FOLDER_STATUS_UPDATE'
 /** @typedef {typeof state} FolderState */
 const state = {
-  folderStatus:{}
+  folderStatus:{} as {x?:number,y?:number,w?:number,h?:number}
 }
 type State=typeof state
 /** @type MutationTree<FolderState> */

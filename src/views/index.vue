@@ -75,7 +75,7 @@ import { defineComponent,computed, nextTick } from "vue"
 import moment from "moment";
 
 import * as THREE from "three";
-const pinyin = require("@/components/PinYin/index");
+
 import message from "@/components/Message/dialog.jsx";
 import {
   mapGetters,

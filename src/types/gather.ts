@@ -4,8 +4,3 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
-import { App,AppRun } from "@/store/modules/view/desktop";
-export {
-  App,
-  AppRun
-}

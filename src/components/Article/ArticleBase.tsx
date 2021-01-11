@@ -17,6 +17,6 @@ export default defineComponent({
     content: {
       type: String,
       default: "",
-    },
+    }
   }
 })
