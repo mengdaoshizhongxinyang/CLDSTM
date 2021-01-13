@@ -11,6 +11,7 @@ export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
 export const UPDATE_FILENAME = 'UPDATE_FILENAME'
 import { fileType, baseFileType, taskType } from "@/types";
+console.log(baseFileType)
 const state = {
     desktopApps: {
         apps: [] as Array<taskType>,
@@ -30,6 +31,7 @@ const mutations = {
         state.fileList = item
     },
     [SET_RUNING_APPS](state: State, item: fileType) {
+        console.log( state.apps)
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
             ...item,
@@ -67,7 +69,7 @@ const mutations = {
         state.fileList = JSON.parse(JSON.stringify(state.fileList))
     },
     [MERGE_APPS](state: State, apps = {}) {
-        state.apps = Object.assign(state.apps, apps)
+        // state.apps = Object.assign(state.apps, apps)
     },
     [SET_FILETYPES](state: State, types = {}) {
         state.fileTypes = types

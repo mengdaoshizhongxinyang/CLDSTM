@@ -49,13 +49,12 @@ const VueStorage = {
         store = MemoryStorage;
         break;
     }
-    console.log(111)
     if (!store) {
       store = MemoryStorage;
       // eslint-disable-next-line
       console.error(`Vue-ls: Storage "${_options.storage}" is not supported your system, use memory storage`);
     }
-    console.log(store)
+    
     webStorage = new WebStorage(store);
 
     webStorage.setOptions(Object.assign(webStorage.options, {

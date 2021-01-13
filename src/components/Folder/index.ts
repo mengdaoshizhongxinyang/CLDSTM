@@ -1,2 +1,2 @@
-import Folder from "./Folder.vue";
+import Folder from "./Folder";
 export default Folder

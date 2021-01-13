@@ -8,7 +8,7 @@ import { Store } from '@/store'
 
 
 
-let baseFileType: {
+const baseFileType= {
   'article': 'ArticleMd',
   'Money': 'Money',
   'folder': 'Folder',

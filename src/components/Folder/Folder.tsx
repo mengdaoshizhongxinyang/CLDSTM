@@ -1,15 +1,10 @@
-import { computed, defineComponent, PropType, reactive, h } from "vue";
+import { computed, defineComponent, PropType, reactive, h, ExtractDefaultPropTypes } from "vue";
 import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
 import { fileType, filesType } from "@/types";
-interface props {
-  children: filesType
-  position: string
-  icon: string
-}
-
+import "./*.less";
 export default defineComponent({
   props: {
     children: {
@@ -34,7 +29,8 @@ export default defineComponent({
     AppFrame,
     IconManage
   },
-  setup(props: props, { attrs }) {
+  setup(props, { attrs }) {
+    console.log(props)
     const store = useStore()
     const desktopApps = computed(() => {
       return store.getters.desktopApps
@@ -121,76 +117,70 @@ export default defineComponent({
     const handleResize = (w: number, h: number, x: number, y: number) => {
       store.dispatch('updateFolderStatus', { w, h, x: x + 20, y: y + 20 })
     }
-    const handleDragstop = (x, y) => {
+    const handleDragstop = (x: number, y: number) => {
       store.dispatch('updateFolderStatus', { x: x + 20, y: y + 20 })
     }
-    const handleResizing = (l, t, w, h) => {
+    const handleResizing = (l: number, t: number, w: number, h: number) => {
 
     }
     return () => h(
-      <AppFrame
+      <app-frame
         {...attrs}
-    onResize={handleResize}
-    onDragstop={handleDragstop}
-    initialH = {folderStatus.value.h}
-    initialW = {folderStatus.value.w}
-    initialX = {folderStatus.value.x}
-    initialY = {folderStatus.value.y}
-    onResizing={handleResizing}
-    minWidth = {400}
+        onResize={handleResize}
+        onDragstop={handleDragstop}
+        initialH={folderStatus.value.h}
+        initialW={folderStatus.value.w}
+        initialX={folderStatus.value.x}
+        initialY={folderStatus.value.y}
+        onResizing={handleResizing}
+        minWidth={400}
       >
-    <div class="floder">
-      <div class="floder-menu"></div>
-      <div class="floder-address">
-        <a-button
-          size="small"
-          class="floder-address-button"
-          disabled="backStack.length==0"
-          onClick="handleBack"
-        >
-          <icon-manage icon="arrowLeft"></icon-manage>
-        </a-button>
-        <a-button
-          size="small"
-          class="floder-address-button"
-          disabled="nextStack==0"
-          onClick="handleNext"
-        >
-          <icon-manage icon="arrowRight"></icon-manage>
-        </a-button>
-        <a-button size="small" class="floder-address-button" disabled>
-          <icon-manage icon="down"></icon-manage>
-        </a-button>
-        <a-button size="small" class="floder-address-button" disabled>
-          <icon-manage icon="arrowUp"></icon-manage>
-        </a-button>
-        <a-input size="small" class="floder-address-input" v-model={[data.path,'value']}>
-          {
-            
-          }
-          <template prefix>
-            <icon-manage icon="icon" />
-          </template>
-        </a-input>
-        <a-button
-          size="small"
-          class="floder-address-button floder-address-input-suffix"
-        >
-          <icon-manage icon="redo"></icon-manage>
-        </a-button>
-        <a-input-search
-          size="small"
-          style="width:112px"
-          onSearch="handleSearch"
-          v-model = {[data.search,'value']}
-      ></a-input-search>
-      </div >
-      <div class="floder-content">
-        <div class="floder-content-tree">
-          <tree></tree>
-        </div>
-        <div class="floder-content-list">
-          {/* <desktop-icon-base
+        <div class="floder">
+          <div class="floder-menu"></div>
+          <div class="floder-address">
+            <a-button
+              size="small"
+              class="floder-address-button"
+              disabled="backStack.length==0"
+              onClick="handleBack"
+            >
+              <icon-manage icon="arrowLeft"></icon-manage>
+            </a-button>
+            <a-button
+              size="small"
+              class="floder-address-button"
+              disabled="nextStack==0"
+              onClick="handleNext"
+            >
+              <icon-manage icon="arrowRight"></icon-manage>
+            </a-button>
+            <a-button size="small" class="floder-address-button" disabled>
+              <icon-manage icon="down"></icon-manage>
+            </a-button>
+            <a-button size="small" class="floder-address-button" disabled>
+              <icon-manage icon="arrowUp"></icon-manage>
+            </a-button>
+            <a-input size="small" class="floder-address-input" v-model={[data.path, 'value']} v-slots={{ prefix: () => <icon-manage icon="icon" /> }}>
+            </a-input>
+            <a-button
+              size="small"
+              class="floder-address-button floder-address-input-suffix"
+            >
+              <icon-manage icon="redo"></icon-manage>
+            </a-button>
+            <a-input-search
+              size="small"
+              style="width:112px"
+              onSearch="handleSearch"
+              v-model={[data.search, 'value']}
+            ></a-input-search>
+          </div >
+          <div class="floder-content">
+            <div class="floder-content-tree">
+              <tree></tree>
+            </div>
+            <div class="floder-content-list">
+              {/* <desktop-icon-base
             class="icon"
             tabindex="-1"
             @openApps="handleOpenApps(icon)"
@@ -200,10 +190,22 @@ export default defineComponent({
             :iconStyle="iconStyle"
             :iconInfo="icon"
           ></desktop-icon-base> */}
-      </div>
-      </div >
-    </div >
-  </AppFrame >
+              {
+                Object.keys(data.folderList).map(item => {
+                  return <desktop-icon-base
+                    class="icon"
+                    tabindex={-1}
+                    onOpenApps={() => handleOpenApps(data.folderList[item])}
+                    style={{ color: "#000" }}
+                    iconStyle={data.iconStyle}
+                    iconInfo={data.folderList[item]}
+                  ></desktop-icon-base>
+                })
+              }
+            </div>
+          </div >
+        </div >
+      </app-frame >
     )
   }
 })
