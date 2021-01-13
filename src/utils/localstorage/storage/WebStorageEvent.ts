@@ -1,4 +1,4 @@
-const listeners = {};
+const listeners = {} as {[key :string]:Array<Function> };
 
 /**
  * Event class
@@ -10,8 +10,8 @@ export class WebStorageEvent {
    * @param {string} name
    * @param {Function} callback
    */
-  static on(name, callback) {
-    if (typeof listeners[name] === 'undefined') {
+  static on(name:string, callback:Function) {
+    if (listeners[name] === undefined) {
       listeners[name] = [];
     }
 
@@ -24,7 +24,7 @@ export class WebStorageEvent {
    * @param {string} name
    * @param {Function} callback
    */
-  static off(name, callback) {
+  static off(name:string, callback:Function) {
     if (listeners[name].length) {
       listeners[name].splice(listeners[name].indexOf(callback), 1);
     } else {
@@ -37,10 +37,10 @@ export class WebStorageEvent {
    *
    * @param {Object} event
    */
-  static emit(event) {
-    const e = event || window.event;
+  static emit(event:Event) {
+    const e= (event || window.event) as Event&{key:string,newValue:string,oldValue:string,url:string,uri:string} 
 
-    const getValue = (data) => {
+    const getValue = (data:string) => {
       try {
         return JSON.parse(data).value;
       } catch (err) {
@@ -48,7 +48,7 @@ export class WebStorageEvent {
       }
     };
 
-    const fire = (listener) => {
+    const fire = (listener:Function) => {
       const newValue = getValue(e.newValue);
       const oldValue = getValue(e.oldValue);
 

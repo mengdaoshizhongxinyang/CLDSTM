@@ -2,7 +2,7 @@ import { MemoryStorage, WebStorage } from './storage';
 import {App} from "vue"
 import { WS } from "./storage/ws"
 // eslint-disable-next-line
-const _global = (typeof window !== 'undefined' ? window : global || {});
+const _global = (typeof window !== 'undefined' ? window : globalThis || {});
 /**
  * @type {{install: (function(Object, Object): WebStorage)}}
  */
@@ -74,8 +74,10 @@ const VueStorage = {
     });
   },
 };
-
-_global.VueStorage = VueStorage;
+Object.assign(_global,{
+  VueStorage:VueStorage
+})
+// _global.VueStorage = VueStorage;
 let ws=()=>{
   return webStorage as WS
 }

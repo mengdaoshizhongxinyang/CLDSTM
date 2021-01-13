@@ -34,13 +34,7 @@ export class WebStorage {
 
     if (typeof window !== 'undefined') {
       for (const i in this.options.events) {
-        if (window.addEventListener) {
-          window.addEventListener(this.options.events[i], WebStorageEvent.emit, false);
-        } else if (window.attachEvent) {
-          window.attachEvent(`on${this.options.events[i]}`, WebStorageEvent.emit);
-        } else {
-          window[`on${this.options.events[i]}`] = WebStorageEvent.emit;
-        }
+        window.addEventListener(i, WebStorageEvent.emit, false);
       }
     }
   }

@@ -1,6 +1,6 @@
 /* eslint class-methods-use-this: off */
 
-let ls = {};
+let ls = {} as {[key:string]:unknown};
 
 class MemoryStorageInterface {
   constructor() {
@@ -22,7 +22,7 @@ class MemoryStorageInterface {
    * @param {string} name
    * @returns {*}
    */
-  getItem(name) {
+  getItem(name:string) {
     return name in ls ? ls[name] : null;
   }
 
@@ -33,7 +33,7 @@ class MemoryStorageInterface {
    * @param {*} value
    * @returns {boolean}
    */
-  setItem(name, value) {
+  setItem(name:string, value:unknown) {
     ls[name] = value;
 
     return true;
@@ -45,7 +45,7 @@ class MemoryStorageInterface {
    * @param {string} name
    * @returns {boolean}
    */
-  removeItem(name) {
+  removeItem(name:string) {
     const found = name in ls;
 
     if (found) {
@@ -72,7 +72,7 @@ class MemoryStorageInterface {
    * @param {number} index
    * @returns {*}
    */
-  key(index) {
+  key(index:number) {
     const keys = Object.keys(ls);
 
     return typeof keys[index] !== 'undefined' ? keys[index] : null;
