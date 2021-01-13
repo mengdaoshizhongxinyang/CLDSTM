@@ -1,10 +1,10 @@
-import { computed, defineComponent, PropType, reactive, h, ExtractDefaultPropTypes } from "vue";
+import { computed, defineComponent, PropType, reactive, h, onMounted } from "vue";
 import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
 import { fileType, filesType } from "@/types";
-import "./*.less";
+import style from"./folder.module.less";
 export default defineComponent({
   props: {
     children: {
@@ -30,11 +30,7 @@ export default defineComponent({
     IconManage
   },
   setup(props, { attrs }) {
-    console.log(props)
     const store = useStore()
-    const desktopApps = computed(() => {
-      return store.getters.desktopApps
-    })
     const folderStatus = computed(() => {
       return store.state.view.folder.folderStatus
     })
@@ -123,6 +119,11 @@ export default defineComponent({
     const handleResizing = (l: number, t: number, w: number, h: number) => {
 
     }
+    onMounted(()=>{
+      const {w, h, x, y}=folderStatus.value
+    data.folderList = props.children;
+    store.dispatch('updateFolderStatus',{w, h, x:x!+20, y:y!+20})
+    })
     return () => h(
       <app-frame
         {...attrs}
@@ -135,65 +136,55 @@ export default defineComponent({
         onResizing={handleResizing}
         minWidth={400}
       >
-        <div class="floder">
-          <div class="floder-menu"></div>
-          <div class="floder-address">
+        <div class={style["floder"]}>
+          <div class={style["floder-menu"]}></div>
+          <div class={style["floder-address"]}>
             <a-button
               size="small"
-              class="floder-address-button"
-              disabled="backStack.length==0"
-              onClick="handleBack"
+              class={style["floder-address-button"]}
+              disabled={data.backStack.length==0}
+              onClick={handleBack}
             >
               <icon-manage icon="arrowLeft"></icon-manage>
             </a-button>
             <a-button
               size="small"
-              class="floder-address-button"
-              disabled="nextStack==0"
-              onClick="handleNext"
+              class={style["floder-address-button"]}
+              disabled={data.nextStack.length==0}
+              onClick={handleNext}
             >
               <icon-manage icon="arrowRight"></icon-manage>
             </a-button>
-            <a-button size="small" class="floder-address-button" disabled>
+            <a-button size="small" class={style["floder-address-button"]} disabled>
               <icon-manage icon="down"></icon-manage>
             </a-button>
-            <a-button size="small" class="floder-address-button" disabled>
+            <a-button size="small" class={style["floder-address-button"]} disabled>
               <icon-manage icon="arrowUp"></icon-manage>
             </a-button>
-            <a-input size="small" class="floder-address-input" v-model={[data.path, 'value']} v-slots={{ prefix: () => <icon-manage icon="icon" /> }}>
+            <a-input size="small" class={style["floder-address-input"]} v-model={[data.path, 'value']} v-slots={{ prefix: () => <icon-manage icon={props.icon} /> }}>
             </a-input>
             <a-button
               size="small"
-              class="floder-address-button floder-address-input-suffix"
+              class={[style["floder-address-button"],style["floder-address-input-suffix"]]}
             >
               <icon-manage icon="redo"></icon-manage>
             </a-button>
             <a-input-search
               size="small"
               style="width:112px"
-              onSearch="handleSearch"
+              onSearch={handleSearch}
               v-model={[data.search, 'value']}
             ></a-input-search>
           </div >
-          <div class="floder-content">
-            <div class="floder-content-tree">
+          <div class={style["floder-content"]}>
+            <div class={style["floder-content-tree"]}>
               <tree></tree>
             </div>
-            <div class="floder-content-list">
-              {/* <desktop-icon-base
-            class="icon"
-            tabindex="-1"
-            @openApps="handleOpenApps(icon)"
-            v-for="icon in folderList"
-            :key="icon.name"
-            style="color:#000"
-            :iconStyle="iconStyle"
-            :iconInfo="icon"
-          ></desktop-icon-base> */}
+            <div class={style["floder-content-list"]}>
               {
                 Object.keys(data.folderList).map(item => {
                   return <desktop-icon-base
-                    class="icon"
+                    class={style["icon"]}
                     tabindex={-1}
                     onOpenApps={() => handleOpenApps(data.folderList[item])}
                     style={{ color: "#000" }}
@@ -203,9 +194,9 @@ export default defineComponent({
                 })
               }
             </div>
-          </div >
-        </div >
-      </app-frame >
+          </div>
+        </div>
+      </app-frame>
     )
   }
 })

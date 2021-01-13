@@ -9,7 +9,7 @@ declare module "*.less" {
 }
 
 declare namespace configs{
-  const fileType:{
+  type fileType={
     [key:string]:{
       type:string
       name:string
@@ -25,7 +25,8 @@ declare namespace configs{
   export {
     init,
     getDesktopIcon,
-    getActionsItem
+    getActionsItem,
+    fileType
   }
 }
 
