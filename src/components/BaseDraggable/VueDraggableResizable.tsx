@@ -170,7 +170,7 @@ let props= {
     default: null
   }
 }
-type Props=ExtractDefaultPropTypes<typeof props>
+
 export default defineComponent({
   name: 'vue-draggable-resizable',
   props,

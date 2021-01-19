@@ -1,10 +1,6 @@
 import { defineComponent,h,PropType,reactive,Transition } from "vue";
 import style from "./tree.module.less"
 
-interface thisProps{
-  level:number,
-  node:node
-}
 export default defineComponent({
   setup(props){
     const data=reactive({showChildren: false})

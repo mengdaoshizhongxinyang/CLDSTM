@@ -4,12 +4,12 @@ declare module '*.vue' {
   export default component
 }
 declare module "*.less" {
-  const less: any;
+  const less: {[key:string]:string};
   export default less;
 }
 
 declare namespace configs{
-  type fileType={
+  interface fileType{
     [key:string]:{
       type:string
       name:string

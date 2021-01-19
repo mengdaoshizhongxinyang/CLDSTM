@@ -76,7 +76,9 @@ import moment from "moment";
 
 import * as THREE from "three";
 
-import message from "@/components/Message/dialog.jsx";
+
+
+
 import {
   mapGetters,
   mapState,
@@ -101,7 +103,6 @@ export default  defineComponent({
     DesktopIcon,
     // Money,
     ArticleMd,
-    message,
     Properties,
     Setting
   },

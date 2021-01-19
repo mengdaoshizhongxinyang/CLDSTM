@@ -2,94 +2,72 @@
 //{/* <script lang="ts"> */}
 
 import SubContext from "./SubContext";
-import { defineComponent,DefineComponent, watch, computed, ref, nextTick, reactive } from "vue";
+import { defineComponent, watch, computed, ref, nextTick, reactive, PropType, h } from "vue";
 import "./contextMenu.less"
-interface thisProps{
-  offset?:{left:Number,top:Number},
-  show?:Boolean,
-  menu?:typeMenu
-}
 interface typeMenu {
   label?: string,
   name?: string,
   children?: Array<typeMenu>,
   show?: Boolean,
-  function?:Function
+  function?: Function
 }
-const rightClickMenu= defineComponent({
-  name: "right-click-menu",
-  components: {
-    SubContext,
-  },
-  setup(p,{emit,attrs,slots}){
-    let data=reactive({style:{}})
-    let props=p as thisProps
-    return {style:data.style}
-  },
+export default defineComponent({
   props: {
     offset: {
-      type: Object,
-      default: function () {
-        return {
-          left: 0,
-          top: 0,
-        };
-      },
+      type: Object as PropType<{ left: number, top: number }>,
+      default: {
+        left: 0,
+        top: 0,
+      }
     },
-    show: Boolean,
+    show: {
+      type: Boolean,
+      default: false
+    },
     menus: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
+      type: Array as PropType<typeMenu[]>,
+      default: []
+    }
   },
-  // data(){
-  //   return{
-  //     style:{}
-  //   }
-  // },
-  watch: {
-    show(show :Boolean) {
+  setup(props, { emit, slots }) {
+    const data = reactive({ style: {} })
+    const clickDocumentHandler = () => {
+      if (props.show) {
+        emit("update:show", false);
+      } else {
+        emit("update:show", true);
+      }
+    }
+    const handleClick = (menu: typeMenu) => {
+      emit("update:show", false);
+      emit("menuItemClick", menu);
+    }
+    watch(() => props.show, (show: Boolean) => {
       if (show) {
         // this.$nextTick(this.setPosition)
-        document.body.addEventListener("mousedown", this.clickDocumentHandler);
+        document.body.addEventListener("mousedown", clickDocumentHandler);
       } else {
         document.body.removeEventListener(
           "mousedown",
-          this.clickDocumentHandler
+          clickDocumentHandler
         );
       }
-    },
-  },
-  methods: {
-    clickDocumentHandler() {
-      if (this.show) {
-        this.$emit("update:show", false);
-      } else {
-        this.$emit("update:show", true);
-      }
-    },
-    handleClick(menu:typeMenu) {
-      this.$emit("update:show", false);
-      this.$emit("menuItemClick", menu);
-    },
-  },
-  render() {
-    let  {show,menus,offset,handleClick}=this
-    const scopedSlots=this.$slots
-    return (
+    })
+    return () => h(
       <div
         class="context-menu"
-        v-show={show}
-        style={`left:${offset.left}px;top:${offset.top}px`}
-        onMousemove={(event : MouseEvent)=>{ event.stopPropagation()}}
+        v-show={props.show}
+        style={`left:${props.offset.left}px;top:${props.offset.top}px`}
+        onMousemove={(event: MouseEvent) => { event.stopPropagation() }}
       >
-        <sub-context menus={menus} show={show} onMenuItemClick={handleClick} v-slots={{...scopedSlots}}>
+        <sub-context menus={props.menus} show={props.show} onMenuItemClick={handleClick} v-slots={{ ...slots }}>
         </sub-context>
       </div>
-    );
+    )
   },
+  components: {
+    SubContext,
+  }
+
 });
 //</script>
-export default rightClickMenu

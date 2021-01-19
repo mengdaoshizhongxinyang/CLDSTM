@@ -1,11 +1,11 @@
 import "./subContext.less";
-import { Transition, defineComponent, watch, ref, nextTick,h, reactive, DefineComponent, PropType } from "vue";
+import { Transition, defineComponent, watch, ref, nextTick, h, reactive, DefineComponent, PropType } from "vue";
 interface typeMenu {
   label?: string,
   name?: string,
   children?: Array<typeMenu>,
   show?: Boolean,
-  function?:Function
+  function?: Function
 }
 interface typeBasePosition {
   left: Number,
@@ -13,39 +13,34 @@ interface typeBasePosition {
   width: Number,
   height: Number,
 }
-interface thisProps {
-  menus: Array<typeMenu> | [],
-  basePosition: typeBasePosition,
-  show: Boolean,
-  direction: "left" | "right"
-}
-const SubContext =defineComponent({
+
+const SubContext = defineComponent({
   name: "SubContext",
   components: {
     Transition
   },
-  setup(props:thisProps, { emit, slots }) {
+  setup(props, { emit, slots }) {
 
-    let data= reactive({menuList:props.menus.concat(),style:{}})
+    let data = reactive({ menuList: props.menus.concat(), style: {} })
 
-    let direction=props.direction
-    const handleMouseenter=(menu:typeMenu)=>{
+    let direction = props.direction
+    const handleMouseenter = (menu: typeMenu) => {
       menu.show = true;
     }
-    const handleMouseleave=(menu:typeMenu)=>{
+    const handleMouseleave = (menu: typeMenu) => {
       menu.show = false;
     }
-    
-    const clickDocumentHandler=()=>{
+
+    const clickDocumentHandler = () => {
       if (props.show) {
         emit("update", false);
       } else {
         emit("update", true);
       }
     }
-    let root=ref<HTMLDivElement>()
-    const setPosition=()=>{
-      const ele =root.value!
+    let root = ref<HTMLDivElement>()
+    const setPosition = () => {
+      const ele = root.value!
       const {
         x,
         y,
@@ -74,7 +69,7 @@ const SubContext =defineComponent({
       };
       emit("setPosition", data.style);
     }
-    const handleClick=(e:MouseEvent,menu:typeMenu)=>{
+    const handleClick = (e: MouseEvent, menu: typeMenu) => {
       e.preventDefault()
       if (!menu.children) {
         if (menu.function) {
@@ -83,23 +78,23 @@ const SubContext =defineComponent({
         emit("menuItemClick", menu);
       }
     }
-    const renderChildren=(menu:typeMenu)=>{
+    const renderChildren = (menu: typeMenu) => {
       return menu.children && menu.children.length > 0 ? h(
         <sub-context
           direction={direction}
           menus={menu.children}
           show={menu.show}
-          onUpdate={(val:Boolean) => {
+          onUpdate={(val: Boolean) => {
             menu.show = val;
           }}
           onMenuItemClick={handleClick}
           v-slots={{ ...slots }}
         ></sub-context>
       ) : (
-        null
-      );
+          null
+        );
     }
-    watch(()=>props.show, (val) => {
+    watch(() => props.show, (val) => {
       if (val) {
         nextTick(setPosition);
         document.body.addEventListener("mousedown", clickDocumentHandler);
@@ -114,7 +109,7 @@ const SubContext =defineComponent({
         });
       }
     })
-    return ()=>h(
+    return () => h(
       <Transition name="contextmenu-fade">
         <div class="menu" style={data.style} v-show={props.show} ref={root}>
           {data.menuList.map((menu, index) => {
@@ -124,8 +119,8 @@ const SubContext =defineComponent({
                 key={index}
                 onMouseenter={() => handleMouseenter(menu)}
                 onMouseleave={() => handleMouseleave(menu)}
-                onMousedown={(e)=>{e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}}
-                onClick={(e) => handleClick(e,menu)}
+                onMousedown={(e) => { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation() }}
+                onClick={(e) => handleClick(e, menu)}
               >
                 {menu.name && slots[menu.name] ? (
                   slots[menu.name]!().concat(renderChildren(menu))
@@ -144,20 +139,16 @@ const SubContext =defineComponent({
   },
   props: {
     menus: {
-      type: Array as PropType<thisProps['menus']>,
-      default: () => {
-        return [];
-      },
+      type: Array as PropType<typeMenu[]>,
+      default: []
     },
     basePosition: {
-      type: Object as PropType<thisProps['basePosition']>,
-      default: function () {
-        return {
-          left: 0,
-          top: 0,
-          width: 0,
-          height: 0,
-        };
+      type: Object as PropType<typeBasePosition>,
+      default: {
+        left: 0,
+        top: 0,
+        width: 0,
+        height: 0
       },
     },
     show: {
@@ -165,7 +156,7 @@ const SubContext =defineComponent({
       default: false,
     },
     direction: {
-      type: String as PropType<thisProps['direction']>,
+      type: String as PropType<"left" | "right">,
       default: "right"
     }
   }
