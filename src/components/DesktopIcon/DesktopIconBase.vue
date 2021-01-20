@@ -4,7 +4,10 @@
       <div class="desktop-icon-icon">
         <slot>
           <div class="desktop-icon-icon-default">
-            <icon-manage :icon="iconInfo.icon" :iconStyle="iconStyle"></icon-manage>
+            <icon-manage
+              :icon="iconInfo.icon"
+              :iconStyle="iconStyle"
+            ></icon-manage>
           </div>
         </slot>
       </div>
@@ -35,12 +38,12 @@
 </template>
 
 <script>
-import {IconManage,RightClickMenu} from "@/components";
+import { IconManage, RightClickMenu } from "@/components";
 import { defineComponent, reactive } from "vue";
-import { useStore } from '@/store';
+import { useStore } from "@/store";
 export default defineComponent({
-  setup(){
-    const data=reactive({
+  setup() {
+    const data = reactive({
       actived: false,
       type: "show",
       tempName: "",
@@ -53,21 +56,20 @@ export default defineComponent({
         { label: "重命名", run: "rename" },
         { label: "属性", run: "attribute" },
       ],
-    })
-    const store=useStore();
-
+    });
+    const store = useStore();
   },
   created() {
     this.tempName = this.iconInfo.name;
   },
   components: {
     IconManage,
-    RightClickMenu
+    RightClickMenu,
   },
   props: {
     iconStyle: {
       type: String,
-      default: "outlined"
+      default: "outlined",
     },
     iconInfo: {
       type: Object,
@@ -124,7 +126,7 @@ export default defineComponent({
         name: iconInfo.name + " 属性",
         position: iconInfo.position,
         fileName: iconInfo.name,
-        apps:'Properties'
+        apps: "Properties",
       };
       this.$store.dispatch("openApps", attribute);
     },
@@ -143,16 +145,17 @@ export default defineComponent({
         left: e.x,
         top: e.y,
       };
-      let X=e.x,Y=e.y
-      let w=document.body.offsetWidth
-      let h=document.body.offsetHeight
-      while(X+320>=w){
-        X-=56
+      let X = e.x,
+        Y = e.y;
+      let w = document.body.offsetWidth;
+      let h = document.body.offsetHeight;
+      while (X + 320 >= w) {
+        X -= 56;
       }
-      while(Y+480>=h){
-        Y-=88
+      while (Y + 480 >= h) {
+        Y -= 88;
       }
-      this.$store.dispatch('setPosition',{X,Y})
+      this.$store.dispatch("setPosition", { X, Y });
       this.iconShow = true;
     },
   },

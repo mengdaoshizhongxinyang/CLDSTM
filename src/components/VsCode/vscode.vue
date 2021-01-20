@@ -1,5 +1,5 @@
 <template>
-  <Frame @resize="handleResize" :scrollY="false" v-bind="$attrs">
+  <AppFrame @resize="handleResize" :scrollY="false" v-bind="$attrs">
     <div class="vsbody">
       <div class="composite-bar">
         <div class="action-bar">
@@ -16,17 +16,17 @@
       </div>
       <div ref="container" class="monaco-editor" :style="`height:${height}px;width:${width}px`"></div>
     </div>
-  </Frame>
+  </AppFrame>
 </template>
 
 <script>
 import * as monaco from "monaco-editor";
-import {Frame} from "@/components";
+import {AppFrame} from "@/components";
 
 export default {
   name: "Monaco",
   components: {
-    Frame
+    AppFrame
   },
   props: {
     monacoOptions: {
