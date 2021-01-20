@@ -1,23 +1,19 @@
 import { defineComponent, h, PropType, reactive } from "vue";
 import TreeItem from "./TreeItem";
-import { node } from "./type";
 export default defineComponent({
-  components:{
+  components: {
     TreeItem
   },
   setup() {
-    const data = reactive({ desktopIcons: {} })
-    data.desktopIcons = configs.getDesktopIcon()
+    const data = reactive({ desktopIcons: configs.getDesktopIcon() })
     return () => h(
       <div class="tree">
         {
           Object.keys(data.desktopIcons).map(item => {
-            return (
-              <tree-item 
-                key={(data.desktopIcons[item as keyof typeof data.desktopIcons] as node).name} 
-                node={(data.desktopIcons[item as keyof typeof data.desktopIcons] as node).children}
-              ></tree-item>
-            )
+            return <TreeItem
+              key={data.desktopIcons[item].name}
+              node={data.desktopIcons[item]}
+            ></TreeItem>
           })
         }
       </div>
@@ -25,7 +21,7 @@ export default defineComponent({
   },
   props: {
     treeData: {
-      type: Object ,
+      type: Object as PropType<configs.fileType>,
       default: () => {
         return {};
       },

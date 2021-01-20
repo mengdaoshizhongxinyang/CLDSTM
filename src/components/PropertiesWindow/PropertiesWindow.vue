@@ -1,6 +1,5 @@
 <template>
   <frame-window
-    v-on="$listeners"
     v-bind="$attrs"
     :allowEnlarge="false"
     :allowMinimize="false"
@@ -32,7 +31,7 @@
 </template>
 
 <script>
-import {Frame as FrameWindow} from "@/components";
+import { Frame as FrameWindow } from "@/components";
 import { mapState } from "vuex";
 export default {
   created() {
@@ -43,7 +42,6 @@ export default {
   },
   computed: {
     ...mapState({
-      /** @returns {Object} */
       position(state) {
         return {
           x: state.core.properties.clickPositionX,

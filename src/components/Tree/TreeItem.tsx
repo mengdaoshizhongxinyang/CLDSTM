@@ -1,4 +1,4 @@
-import { defineComponent, h } from "vue";
+import { defineComponent, h,PropType } from "vue";
 import TreeBranch from "./TreeBranch";
 import TreeNode from "./TreeNode";
 export default defineComponent({
@@ -7,20 +7,21 @@ export default defineComponent({
     TreeNode
   },
   setup(props) {
+    // console.log(props.node)
     return () => h(
       <>
-        {props.level}
         {
+          // typeof props.node.children
           (props.node && props.node.children && Object.keys(props.node.children).length) ?
-            <tree-branch node={props.node} level={props.level+1}></tree-branch> : null
+            <TreeBranch node={props.node} level={props.level+1}></TreeBranch> : null
+            // 1 : null
         }
-
       </>
     )
   },
   props: {
     node: {
-      type: Object,
+      type: Object as PropType<configs.fileType>,
       default: () => {
         return {}
       }
