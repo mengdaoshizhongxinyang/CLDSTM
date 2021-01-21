@@ -60,8 +60,8 @@ export default defineComponent({
         style={`left:${props.offset.left}px;top:${props.offset.top}px`}
         onMousemove={(event: MouseEvent) => { event.stopPropagation() }}
       >
-        <sub-context menus={props.menus} show={props.show} onMenuItemClick={handleClick} v-slots={{ ...slots }}>
-        </sub-context>
+        <SubContext menus={props.menus} show={props.show} onMenuItemClick={handleClick} v-slots={{ ...slots }}>
+        </SubContext>
       </div>
     )
   },

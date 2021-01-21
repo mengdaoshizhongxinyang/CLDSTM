@@ -1,19 +1,11 @@
 import "./subContext.less";
-<<<<<<< Updated upstream
-import { Transition, defineComponent, watch, ref, nextTick, h, reactive, DefineComponent, PropType } from "vue";
-=======
 import { Transition, defineComponent, watch, ref, nextTick, h, reactive, PropType, DefineComponent, onMounted } from "vue";
-import { sortAndDeduplicateDiagnostics } from "typescript";
->>>>>>> Stashed changes
+
 interface typeMenu {
   label?: string,
   name?: string,
   children?: Array<typeMenu>,
-<<<<<<< Updated upstream
-  show?: Boolean,
-=======
   show: boolean,
->>>>>>> Stashed changes
   function?: Function
 }
 interface typeBasePosition {
@@ -22,28 +14,19 @@ interface typeBasePosition {
   width: number,
   height: number
 }
-<<<<<<< Updated upstream
-
-=======
 type position={
   left:string
   top:string
 }
->>>>>>> Stashed changes
+
 const SubContext = defineComponent({
   name: "SubContext",
   components: {
     Transition
   },
-  setup(props, { emit, slots }) {
-<<<<<<< Updated upstream
-
-    let data = reactive({ menuList: props.menus.concat(), style: {} })
-
-=======
+  setup(props, { slots }) {
     let data = reactive({ menuList: props.menus, style: {} as position })
 
->>>>>>> Stashed changes
     let direction = props.direction
     const handleMouseenter = (menu: typeMenu) => {
       menu.show = true;
@@ -53,19 +36,12 @@ const SubContext = defineComponent({
     }
 
     const clickDocumentHandler = () => {
-<<<<<<< Updated upstream
-      if (props.show) {
-        emit("update", false);
-      } else {
-        emit("update", true);
-=======
-      if (props.onUpdate) {
+      if(props.onUpdate){
         if (props.show) {
           props.onUpdate(false)
         } else {
           props.onUpdate(true)
         }
->>>>>>> Stashed changes
       }
     }
     let root = ref<HTMLDivElement>()
@@ -97,7 +73,9 @@ const SubContext = defineComponent({
         left: `${leftover}px`,
         top: `${topover}px`,
       };
-      emit("setPosition", data.style);
+      if(props.onSetPosition){
+        props.onSetPosition(data.style)
+      }
     }
     const handleClick = (e: MouseEvent, menu: typeMenu) => {
       e.preventDefault()
@@ -105,7 +83,10 @@ const SubContext = defineComponent({
         if (menu.function) {
           menu.function();
         }
-        emit("menuItemClick", menu);
+        if(props.onMenuItemClick){
+          props.onMenuItemClick(e,menu)
+        }
+        // emit("menuItemClick", menu);
       }
     }
     const renderChildren = (menu: typeMenu) => {
@@ -167,13 +148,9 @@ const SubContext = defineComponent({
       </Transition>
     );
   },
-  props: {
+  props:{
     menus: {
-<<<<<<< Updated upstream
       type: Array as PropType<typeMenu[]>,
-=======
-      type: Array as PropType<Array<typeMenu>>,
->>>>>>> Stashed changes
       default: []
     },
     basePosition: {
@@ -182,13 +159,8 @@ const SubContext = defineComponent({
         left: 0,
         top: 0,
         width: 0,
-<<<<<<< Updated upstream
-        height: 0
-      },
-=======
         height: 0,
       }
->>>>>>> Stashed changes
     },
     show: {
       type: Boolean,
