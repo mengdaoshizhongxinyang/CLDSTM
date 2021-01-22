@@ -1,2 +1,2 @@
-import PropertiesWindow from "./PropertiesWindow.vue";
+import PropertiesWindow from "./PropertiesWindow";
 export default PropertiesWindow

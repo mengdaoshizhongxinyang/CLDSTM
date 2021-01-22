@@ -58,7 +58,7 @@ export default defineComponent({
         class="context-menu"
         v-show={props.show}
         style={`left:${props.offset.left}px;top:${props.offset.top}px`}
-        onMousemove={(event: MouseEvent) => { event.stopPropagation() }}
+        onMousemove={(event) => { event.stopPropagation() }}
       >
         <SubContext menus={props.menus} show={props.show} onMenuItemClick={handleClick} v-slots={{ ...slots }}>
         </SubContext>
