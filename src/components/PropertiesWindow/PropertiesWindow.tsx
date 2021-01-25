@@ -7,6 +7,7 @@
 import { computed, defineComponent, h,PropType } from "vue";
 import { useStore } from "@/store";
 import { AppFrame } from "@/components";
+import style from "./PropertiesWindow.module.less";
 export default defineComponent({
   components: {
     AppFrame

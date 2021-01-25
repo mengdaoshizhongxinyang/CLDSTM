@@ -45,7 +45,6 @@ export default defineComponent({
       y: props.initialY,
       title: "",
     })
-    console.log(data.w,data.h)
     const store = useStore()
     const getAppInfo = computed(() => store.getters.getAppInfo)
     const rightClick = (e: MouseEvent, button: string) => {
@@ -242,4 +241,10 @@ export default defineComponent({
       default: ''
     }
   },
+  emits:{
+    resize:(w:number,h:number,x:number,y:number)=>{},
+    minimize:()=>{},
+    dragstop:(x:number,y:number)=>{},
+    close:()=>{},
+  }
 })

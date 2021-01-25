@@ -4,7 +4,7 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
-import { defineComponent, PropType, reactive,ref } from "vue";
+import { defineComponent, PropType, reactive,ref,h } from "vue";
 import { AppFrame } from "@/components";
 import {editor} from "monaco-editor"
 import * as monaco from "monaco-editor"
@@ -26,7 +26,11 @@ export default defineComponent({
       }
     }
   },
-  setup(props){
+  emits:{
+    change:(val:string)=>{},
+    input:(val:string)=>{},
+  },
+  setup(props,{attrs,emit}){
     const data=reactive({
       monacoEditor: {} as editor.IStandaloneCodeEditor,
       height: 168,
@@ -42,14 +46,44 @@ export default defineComponent({
       data.editorOptions = props.monacoOptions;
       // 生成编辑器对象
       data.monacoEditor = monaco.editor.create(
-        this.$refs.container,
-        this.editorOptions
+        root.value!,
+        data.editorOptions
       );
       // 编辑器内容发生改变时触发
-      this.monacoEditor.onDidChangeModelContent(() => {
-        this.$emit("change", this.monacoEditor.getValue());
-        this.$emit("input", this.monacoEditor.getValue());
+      data.monacoEditor.onDidChangeModelContent(() => {
+        emit("change", data.monacoEditor.getValue());
+        emit("input", data.monacoEditor.getValue());
       });
     }
+    const getVal=()=>{
+      return data.monacoEditor.getValue();
+    }
+    const handleResize=(w:number, h:number) =>{
+      data.height = h - 32;
+      data.width = w;
+    }
+    const selectLeftBar=(selecedBarName:string)=> {
+      data.active = selecedBarName;
+    }
+    return ()=>h(
+      <AppFrame onResize={handleResize} scrollY={false} {...attrs} ref={root}>
+        <div class="vsbody">
+          <div class="composite-bar">
+            <div class="action-bar">
+              <div
+                class="`action-bar-item ${active=='files'?'action-bar-item-active':''}`"
+                onClick={(e)=>selectLeftBar('files')}
+              >
+                <a-icon type="snippets"></a-icon>
+              </div>
+            </div>
+          </div>
+          <div class="split-view-view">
+            <div class="view-handle"></div>
+          </div>
+          <div ref="container" class="monaco-editor" style={`height:${data.height}px;width:${data.width}px`}></div>
+        </div>
+      </AppFrame>
+    )
   }
 })

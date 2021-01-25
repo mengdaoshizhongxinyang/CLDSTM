@@ -4,13 +4,7 @@
 import SubContext from "./SubContext";
 import { defineComponent, watch, computed, ref, nextTick, reactive, PropType, h } from "vue";
 import "./contextMenu.less"
-interface typeMenu {
-  label?: string,
-  name?: string,
-  children?: Array<typeMenu>,
-  show?: Boolean,
-  function?: Function
-}
+import { typeMenu } from "./type";
 export default defineComponent({
   props: {
     offset: {
@@ -38,7 +32,7 @@ export default defineComponent({
         emit("update:show", true);
       }
     }
-    const handleClick = (menu: typeMenu) => {
+    const handleClick = (e:MouseEvent,menu: typeMenu) => {
       emit("update:show", false);
       emit("menuItemClick", menu);
     }

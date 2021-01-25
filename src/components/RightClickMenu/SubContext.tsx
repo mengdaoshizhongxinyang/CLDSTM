@@ -1,13 +1,7 @@
 import "./subContext.less";
 import { Transition, defineComponent, watch, ref, nextTick, h, reactive, PropType, DefineComponent, onMounted } from "vue";
+import { typeMenu } from "./type";
 
-interface typeMenu {
-  label?: string,
-  name?: string,
-  children?: Array<typeMenu>,
-  show: boolean,
-  function?: Function
-}
 interface typeBasePosition {
   left: number,
   top: number,
@@ -24,7 +18,7 @@ const SubContext = defineComponent({
   components: {
     Transition
   },
-  setup(props, { slots }) {
+  setup(props, { slots,emit }) {
     let data = reactive({ menuList: props.menus, style: {} as position })
 
     let direction = props.direction
@@ -36,13 +30,11 @@ const SubContext = defineComponent({
     }
 
     const clickDocumentHandler = () => {
-      if(props.onUpdate){
         if (props.show) {
-          props.onUpdate(false)
+          emit('update',false)
         } else {
-          props.onUpdate(true)
+          emit('update',true)
         }
-      }
     }
     let root = ref<HTMLDivElement>()
     const setPosition = () => {
@@ -73,9 +65,9 @@ const SubContext = defineComponent({
         left: `${leftover}px`,
         top: `${topover}px`,
       };
-      if(props.onSetPosition){
-        props.onSetPosition(data.style)
-      }
+
+      emit('setPosition',data.style)
+
     }
     const handleClick = (e: MouseEvent, menu: typeMenu) => {
       e.preventDefault()
@@ -83,10 +75,7 @@ const SubContext = defineComponent({
         if (menu.function) {
           menu.function();
         }
-        if(props.onMenuItemClick){
-          props.onMenuItemClick(e,menu)
-        }
-        // emit("menuItemClick", menu);
+        emit('menuItemClick',e,menu)
       }
     }
     const renderChildren = (menu: typeMenu) => {
@@ -169,16 +158,12 @@ const SubContext = defineComponent({
     direction: {
       type: String as PropType<"left" | "right">,
       default: "right"
-    },
-    onUpdate: {
-      type: Function as PropType<(val: boolean) => void>
-    },
-    onMenuItemClick: {
-      type: Function as PropType<(e: MouseEvent, menu: typeMenu) => void>
-    },
-    onSetPosition:{
-      type:Function as PropType<(e:position)=>void>
     }
+  },
+  emits:{
+    update: (val:boolean)=>{},
+    menuItemClick:(e: MouseEvent, menu: typeMenu)=>{},
+    setPosition:(e:position)=>{}
   }
 })
 export default SubContext;

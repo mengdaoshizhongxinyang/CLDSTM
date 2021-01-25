@@ -4,10 +4,10 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
-interface typeMenu {
+export interface typeMenu {
   label?: string,
   name?: string,
   children?: Array<typeMenu>,
-  show?: Boolean,
+  show?: boolean,
   function?: Function
 }
