@@ -72,7 +72,7 @@ function Config() {
         vscode:{
             name:"vscode",
             type:"vscode",
-            icon:"vscode",
+            icon:"vscodeIcon",
         },
     }
     this.getFile = function () {

@@ -1,4 +1,4 @@
-import { App } from "@/types";
+import { fileType } from "@/types";
 import { RightClickMenu } from "@/components";
 import { useStore } from "@/store";
 import { Events, h, onMounted, reactive } from "vue";
@@ -13,7 +13,7 @@ type typeMenu = {
 export default defineComponent({
     setup() {
         const store = useStore();
-        const data=reactive({
+        const data = reactive({
             headerMenu: false,
             contextMenuOffset: {
                 left: 0,
@@ -61,7 +61,7 @@ export default defineComponent({
                 });
             },
             personaliseFrame() {
-                let PersonaliseSetting: App = {
+                let PersonaliseSetting: fileType = {
                     apps: 'Setting',
                     icon: "setting",
                     name: "设置",
@@ -75,12 +75,12 @@ export default defineComponent({
                 runEvent[menu.run as keyof typeof runEvent]();
             }
         };
-        const rightClick=(e: MouseEvent)=>{
+        const rightClick = (e: MouseEvent) => {
             data.contextMenuOffset.left = e.x;
             data.contextMenuOffset.top = e.y;
             data.headerMenu = true;
         }
-        const personaliseFrame=()=>{
+        const personaliseFrame = () => {
             store.dispatch("openApps", {
                 type: "setting",
                 apps: "Setting",
@@ -88,19 +88,19 @@ export default defineComponent({
                 name: "设置"
             });
         }
-        onMounted(()=>{
-            data.list=configs.getActionsItem()
+        onMounted(() => {
+            data.list = configs.getActionsItem()
         })
-        return ()=>h(
+        return () => h(
             <div class={style["desktop"]} onContextmenu={(e) => rightClick(e)}>
                 <div class={style["desktop-rightmenu"]}>
-                <right-click-menu
-                    offset={data.contextMenuOffset}
-                    v-model={[data.headerMenu,'show']}
-                    menus={menus()}
-                    onMenuItemClick={handleMenuItemClick}
-                >
-                </right-click-menu>
+                    <right-click-menu
+                        offset={data.contextMenuOffset}
+                        v-model={[data.headerMenu, 'show']}
+                        menus={menus()}
+                        onMenuItemClick={handleMenuItemClick}
+                    >
+                    </right-click-menu>
                 </div>
             </div>
         )

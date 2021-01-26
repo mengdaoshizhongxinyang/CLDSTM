@@ -76,17 +76,7 @@ import moment from "moment";
 
 import * as THREE from "three";
 
-
-
-
-import {
-  mapGetters,
-  mapState,
-  mapActions,
-  StoreOptions
-} from 'vuex'
 import {useStore} from "@/store"
-import { Store } from "@/store/index";
 import Proton from "./proton.js";
 
 let proton, emitter;
@@ -105,16 +95,6 @@ export default  defineComponent({
     ArticleMd,
     Properties,
     Setting
-  },
-  computed:{
-    // ...mapGetters(['desktopApps']),
-    // ...mapState({
-    //   /** @returns {Object} */
-    //   desktopIcons(state ){
-    //     console.log(state)
-    //     return state.view.desktop.fileList
-    //   }
-    // })
   },
   setup(props){
     
