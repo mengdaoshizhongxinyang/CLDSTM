@@ -1,5 +1,5 @@
 import { matchesSelectorToParentElements, addEvent, removeEvent } from './utils';
-import { defineComponent, PropType, reactive, getCurrentInstance, ref, computed, onBeforeMount, watch, onMounted, h, StyleHTMLAttributes, nextTick,ExtractDefaultPropTypes } from "vue";
+import { defineComponent, PropType, reactive, ref, computed, onBeforeMount, watch, onMounted, h, StyleHTMLAttributes, nextTick,ExtractDefaultPropTypes } from "vue";
 import style from "./vueDraggableResizable.module.less"
 
 const events = {
@@ -29,155 +29,154 @@ const userSelectAuto = {
   MsUserSelect: 'auto'
 }
 let eventsFor = events.mouse
-let props= {
-  className: {
-    type: String,
-    default: 'vdr'
-  },
-  classNameDraggable: {
-    type: String,
-    default: 'draggable'
-  },
-  classNameResizable: {
-    type: String,
-    default: 'resizable'
-  },
-  classNameDragging: {
-    type: String,
-    default: 'dragging'
-  },
-  classNameResizing: {
-    type: String,
-    default: 'resizing'
-  },
-  classNameActive: {
-    type: String,
-    default: 'active'
-  },
-  classNameHandle: {
-    type: String,
-    default: 'handle'
-  },
-  disableUserSelect: {
-    type: Boolean,
-    default: true
-  },
-  enableNativeDrag: {
-    type: Boolean,
-    default: false
-  },
-  preventDeactivation: {
-    type: Boolean,
-    default: false
-  },
-  active: {
-    type: Boolean,
-    default: false
-  },
-  draggable: {
-    type: Boolean,
-    default: true
-  },
-  resizable: {
-    type: Boolean,
-    default: true
-  },
-  lockAspectRatio: {
-    type: Boolean,
-    default: false
-  },
-  w: {
-    type: Number,
-    default: 200,
-    validator: (val: number) => val > 0
-  },
-  h: {
-    type: Number,
-    default: 200,
-    validator: (val: number) => val > 0
-  },
-  minWidth: {
-    type: Number,
-    default: 0,
-    validator: (val: number) => val >= 0
-  },
-  minHeight: {
-    type: Number,
-    default: 0,
-    validator: (val: number) => val >= 0
-  },
-  maxWidth: {
-    type: Number,
-    default: null,
-    validator: (val: number) => val >= 0
-  },
-  maxHeight: {
-    type: Number,
-    default: null,
-    validator: (val: number) => val >= 0
-  },
-  x: {
-    type: Number,
-    default: 0,
-    validator: (val:number) => typeof val === 'number'
-  },
-  y: {
-    type: Number,
-    default: 0,
-    validator: (val:number) => typeof val === 'number'
-  },
-  z: {
-    type: [String, Number],
-    default: 'auto',
-    validator: (val: string | number) => (typeof val === 'string' ? val === 'auto' : val >= 0)
-  },
-  handles: {
-    type: Array as PropType<Array<string>>,
-    default: () => ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'],
-    validator: (val: Array<string>) => {
-      const s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
-
-      return new Set(val.filter(h => s.has(h))).size === val.length
-    }
-  },
-  dragHandle: {
-    type: String,
-    default: null
-  },
-  dragCancel: {
-    type: String,
-    default: null
-  },
-  axis: {
-    type: String as PropType<'x' | 'y' | 'both'>,
-    default: 'both',
-    validator: (val: string) => ['x', 'y', 'both'].includes(val)
-  },
-  grid: {
-    type: Array as unknown as PropType<[number,number]>,
-    default: () => [1, 1]
-  },
-  parent: {
-    type: Boolean,
-    default: false
-  },
-  onDragStart: {
-    type: Function,
-    default: null
-  },
-  onResizeStart: {
-    type: Function,
-    default: null
-  }
-}
 
 export default defineComponent({
   name: 'vue-draggable-resizable',
-  props,
+  props:{
+    className: {
+      type: String,
+      default: 'vdr'
+    },
+    classNameDraggable: {
+      type: String,
+      default: 'draggable'
+    },
+    classNameResizable: {
+      type: String,
+      default: 'resizable'
+    },
+    classNameDragging: {
+      type: String,
+      default: 'dragging'
+    },
+    classNameResizing: {
+      type: String,
+      default: 'resizing'
+    },
+    classNameActive: {
+      type: String,
+      default: 'active'
+    },
+    classNameHandle: {
+      type: String,
+      default: 'handle'
+    },
+    disableUserSelect: {
+      type: Boolean,
+      default: true
+    },
+    enableNativeDrag: {
+      type: Boolean,
+      default: false
+    },
+    preventDeactivation: {
+      type: Boolean,
+      default: false
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    draggable: {
+      type: Boolean,
+      default: true
+    },
+    resizable: {
+      type: Boolean,
+      default: true
+    },
+    lockAspectRatio: {
+      type: Boolean,
+      default: false
+    },
+    w: {
+      type: Number,
+      default: 200,
+      validator: (val: number) => val > 0
+    },
+    h: {
+      type: Number,
+      default: 200,
+      validator: (val: number) => val > 0
+    },
+    minWidth: {
+      type: Number,
+      default: 0,
+      validator: (val: number) => val >= 0
+    },
+    minHeight: {
+      type: Number,
+      default: 0,
+      validator: (val: number) => val >= 0
+    },
+    maxWidth: {
+      type: Number,
+      default: null,
+      validator: (val: number) => val >= 0
+    },
+    maxHeight: {
+      type: Number,
+      default: null,
+      validator: (val: number) => val >= 0
+    },
+    x: {
+      type: Number,
+      default: 0,
+      validator: (val:number) => typeof val === 'number'
+    },
+    y: {
+      type: Number,
+      default: 0,
+      validator: (val:number) => typeof val === 'number'
+    },
+    z: {
+      type: [String, Number],
+      default: 'auto',
+      validator: (val: string | number) => (typeof val === 'string' ? val === 'auto' : val >= 0)
+    },
+    handles: {
+      type: Array as PropType<Array<string>>,
+      default: () => ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'],
+      validator: (val: Array<string>) => {
+        const s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
+  
+        return new Set(val.filter(h => s.has(h))).size === val.length
+      }
+    },
+    dragHandle: {
+      type: String,
+      default: null
+    },
+    dragCancel: {
+      type: String,
+      default: null
+    },
+    axis: {
+      type: String as PropType<'x' | 'y' | 'both'>,
+      default: 'both',
+      validator: (val: string) => ['x', 'y', 'both'].includes(val)
+    },
+    grid: {
+      type: Array as unknown as PropType<[number,number]>,
+      default: () => [1, 1]
+    },
+    parent: {
+      type: Boolean,
+      default: false
+    },
+    onDragStart: {
+      type: Function,
+      default: null
+    },
+    onResizeStart: {
+      type: Function,
+      default: null
+    }
+  },
   setup(props, { emit,slots }) {
     const data = reactive({
-      rawWidth: props.w,
-      rawHeight: props.h,
+      rawWidth: Math.max(props.w,props.minWidth),
+      rawHeight: Math.max(props.h,props.minHeight),
       rawLeft: props.x,
       rawTop: props.y,
       rawRight: null as null | number,
@@ -229,10 +228,10 @@ export default defineComponent({
     })
     //#region computed
     const width = computed(() => {
-      return data.parentWidth! - data.left - data.right!
+      return (data.parentWidth || 0) - data.left - (data.right || 0)
     })
     const height = computed(() => {
-      return data.parentHeight! - data.top - data.bottom!
+      return (data.parentHeight || 0) - data.top - (data.bottom || 0)
     })
     const bodyStyle = computed(() => {
       return {
@@ -437,6 +436,7 @@ export default defineComponent({
       }
     })
     //#endregion
+    
     let root = ref<HTMLBaseElement>()
     let el=root.value!
     // let el=getCurrentInstance()?.root
@@ -786,7 +786,9 @@ export default defineComponent({
     })
 
     onMounted(() => {
+      nextTick(()=>{
 
+        
         el=root.value!
         if (!props.enableNativeDrag) {
             root.value!.ondragstart = () => false
@@ -802,8 +804,9 @@ export default defineComponent({
 
         addEvent(window, 'resize', checkParentSize)
 
-      
+      })
     })
+    resetBoundsAndMouseState()
     return () => h(
       <div
         style={bodyStyle.value}
