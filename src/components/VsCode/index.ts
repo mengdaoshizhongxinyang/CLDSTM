@@ -1,2 +1,2 @@
-import vscode from "./vscode.vue";
+import vscode from "./vscode";
 export default vscode

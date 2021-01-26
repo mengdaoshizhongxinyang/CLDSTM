@@ -4,14 +4,25 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
-import { defineComponent, PropType, reactive,ref,h } from "vue";
-import { AppFrame } from "@/components";
+import { defineComponent, PropType, reactive,ref,h, onMounted } from "vue";
+import { AppFrame,IconManage } from "@/components";
 import {editor} from "monaco-editor"
 import * as monaco from "monaco-editor"
+import style from "./vscode.module.less";
+const data=reactive({
+  monacoEditor: {} as editor.IStandaloneCodeEditor,
+  height: 168,
+  width: 246,
+  splitWidth:170,
+  isShowSplit:1 as 1 | 0,
+  active: "",
+  editorOptions:{} as editor.IStandaloneEditorConstructionOptions
+})
 export default defineComponent({
   name: "Monaco",
   components: {
-    AppFrame
+    AppFrame,
+    IconManage
   },
   props: {
     monacoOptions: {
@@ -31,22 +42,15 @@ export default defineComponent({
     input:(val:string)=>{},
   },
   setup(props,{attrs,emit}){
-    const data=reactive({
-      monacoEditor: {} as editor.IStandaloneCodeEditor,
-      height: 168,
-      width: 246,
-      active: "",
-      editorOptions:{} as editor.IStandaloneEditorConstructionOptions
-    })
-    const root=ref<HTMLDivElement>();
+    const container=ref<HTMLDivElement>();
     const init=()=>{
       // 初始化container的内容，销毁之前生成的编辑器
-      root.value!.innerHTML = "";
+      container.value!.innerHTML = "";
 
       data.editorOptions = props.monacoOptions;
       // 生成编辑器对象
       data.monacoEditor = monaco.editor.create(
-        root.value!,
+        container.value!,
         data.editorOptions
       );
       // 编辑器内容发生改变时触发
@@ -55,9 +59,6 @@ export default defineComponent({
         emit("input", data.monacoEditor.getValue());
       });
     }
-    const getVal=()=>{
-      return data.monacoEditor.getValue();
-    }
     const handleResize=(w:number, h:number) =>{
       data.height = h - 32;
       data.width = w;
@@ -65,25 +66,31 @@ export default defineComponent({
     const selectLeftBar=(selecedBarName:string)=> {
       data.active = selecedBarName;
     }
+    onMounted(()=>{
+      init()
+    })
     return ()=>h(
-      <AppFrame onResize={handleResize} scrollY={false} {...attrs} ref={root}>
-        <div class="vsbody">
-          <div class="composite-bar">
-            <div class="action-bar">
+      <AppFrame onResize={handleResize} scrollY={false} {...attrs} minWidth={246}>
+        <div class={style["vsbody"]}>
+          <div class={style["composite-bar"]}>
+            <div class={style["action-bar"]}>
               <div
-                class="`action-bar-item ${active=='files'?'action-bar-item-active':''}`"
-                onClick={(e)=>selectLeftBar('files')}
+                class={[style["action-bar-item"],data.active=='files'?style['action-bar-item-active']:'']}
+                onClick={()=>selectLeftBar('files')}
               >
-                <a-icon type="snippets"></a-icon>
+                <IconManage icon="snippets"></IconManage>
               </div>
             </div>
           </div>
-          <div class="split-view-view">
-            <div class="view-handle"></div>
+          <div class={style["split-view-view"]} style={`width:${data.splitWidth}px`}>
+            <div class={style["view-handle"]}></div>
           </div>
-          <div ref="container" class="monaco-editor" style={`height:${data.height}px;width:${data.width}px`}></div>
+          <div ref={container} class={style["monaco-editor"]} style={`height:${data.height}px;width:${data.width-data.splitWidth-48}px`}></div>
         </div>
       </AppFrame>
     )
   }
 })
+export const getVal=()=>{
+  return data.monacoEditor.getValue();
+}
