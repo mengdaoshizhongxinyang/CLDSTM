@@ -72,8 +72,8 @@ declare module "vue" {
     PublicD = UnwrapMixinsType<PublicMixin, 'D'> & EnsureNonVoid<D>,
     PublicC extends ComputedOptions = UnwrapMixinsType<PublicMixin, 'C'> & EnsureNonVoid<C>,
     PublicM extends MethodOptions = UnwrapMixinsType<PublicMixin, 'M'> & EnsureNonVoid<M>,
-    PublicDefaults = UnwrapMixinsType<PublicMixin, 'Defaults'> & EnsureNonVoid<Defaults>> = ComponentPublicInstance<PublicP,
-      PublicB, PublicD, PublicC, PublicM, E,
+    PublicDefaults = UnwrapMixinsType<PublicMixin, 'Defaults'> & EnsureNonVoid<Defaults>> = ComponentPublicInstance<
+      PublicP,PublicB, PublicD, PublicC, PublicM, E,
       PublicProps, PublicDefaults, MakeDefaultsOptional, ComponentOptionsBase<P, B, D, C, M, Mixin, Extends, E, string, Defaults>>;
 
   export declare type DefineComponent<
@@ -139,7 +139,7 @@ declare module "vue" {
     M extends MethodOptions = {},
     Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
     Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
-    E extends EmitsOptions = EmitsOptions,
+    E extends EmitsOptions = ObjectEmitsOptions,
     EE extends string = string
   >(options: ComponentOptionsWithoutProps<Props, RawBindings, D, C, M, Mixin, Extends, E, EE>):
     DefineComponent<Props, RawBindings, D, C, M, Mixin, Extends, E, EE>;
@@ -152,7 +152,7 @@ declare module "vue" {
     M extends MethodOptions = {},
     Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
     Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
-    E extends EmitsOptions = EmitsOptions,
+    E extends EmitsOptions = ObjectEmitsOptions,
     EE extends string = string
   >(options: ComponentOptionsWithObjectProps<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>):
     DefineComponent<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>;
