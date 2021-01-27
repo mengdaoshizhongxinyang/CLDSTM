@@ -78,7 +78,7 @@ export default defineComponent({
                 class={[style["action-bar-item"],data.active=='files'?style['action-bar-item-active']:'']}
                 onClick={()=>selectLeftBar('files')}
               >
-                <IconManage icon="snippets"></IconManage>
+                <IconManage icon="SnippetsOutlined"></IconManage>
               </div>
             </div>
           </div>

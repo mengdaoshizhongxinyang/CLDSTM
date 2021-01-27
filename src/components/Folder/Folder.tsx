@@ -3,12 +3,12 @@ import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
-import { fileType, filesType } from "@/types";
+import { FileType, FilesType,IconList } from "@/types";
 import style from"./folder.module.less";
 export default defineComponent({
   props: {
     children: {
-      type: Object as PropType<filesType>,
+      type: Object as PropType<FilesType>,
       default: () => {
         return {};
       },
@@ -18,8 +18,8 @@ export default defineComponent({
       default: "",
     },
     icon: {
-      type: String,
-      default: "file-unknown",
+      type: String as PropType<IconList>,
+      default: "FileUnknown",
     },
   },
   components: {
@@ -35,7 +35,7 @@ export default defineComponent({
       return store.state.view.folder.folderStatus
     })
     const data = reactive({
-      folderList: {} as filesType,
+      folderList: {} as FilesType,
       backStack: [] as {}[],
       nextStack: [] as {}[],
       path: props.position,
@@ -44,7 +44,7 @@ export default defineComponent({
       iconStyle: "filled",
     })
 
-    const handleOpenApps = (icon: fileType) => {
+    const handleOpenApps = (icon: FileType) => {
       let { folderList, backStack, path, cacheSearch } = data;
       data.search = icon.search ? icon.search : "";
       if (icon.type == "folder") {
@@ -89,7 +89,7 @@ export default defineComponent({
       let tempList = Object.values(data.folderList).map((item) => {
         return item;
       });
-      let folderList: filesType = {};
+      let folderList: FilesType = {};
       while (tempList.length > 0) {
         let start = tempList.shift()!;
         if (start.type == "folder") {
@@ -145,7 +145,7 @@ export default defineComponent({
               disabled={data.backStack.length==0}
               onClick={handleBack}
             >
-              <icon-manage icon="arrowLeft"></icon-manage>
+              <IconManage icon="ArrowLeftOutlined"></IconManage>
             </a-button>
             <a-button
               size="small"
@@ -153,21 +153,21 @@ export default defineComponent({
               disabled={data.nextStack.length==0}
               onClick={handleNext}
             >
-              <icon-manage icon="arrowRight"></icon-manage>
+              <IconManage icon="ArrowRightOutlined"></IconManage>
             </a-button>
             <a-button size="small" class={style["floder-address-button"]} disabled>
-              <icon-manage icon="down"></icon-manage>
+              <IconManage icon="DownOutlined"></IconManage>
             </a-button>
             <a-button size="small" class={style["floder-address-button"]} disabled>
-              <icon-manage icon="arrowUp"></icon-manage>
+              <IconManage icon="ArrowUpOutlined"></IconManage>
             </a-button>
-            <a-input size="small" class={style["floder-address-input"]} v-model={[data.path, 'value']} v-slots={{ prefix: () => <icon-manage icon={props.icon} /> }}>
+            <a-input size="small" class={style["floder-address-input"]} v-model={[data.path, 'value']} v-slots={{ prefix: () => <IconManage icon={props.icon} /> }}>
             </a-input>
             <a-button
               size="small"
               class={[style["floder-address-button"],style["floder-address-input-suffix"]]}
             >
-              <icon-manage icon="redo"></icon-manage>
+              <IconManage icon="RedoOutlined"></IconManage>
             </a-button>
             <a-input-search
               size="small"

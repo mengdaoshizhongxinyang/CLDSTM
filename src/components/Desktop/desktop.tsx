@@ -1,13 +1,13 @@
-import { fileType } from "@/types";
+import { FileType } from "@/types";
 import { RightClickMenu } from "@/components";
 import { useStore } from "@/store";
-import { Events, h, onMounted, reactive } from "vue";
+import { h, onMounted, reactive } from "vue";
 import { defineComponent } from "vue";
 import style from "./desktop.module.less"
-type typeMenu = {
+type TypeMenu = {
     label: string;
     name: string;
-    children?: Array<typeMenu>;
+    children?: Array<TypeMenu>;
     run?: string;
 };
 export default defineComponent({
@@ -24,9 +24,8 @@ export default defineComponent({
         const menus = () => {
             let language =
                 store.state.core.language.languageSelected.desktop.contextMenu;
-            type languageContextMenu = typeof language;
 
-            let menuList: Array<typeMenu> = [
+            let menuList: Array<TypeMenu> = [
                 { label: "刷新", name: "refresh" },
                 {
                     label: "创建",
@@ -40,9 +39,9 @@ export default defineComponent({
 
             let queueMenus = menuList.concat([]);
             while (queueMenus.length != 0) {
-                let menu = queueMenus.pop() as typeMenu;
+                let menu = queueMenus.pop() as TypeMenu;
                 menu.label =
-                    language[menu.name as keyof languageContextMenu] || menu.label;
+                    language[menu.name as keyof typeof language] || menu.label;
                 if (menu.children && menu.children.length > 0) {
                     queueMenus = queueMenus.concat(menu.children);
                 }
@@ -61,7 +60,7 @@ export default defineComponent({
                 });
             },
             personaliseFrame() {
-                let PersonaliseSetting: fileType = {
+                let PersonaliseSetting: FileType = {
                     apps: 'Setting',
                     icon: "setting",
                     name: "设置",
@@ -70,7 +69,7 @@ export default defineComponent({
                 store.dispatch("openApps", PersonaliseSetting);
             },
         };
-        const handleMenuItemClick = (menu: typeMenu) => {
+        const handleMenuItemClick = (menu: TypeMenu) => {
             if (runEvent[menu.run as keyof typeof runEvent]) {
                 runEvent[menu.run as keyof typeof runEvent]();
             }

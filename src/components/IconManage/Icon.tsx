@@ -46,23 +46,19 @@ const components={
   SnippetsOutlined,
   vscodeIcon
 }
-import { defineComponent,h,reactive,PropType } from "vue";
+import { defineComponent,h,PropType } from "vue";
+export type IconList=keyof typeof components
 export default defineComponent({
   components,
   props: {
     icon: {
-      type: String as PropType<keyof typeof components>,
+      type: String as unknown as PropType<IconList>,
       default: "FileUnknown",
-    },
-    iconStyle: {
-      type: String as PropType<'filled' | 'outlined' | 'twoTone'>,
-      default: "outlined",
-    },
+    }
   },
   setup(props) {
-    console.log(props.icon)
     return ()=>h(
-      components[props.icon]
+      components[props.icon] || components['FileUnknownOutlined']
     )
   }
 })

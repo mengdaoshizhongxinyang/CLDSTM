@@ -5,8 +5,9 @@
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
 import { Store } from '@/store'
+import { IconList as Icons } from "@/components/IconManage";
 
-
+type IconList=Icons
 
 const baseFileType= {
   'article': 'ArticleMd',
@@ -15,27 +16,28 @@ const baseFileType= {
   'vscode': 'vscode',
   'setting': 'setting'
 }
-type taskType = fileType & {
+type TaskType = FileType & {
   mini: boolean
   id: number
   zindex: number
   apps: typeof baseFileType[keyof typeof baseFileType]
 }
-interface fileType {
+interface FileType {
   type: keyof typeof baseFileType
   name?: string
   icon?: string
   position?: string
-  children?: filesType
+  children?: FilesType
   path?:string
   [key: string]: any
 }
-interface filesType {
-  [key: string]: fileType
+interface FilesType {
+  [key: string]: FileType
 }
 export {
-  taskType,
-  fileType,
+  TaskType,
+  FileType,
   baseFileType,
-  filesType
+  FilesType,
+  IconList
 }

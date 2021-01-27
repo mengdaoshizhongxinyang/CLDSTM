@@ -4,30 +4,13 @@ import IconManage from "@/components/IconManage";
 import { useStore } from "@/store";
 import { computed, defineComponent, h, reactive } from "vue";
 import style from "./Frame.module.less";
-interface Props {
-  scrollX: boolean
-  scrollY: boolean
-  minWidth: number
-  minHeight: number
-  initialW: number
-  initialH: number
-  initialX: number
-  initialY: number
-  z: number
-  appsId: number
-  allowEnlarge: boolean
-  allowMinimize: boolean
-  draggable: boolean
-  resizable: boolean
-  dragCancel: string
-}
 export default defineComponent({
   components: {
     IconManage,
     VueDraggableResizable,
     RightClickMenu
   },
-  setup(props: Props, { emit, slots }) {
+  setup(props, { emit, slots }) {
     const data = reactive({
       headerMenu: false,
       contextMenuOffset: {
@@ -141,19 +124,22 @@ export default defineComponent({
           <div class={style["header-button-group"]}>
             {
               props.allowMinimize ? <div class={style["header-button"]} onClick={minimize}>
-                <icon-manage icon="minus" iconStyle="outlined"></icon-manage>
+                <IconManage icon="MinusOutlined"></IconManage>
               </div> : null
             }
             {
-              props.allowEnlarge ? data.isFull ? <div class={style["header-button"]} onClick={fullScrean}>
-                <icon-manage icon="block" iconStyle="outlined"></icon-manage>
-              </div> : <div class={style["header-button"]} onClick={fullScrean}>
-                  <icon-manage icon="border" iconStyle="outlined"></icon-manage>
-                </div> : null
+              props.allowEnlarge ? 
+                data.isFull ? 
+                  <div class={style["header-button"]} onClick={fullScrean}>
+                    <IconManage icon="BlockOutlined"></IconManage>
+                  </div> : 
+                  <div class={style["header-button"]} onClick={fullScrean}>
+                    <IconManage icon="BorderOutlined"></IconManage>
+                  </div> : null
             }
 
             <div class={style["header-button-close"]} onClick={close}>
-              <icon-manage icon="close" iconStyle="outlined"></icon-manage>
+              <IconManage icon="CloseOutlined"></IconManage>
             </div>
           </div>
         </div>

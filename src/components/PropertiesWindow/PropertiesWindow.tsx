@@ -15,9 +15,7 @@ export default defineComponent({
   props: {
     attributes: {
       type: Object as PropType<{name:string,[key : string]:unknown}>,
-      default: () => {
-        return { name: "" };
-      },
+      default:{ name: "" }
     },
   },
   setup(props, { attrs }) {
@@ -48,13 +46,12 @@ export default defineComponent({
         initialX={position.value.x}
         initialY={position.value.y}
       >
-        <div class="main">
-          <div class="tab">
+        <div class={style["main"]}>
+          <div class={style["tab"]}>
             {
               data.tabs.forEach((tab, index) => {
                 return <div
-                  class={index == data.active ? 'tab-active' : ''}
-
+                  class={index == data.active ? style['tab-active'] : ''}
                   onClick={() => handleChangeActive(index)}
                 >
                   {tab}
@@ -62,8 +59,8 @@ export default defineComponent({
               })
             }
           </div>
-          <div class="content"></div>
-          <div class="properties-button-group">
+          <div class={style["content"]}></div>
+          <div class={style["properties-button-group"]}>
             <button>确定</button>
             <button>取消</button>
             <button>应用</button>
