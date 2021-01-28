@@ -87,7 +87,7 @@ declare module "vue" {
     E extends ObjectEmitsOptions = Record<string, any>,
     EE extends string = string,
     PP = VNodeProps & AllowedComponentProps & ComponentCustomProps,
-    Props = Readonly<ExtractPropTypes<PropsOrPropOptions> & {[key in keyof E as `on${Capitalize<key>}`]?: E[key] }>,
+    Props = Readonly<ExtractPropTypes<PropsOrPropOptions> & {[key in keyof E as `on${Capitalize<key>}`]?: (...args : Parameters<E[key]>)=>void}>,
     Defaults = ExtractDefaultPropTypes<PropsOrPropOptions>
     > = ComponentPublicInstanceConstructor<
       CreateComponentPublicInstance<
