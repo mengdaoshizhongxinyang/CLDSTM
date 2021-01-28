@@ -846,5 +846,14 @@ export default defineComponent({
         {/* <slot></slot> */}
       </div>
     )
+  },
+  emits:{
+    resizing:(x:number,y:number,w:number,h:number)=>{return true},
+    resizestop:(x:number,y:number,w:number,h:number)=>{return true},
+    dragging:(w:number,h:number)=>{return true},
+    dragstop:(w:number,h:number)=>{return true},
+    deactivated:()=>{return true},
+    activated:()=>{return true},
+    'update:active':(val:boolean)=>{return true}
   }
 })

@@ -3,15 +3,13 @@ import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
-import { FileType, FilesType,IconList } from "@/types";
-import style from"./folder.module.less";
+import { FileType, FilesType, IconList } from "@/types";
+import style from "./folder.module.less";
 export default defineComponent({
   props: {
     children: {
       type: Object as PropType<FilesType>,
-      default: () => {
-        return {};
-      },
+      default: {},
     },
     position: {
       type: String,
@@ -20,7 +18,7 @@ export default defineComponent({
     icon: {
       type: String as PropType<IconList>,
       default: "FileUnknown",
-    },
+    }
   },
   components: {
     DesktopIconBase,
@@ -119,13 +117,13 @@ export default defineComponent({
     const handleResizing = (l: number, t: number, w: number, h: number) => {
 
     }
-    onMounted(()=>{
-      const {w, h, x, y}=folderStatus.value
-    data.folderList = props.children;
-    store.dispatch('updateFolderStatus',{w, h, x:x!+20, y:y!+20})
+    onMounted(() => {
+      const { w, h, x, y } = folderStatus.value
+      data.folderList = props.children;
+      store.dispatch('updateFolderStatus', { w, h, x: x! + 20, y: y! + 20 })
     })
     return () => h(
-      <app-frame
+      <AppFrame
         {...attrs}
         onResize={handleResize}
         onDragstop={handleDragstop}
@@ -142,7 +140,7 @@ export default defineComponent({
             <a-button
               size="small"
               class={style["floder-address-button"]}
-              disabled={data.backStack.length==0}
+              disabled={data.backStack.length == 0}
               onClick={handleBack}
             >
               <IconManage icon="ArrowLeftOutlined"></IconManage>
@@ -150,7 +148,7 @@ export default defineComponent({
             <a-button
               size="small"
               class={style["floder-address-button"]}
-              disabled={data.nextStack.length==0}
+              disabled={data.nextStack.length == 0}
               onClick={handleNext}
             >
               <IconManage icon="ArrowRightOutlined"></IconManage>
@@ -165,7 +163,7 @@ export default defineComponent({
             </a-input>
             <a-button
               size="small"
-              class={[style["floder-address-button"],style["floder-address-input-suffix"]]}
+              class={[style["floder-address-button"], style["floder-address-input-suffix"]]}
             >
               <IconManage icon="RedoOutlined"></IconManage>
             </a-button>
@@ -196,7 +194,7 @@ export default defineComponent({
             </div>
           </div>
         </div>
-      </app-frame>
+      </AppFrame>
     )
   }
 })

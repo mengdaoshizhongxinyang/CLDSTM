@@ -56,7 +56,7 @@ export default defineComponent({
         data.h = data.old_h;
         data.isFull = false;
       }
-      emit("resize", data.w, data.h,data.x,data.y)
+      emit("resize", data.w, data.h, data.x, data.y)
     }
     const minimize = () => {
       if (props.allowMinimize) {
@@ -84,7 +84,7 @@ export default defineComponent({
       store.dispatch("activeApps", props.appsId);
     }
     return () => h(
-      <vue-draggable-resizable
+      <VueDraggableResizable
         class={style["filter-main"]}
         drag-handle={`.${style["header-back"]}`}
         minWidth={props.minWidth}
@@ -95,6 +95,7 @@ export default defineComponent({
         y={data.y}
         z={props.z}
         draggable={props.draggable}
+        onResizing={(...args) => { emit('resizing',...args) }}
         onResizestop={(x: number, y: number, w: number, h: number) => handleResizestop(x, y, w, h)}
         onDragstop={(x: number, y: number) => handleDragstop(x, y)}
         onActivated={active}
@@ -128,11 +129,11 @@ export default defineComponent({
               </div> : null
             }
             {
-              props.allowEnlarge ? 
-                data.isFull ? 
+              props.allowEnlarge ?
+                data.isFull ?
                   <div class={style["header-button"]} onClick={fullScrean}>
                     <IconManage icon="BlockOutlined"></IconManage>
-                  </div> : 
+                  </div> :
                   <div class={style["header-button"]} onClick={fullScrean}>
                     <IconManage icon="BorderOutlined"></IconManage>
                   </div> : null
@@ -144,7 +145,6 @@ export default defineComponent({
           </div>
         </div>
         {
-          
           slots['content'] ?
             slots['content']() :
             <div class={style["main-space"]}>
@@ -162,7 +162,7 @@ export default defineComponent({
               </div>
             </div>
         }
-      </vue-draggable-resizable>
+      </VueDraggableResizable>
     )
   },
   props: {
@@ -227,10 +227,11 @@ export default defineComponent({
       default: ''
     }
   },
-  emits:{
-    resize:(w:number,h:number,x:number,y:number)=>{},
-    minimize:()=>{},
-    dragstop:(x:number,y:number)=>{},
-    close:()=>{},
+  emits: {
+    resize: (w: number, h: number, x: number, y: number) => { },
+    resizing:(w: number, h: number, x: number, y: number) => { },
+    minimize: () => { },
+    dragstop: (x: number, y: number) => { },
+    close: () => { },
   }
 })
