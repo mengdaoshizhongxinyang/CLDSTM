@@ -1,7 +1,6 @@
 
 import { ReturnGetters, Store, ActionContext } from '@/types/store';
 const SET_SETTINGS = 'SET_SETTINGS'
-/** @typedef {typeof state} SettingState */
 
 const state = {
   settings:{
@@ -22,22 +21,19 @@ const state = {
 }
 type State = typeof state
 
-/** @type MutationTree<SettingState> */
 const mutations = {
   
 }
 
-/** @type ActionTree<SettingState, RootState> */
 const actions = {
 
 }
 
-/** @type GetterTree<SettingState, RootState> */
 const getters = {
 
 }
 type Getters = ReturnGetters<typeof getters>;
-/** @type Module<SettingState, RootState> */
+
 const vuexModule = {
   state,
   mutations,
