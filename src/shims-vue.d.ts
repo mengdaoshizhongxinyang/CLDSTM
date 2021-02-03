@@ -8,27 +8,7 @@ declare module "*.less" {
   export default style;
 }
 
-declare namespace configs {
-  interface fileType {
-    [key: string]: {
-      type: string
-      name: string
-      icon: string
-      position?: string
-      children?: fileType
-      [key: string]: any
-    }
-  }
-  const init: () => void
-  const getDesktopIcon: () => fileType
-  const getActionsItem: () => Array<{ name: string, action: string }>
-  export {
-    init,
-    getDesktopIcon,
-    getActionsItem,
-    fileType
-  }
-}
+
 
 // declare module '@vue/runtime-core' {
 //   interface ComponentCustomProperties {

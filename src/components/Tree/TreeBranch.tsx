@@ -74,7 +74,7 @@ export default defineComponent({
       default: 0
     },
     node: {
-      type: Object as PropType<configs.fileType>,
+      type: Object as PropType<configs.FileType>,
       default: {}
     }
   }

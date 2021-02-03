@@ -21,7 +21,7 @@ export default defineComponent({
   },
   props: {
     node: {
-      type: Object as PropType<configs.fileType>,
+      type: Object as PropType<configs.FileType>,
       default: () => {
         return {}
       }

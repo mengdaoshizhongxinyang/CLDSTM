@@ -10,7 +10,7 @@ export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
 export const UPDATE_FILENAME = 'UPDATE_FILENAME'
-import { fileType, baseFileType, taskType } from "@/types";
+import { FileType, baseFileType, taskType } from "@/types";
 console.log(baseFileType)
 const state = {
     desktopApps: {
@@ -19,7 +19,7 @@ const state = {
         id: 0
     },
     apps: baseFileType,
-    fileList: {} as fileType,
+    fileList: {} as FileType,
     fileTypes: {}
 }
 
@@ -27,10 +27,10 @@ type State = typeof state
 
 type actions = ActionContext<State, Getters>
 const mutations = {
-    [SET_FILELIST](state: State, item: fileType) {
+    [SET_FILELIST](state: State, item: FileType) {
         state.fileList = item
     },
-    [SET_RUNING_APPS](state: State, item: fileType) {
+    [SET_RUNING_APPS](state: State, item: FileType) {
         console.log( state.apps)
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
@@ -49,7 +49,7 @@ const mutations = {
     [MINIMIZE_APPS](state: State, index: number) {
         state.desktopApps.apps[index].mini = !state.desktopApps.apps[index].mini
     },
-    [CREATE_FILE](state: State, obj: fileType) {
+    [CREATE_FILE](state: State, obj: FileType) {
         let { type, path, name, icon, other } = obj
         let i = 1;
         let tempName = ''

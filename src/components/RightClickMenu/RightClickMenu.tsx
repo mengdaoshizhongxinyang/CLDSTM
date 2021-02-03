@@ -2,7 +2,7 @@
 //{/* <script lang="ts"> */}
 
 import SubContext from "./SubContext";
-import { defineComponent, watch, computed, ref, nextTick, reactive, PropType, h } from "vue";
+import { defineComponent, watch, computed, ref, nextTick, reactive, PropType, h,getCurrentInstance,onMounted } from "vue";
 import "./contextMenu.less"
 import { typeMenu } from "./type";
 export default defineComponent({
@@ -25,6 +25,9 @@ export default defineComponent({
   },
   setup(props, { emit, slots }) {
     const data = reactive({ style: {} })
+
+    console.log(getCurrentInstance()?.parent)
+
     const clickDocumentHandler = () => {
       if (props.show) {
         emit("update:show", false);
