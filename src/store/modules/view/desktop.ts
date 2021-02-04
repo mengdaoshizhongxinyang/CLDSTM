@@ -10,11 +10,12 @@ export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
 export const UPDATE_FILENAME = 'UPDATE_FILENAME'
-import { FileType, baseFileType, taskType } from "@/types";
+import { baseFileType } from "@/types/baseData";
+import { AppTask, FileType, Task } from '@/types/task';
 console.log(baseFileType)
 const state = {
     desktopApps: {
-        apps: [] as Array<taskType>,
+        apps: [] as Array<AppTask>,
         maxZindex: 0,
         id: 0
     },
@@ -112,7 +113,7 @@ const mutations = {
 
 
 const actions = {
-    openApps({ commit }: actions, icon: fileType) {
+    openApps({ commit }: actions, icon: FileType) {
         commit(SET_RUNING_APPS, icon)
     },
     closeApps({ commit }: actions, index: any) {

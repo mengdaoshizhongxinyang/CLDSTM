@@ -1,6 +1,7 @@
-import { FileType } from "@/types";
+
 import { RightClickMenu } from "@/components";
 import { useStore } from "@/store";
+import { FileType } from "@/types/task";
 import { h, onMounted, reactive } from "vue";
 import { defineComponent } from "vue";
 import style from "./desktop.module.less"
