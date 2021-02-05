@@ -161,9 +161,9 @@ const SubContext = defineComponent({
     }
   },
   emits:{
-    update: (val:boolean)=>{},
-    menuItemClick:(e: MouseEvent, menu: typeMenu)=>{},
-    setPosition:(e:position)=>{}
+    update: (val:boolean)=>{return true},
+    menuItemClick:(e: MouseEvent, menu: typeMenu)=>{return true},
+    setPosition:(e:position)=>{return true}
   }
 })
 export default SubContext;

@@ -15,8 +15,8 @@ const state = {
       { icon: "exclamation-circle", title: "待定", desc: "待定" },
       { icon: "exclamation-circle", title: "待定", desc: "待定" },
       { icon: "exclamation-circle", title: "待定", desc: "待定" }
-    ],
-    none:[]
+    ]
+    
   }
 }
 type State = typeof state

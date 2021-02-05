@@ -23,9 +23,17 @@ import {
   UpOutlined,
   FileMarkdownOutlined,
   FileMarkdownFilled,
-  SnippetsOutlined
+  SnippetsOutlined,
+  HighlightOutlined,
+  GlobalOutlined,
+  FontColorsOutlined,
+  ExclamationCircleOutlined
 } from "@ant-design/icons-vue";
 const components={
+  ExclamationCircleOutlined,
+  FontColorsOutlined,
+  GlobalOutlined,
+  HighlightOutlined,
   FileUnknownOutlined,
   FolderOutlined,
   FolderFilled,

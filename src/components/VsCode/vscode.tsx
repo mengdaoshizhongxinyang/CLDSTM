@@ -38,8 +38,8 @@ export default defineComponent({
     }
   },
   emits:{
-    change:(val:string)=>{},
-    input:(val:string)=>{},
+    change:(val:string)=>{return true},
+    input:(val:string)=>{return true},
   },
   setup(props,{attrs,emit}){
     const container=ref<HTMLDivElement>();

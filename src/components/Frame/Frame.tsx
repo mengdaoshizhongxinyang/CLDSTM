@@ -228,10 +228,10 @@ export default defineComponent({
     }
   },
   emits: {
-    resize: (w: number, h: number, x: number, y: number) => { },
-    resizing:(w: number, h: number, x: number, y: number) => { },
-    minimize: () => { },
-    dragstop: (x: number, y: number) => { },
-    close: () => { },
+    resize: (w: number, h: number, x: number, y: number) => { return true },
+    resizing:(w: number, h: number, x: number, y: number) => { return true },
+    minimize: () => { return true },
+    dragstop: (x: number, y: number) => { return true },
+    close: () => { return true },
   }
 })
