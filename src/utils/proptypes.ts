@@ -1,11 +1,9 @@
 /*
  * @Author: mengdaoshizhongxinyang
  * @Date: 2021-02-22 09:20:23
- * @Description: 
+ * @Description: easy to build base props
  */
-import { PropType as VuePropTypes, CSSProperties } from "vue";
-
-
+import { PropType } from "vue";
 const createTypes = {
   string: String,
   number: Number,
@@ -14,53 +12,50 @@ const createTypes = {
   array: Array,
   func: Function
 }
-type TypeKeys = keyof typeof createTypes
-const typeDefault: {
-  [p in TypeKeys]: ReturnType<typeof createTypes[p]>
-} = {
-  string: '',
-  number: 0,
-  bool: false,
-  object: {},
-  array: [],
-  func: () => { }
+type Validator = () => boolean
+export const PropTypes = {
+  string<T extends string = string>(defaultValue = '' as T, validator?: Validator,required?:boolean) {
+    return getTypes<T>('string', defaultValue, validator,required)
+  },
+  number<T extends number = number>(defaultValue = 0 as T, validator?: Validator,required?:boolean) {
+    return getTypes<T>('string', defaultValue, validator,required)
+  },
+  bool(defaultValue = false, validator?: Validator,required?:boolean) {
+    return getTypes<boolean>('bool', defaultValue, validator,required)
+  },
+  array<T = any>(defaultValue: Array<T> = [], validator?: Validator,required?:boolean) {
+    return getTypes<Array<T>>('array', defaultValue, validator,required)
+  },
+  object<T extends {}>(defaultValue: T = {} as T, validator?: Validator,required?:boolean) {
+    return getTypes<T>('object', defaultValue, validator,required)
+  },
+  func<T extends ((...args: unknown[]) => unknown) = (() => unknown)>(defaultValue: T = ((() => { }) as T), validator?: Validator,required?:boolean) {
+    return getTypes<T>('func', defaultValue, validator,required)
+  },
+  tuple<T>(defaultValue: T, validator?: Validator,required?:boolean) {
+    return getTypes<T>('array', defaultValue, validator,required)
+  },
 }
-export namespace PropTypes {
-  export type Options = {
-    type: TypeKeys
-    default?: (typeof typeDefault)[Type]
-    validator?: string
+type Types<T> = {
+  type: PropType<T>
+  default: T
+  validator?: Validator
+  required?:boolean
+}
+/**
+ * if you don't need validator but need boolean,you can set validator undefined
+ * next aims:can use chain call
+ */
+function getTypes<T = any>(type: keyof typeof createTypes, defaultValue: T, validator?: Validator,required?:boolean) {
+  let types: Types<T> = {
+    type: createTypes[type] as PropType<T>,
+    default: defaultValue
   }
+  if (validator) {
+    types['validator'] = validator
+  }
+  if(required){
+    types['required'] = required
+  }
+  return types
 }
-// export class PropTypes{
-//   private type?: VuePropTypes<unknown>  | VuePropTypes<unknown>[]
-//   private defaultValue?: unknown
-//   private validator?: string
-//   constructor({ type, default: defaultValue, validator }: PropTypes.Options) { }
-//   addBaseTypes({ type, default: defaultValue, validator }: PropTypes.Options)
-//   addBaseTypes<T>({ type, default: defaultValue, validator }: PropTypes.Options)
-//   addBaseTypes({ type, default: defaultValue, validator }: PropTypes.Options){
-//     this.type=type
-//     return this
-//   }
-//   addOtherTypes<T>({ type, default: defaultValue, validator }: PropTypes.Options<NT>): PropTypes<T | NT> {
-//     this.type
-//     return this
-//   }
-//   get() {
-//     return this.type
-//   }
-// }//[T1,T2,T3]
-export declare class PropTypes{
-  private type?: VuePropTypes<unknown> | VuePropTypes<unknown>[]
-  private defaultValue?: unknown
-  private validator?: string
-  add({ type, default: defaultValue, validator }: PropTypes.Options):PropTypes
-  add<T>({ type, default: defaultValue, validator }: PropTypes.Options):PropTypes
-}//[T1,T2,T3]
-
-const propBuild1 = new PropTypes({ type: 'number' })
-const propBuild3 = new PropTypes()
-  .addBaseTypes({ type: 'number' }).get()
-const propBuild2 = new PropTypes({ type: 'number' }).get()
-
