@@ -14,11 +14,11 @@ const createTypes = {
 }
 type Validator = () => boolean
 export const PropTypes = {
-  string<T extends string = string>(defaultValue = '' as T, validator?: Validator,required?:boolean) {
-    return getTypes<T>('string', defaultValue, validator,required)
+  string(defaultValue = '', validator?: Validator,required?:boolean) {
+    return getTypes<string>('string', defaultValue, validator,required)
   },
-  number<T extends number = number>(defaultValue = 0 as T, validator?: Validator,required?:boolean) {
-    return getTypes<T>('string', defaultValue, validator,required)
+  number(defaultValue = 0, validator?: Validator,required?:boolean) {
+    return getTypes<number>('number', defaultValue, validator,required)
   },
   bool(defaultValue = false, validator?: Validator,required?:boolean) {
     return getTypes<boolean>('bool', defaultValue, validator,required)
@@ -35,6 +35,12 @@ export const PropTypes = {
   tuple<T>(defaultValue: T, validator?: Validator,required?:boolean) {
     return getTypes<T>('array', defaultValue, validator,required)
   },
+  strings<T extends string=string>(defaultValue = '' as T, validator?: Validator,required?:boolean) {
+    return getTypes<T>('string', defaultValue, validator,required)
+  },
+  numbers<T extends number=number>(defaultValue = 0 as T, validator?: Validator,required?:boolean) {
+    return getTypes<T>('number', defaultValue, validator,required)
+  }
 }
 type Types<T> = {
   type: PropType<T>
