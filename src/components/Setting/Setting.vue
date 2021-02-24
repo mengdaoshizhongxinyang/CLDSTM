@@ -49,6 +49,7 @@ import {
   LanguageSetting,
   LanguageModule,
 } from "./SubModule/LanguageSettingModule";
+import * as LanguageSettingModule  from "./SubModule/LanguageSettingModule";
 import { PersonaliseSetting } from "./SubModule/PersonaliseSettingModule";
 import { mapState } from "vuex";
 export default {
@@ -94,7 +95,7 @@ export default {
     },
     handleOpenSub(name) {
       if (name) {
-        if (name == this.component) {
+        if (name === this.component) {
           return;
         }
         if (this.widen && name.indexOf("Setting") > -1) {

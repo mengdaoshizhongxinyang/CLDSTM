@@ -1,0 +1,53 @@
+@import url("../Style/default");
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .narrow-more {
+    backdrop-filter: @menu-dark-background-filter;
+  }
+}
+.setting-main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  .setting-body {
+    position: relative;
+
+    flex: 1;
+    .default-title {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      width: 100%;
+    }
+    .widen-default-title{
+      width:calc(100% - 240px);
+      left:240px;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+    }
+    .scroll-bar-thumb {
+      position: absolute;
+      right: 3px;
+      background: rgba(0, 0, 0, 0.55) 50%;
+      width: 3px;
+      z-index: 1;
+      &:hover {
+        width: 9px;
+        right: 0px;
+      }
+      &:focus {
+        width: 9px;
+        right: 0px;
+      }
+    }
+
+    .setting-content {
+      height: 100%;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 0px;
+      }
+    }
+  }
+}

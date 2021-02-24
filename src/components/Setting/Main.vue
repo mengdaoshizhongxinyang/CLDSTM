@@ -38,7 +38,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import SettingBody from "./SettingBody";
+import SettingBody from "./SettingBody.tsx";
 import { IconManage } from "@/components";
 export default {
   components: {

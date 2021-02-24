@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     handleScroll(e) {
+      console.log(e)
       this.scrollTop =
         (e.target.scrollTop / this.$refs.content.childNodes[0].clientHeight) *
           (this.$refs.content.clientHeight -
