@@ -29,7 +29,10 @@ export const PropTypes = {
   object<T extends {}>(defaultValue: T = {} as T, validator?: Validator,required?:boolean) {
     return getTypes<T>('object', defaultValue, validator,required)
   },
-  func<T extends ((...args: unknown[]) => unknown) = (() => unknown)>(defaultValue: T = ((() => { }) as T), validator?: Validator,required?:boolean) {
+  func<T extends Function = (() => void)>(defaultValue: T = ((() => { }) as unknown as T), validator?: Validator,required?:boolean) {
+    return getTypes<T>('func', defaultValue, validator,required)
+  },
+  event<T>(defaultValue: T = ((() => { }) as unknown as T), validator?: Validator,required?:boolean) {
     return getTypes<T>('func', defaultValue, validator,required)
   },
   tuple<T>(defaultValue: T, validator?: Validator,required?:boolean) {
