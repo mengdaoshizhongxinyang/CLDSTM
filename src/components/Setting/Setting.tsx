@@ -5,13 +5,15 @@
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
 import { Frame as SettingFrame, IconManage } from "@/components";
-import { Transition, defineComponent, reactive, computed, h } from "vue";
+import { Transition, defineComponent, reactive, computed, h,watch } from "vue";
 import Main from "./Main";
 import SubModule from "./SubModule";
 const allModule = {
   ...SubModule,
   Main
 }
+import style from "./Setting.module.less";
+
 type ModuleName = keyof typeof allModule
 import { useStore } from "@/store"
 import { PropTypes } from "@/utils/proptypes";
@@ -25,7 +27,7 @@ export default defineComponent({
   props: {
     subComponents: PropTypes.strings<ModuleName>('Main')
   },
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs }) {
     const data = reactive({
       w: 500,
       h: 500,
@@ -42,6 +44,7 @@ export default defineComponent({
       data.h = h;
     }
     function handleOpenSub(name: ModuleName | undefined) {
+      console.log(name)
       if (name) {
         if (name == data.component) {
           return;
@@ -60,6 +63,43 @@ export default defineComponent({
         data.component = data.operated.pop()!;
       }
     }
+    const slots = {
+      'header-name-more': ()=><div class={style['left-title']}>
+        {
+          data.operated.length > 0 ?
+            <div
+              class={style['back-button']}
+              onClick={handleBack}
+            >
+              <IconManage icon="ArrowLeftOutlined"></IconManage>
+            </div> : null
+        }
+        <div>设置</div>
+      </div>,
+      content: ()=><div class={style['content']}>
+        <Transition enterActiveClass={style['push-enter-active']} leaveActiveClass={style['push-leave-active']}>
+          {
+            h(allModule[data.component], {
+              class: style["sub-content"],
+              width: data.w,
+              height: data.h,
+              widen: data.widen,
+              onOpenSub: handleOpenSub
+            })
+          }
+        </Transition>
+      </div>
+    }
+    watch(()=>data.w,(val, oldVal)=>{
+      if (oldVal >= 500 && val < 500) {
+        data.widen = false;
+      } else if (oldVal < 500 && val >= 500) {
+        data.widen = true;
+        if (data.component.indexOf("Setting") > -1) {
+          handleOpenSub(settings.value[data.component][0].component);
+        }
+      }
+    })
     return () => h(
       <SettingFrame
         {...attrs}
@@ -70,43 +110,26 @@ export default defineComponent({
         initialH={data.h}
         initialX={0}
         initialY={0}
-        drag-cancel="'.back-button'"
+        dragCancel={`.${style['back-button']}`}
+        v-slots={slots}
       >
-        {
+        {/* {
           slots['title'] ? slots['title']() : <div class="left-title">
-            <div
-              class="back-button"
-              v-if="operated.length"
-              onClick={handleBack}
-            >
-              <IconManage icon="ArrowLeftOutlined"></IconManage>
-            </div>
+            {
+              data.operated.length > 0 ?
+                <div
+                  class={style['back-button']}
+                  onClick={handleBack}
+                >
+                  <IconManage icon="ArrowLeftOutlined"></IconManage>
+                </div> : null
+            }
             <div>设置</div>
           </div>
         }
         {
-          slots['content'] ? slots['content']() : <div class="content">
-            <Transition name="actions">
-              <component
-                is="component"
-                class="sub-content"
-                width="w"
-                height="h"
-                widen="widen"
-                onOpenSub={handleOpenSub}
-              ></component>
-              {
-                h(allModule[data.component], {
-                  class: "sub-content",
-                  width:data.w,
-                  height:data.h,
-                  widen:data.widen,
-                  onOpenSub:{ handleOpenSub }
-                })
-              }
-            </Transition>
-          </div>
-        }
+          slots['content'] ? slots['content']() : 
+        } */}
       </SettingFrame>
     )
   }

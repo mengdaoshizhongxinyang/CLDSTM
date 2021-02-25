@@ -1,0 +1,119 @@
+.content {
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
+  width:100%;
+  padding-top:32px;
+  background: #fff;
+  min-height: 100%;
+  .title {
+    font-size: 24px;
+    background: #fff;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+  }
+  .setting-item {
+    position: relative;
+    overflow: hidden;
+    .item {
+      
+      &-content {
+        grid-template-columns: 40px calc(100% - 40px);
+        grid-template-rows: 21px 21px;
+        grid-auto-flow: row dense;
+        display: grid;
+        &-icon {
+          color:rgb(0,120,215);
+          grid-row-start: 1;
+          grid-row-end: 3;
+          font-size:28px;
+          line-height: 40px;
+        }
+        &-title{
+          color:rgba(0,0,0,0.85);
+        }
+        &-desc{
+          color:rgba(0,0,0,0.85);
+        }
+      }
+    }
+  }
+  .widescreen {
+    align-content: flex-start;
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    .item {
+      width: 240px;
+      display: flex;
+      flex-wrap: wrap;
+      z-index: 1;
+      .occlude {
+        background: #fff;
+      }
+      &-ud-occlude {
+        width: 100%;
+        height: 12px;
+      }
+      &-lr-occlude {
+        width: 12px;
+      }
+      &-content {
+        flex: 1;
+        height: 64px;
+        padding: 8px;
+        background: #fff;
+        margin: 1px;
+        &:hover {
+          box-shadow: 0px 0px 0px 1px rgba(100, 100, 100, 0.22);
+        }
+      }
+    }
+    .filling{
+      background: #fff;
+      width: 240px;
+      height:90px;
+      z-index: 1;
+    }
+  }
+  .narrowscreen {
+    padding: 24px 0;
+    z-index: 1;
+    background: #fff;
+    .item {
+      width: 100%;
+      z-index: 1;
+      .occlude {
+        display: none;
+      }
+      &-content {
+        height: 56px;
+        padding: 7px;
+        &:hover {
+          background: rgba(100, 100, 100, 0.22);
+        }
+      }
+    }
+    .shadow-box {
+      display: none;
+    }
+    .filling{
+      display: none;
+    }
+  }
+  .shadow-box {
+    position: absolute;
+    background-image: radial-gradient(
+      circle,
+      rgba(180, 180, 180, 0.85) 10%,
+      rgba(255, 255, 255, 0.08) 60%
+    );
+    width: 150px;
+    height: 150px;
+    z-index: 0;
+  }
+}

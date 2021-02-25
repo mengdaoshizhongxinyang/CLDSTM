@@ -4,8 +4,12 @@
  * @Description: 
  */
 import * as LanguageModule from "./LanguageSettingModule"
+import * as PersonaliseSettingModule from "./PersonaliseSettingModule"
+
 const SubModule={
-  ...LanguageModule
+  ...LanguageModule,
+  ...PersonaliseSettingModule
 }
+// const SubModule=Object.assign({},LanguageModule,PersonaliseSettingModule,{Main:Main})
 export default SubModule
 export type SubModuleName=keyof typeof SubModule | 'Main'

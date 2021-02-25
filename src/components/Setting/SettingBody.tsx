@@ -5,7 +5,7 @@
  */
 import { defineComponent, h, nextTick, onMounted, reactive,ref, watch } from "vue";
 import { PropTypes } from "@/utils/proptypes";
-import style from "./SettingBody.Module.less";
+import style from "./SettingBody.module.less";
 export default defineComponent({
   props: {
     title: PropTypes.string(),
@@ -109,7 +109,9 @@ export default defineComponent({
       <div class={style["setting-main"]}>
         <div class={style["setting-body"]}>
           <div class={style["setting-content"]} ref={contentRef} onScroll={handleScroll}>
-            <slot></slot>
+            {
+              slots['default']?slots['default']():<div style="background: #fff; height: 32px"></div>
+            }
           </div>
           <div class={style[`${props.widen?'widen-default-title':'default-title'}`]} ref={titleRef}>
             {

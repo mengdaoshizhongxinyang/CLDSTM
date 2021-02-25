@@ -3,7 +3,8 @@ import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
-import { FileType, FilesType, IconList } from "@/types";
+import { FileType, FilesType } from "@/types/task";
+import { IconList } from "@/types";
 import style from "./folder.module.less";
 export default defineComponent({
   props: {

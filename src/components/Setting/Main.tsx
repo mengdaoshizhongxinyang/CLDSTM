@@ -4,11 +4,13 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
-import { mapState } from 'vuex';
 import SettingBody from "./SettingBody";
 import { IconManage } from "@/components";
 import { defineComponent, reactive, computed, ref,h } from "vue"
 import { useStore } from "@/store";
+import { PropTypes } from "@/utils/proptypes";
+import style from "./Main.module.less";
+import { SubModuleName } from "./SubModule";
 export default defineComponent({
   components: {
     SettingBody,
@@ -34,45 +36,46 @@ export default defineComponent({
       }
     }
     const handleOpen = (item:(typeof items.value)[number]) => {
-      emit('openSub', item.component)
+      console.log(item.component)
+      emit('openSub', item.component!)
     }
     return () => h(
       <SettingBody width={props.width} {...attrs}>
-        <div class="content" onMousemove={handleMousemove}>
-          <div class="title">设置</div>
+        <div class={style["content"]} onMousemove={handleMousemove}>
+          <div class={style["title"]}>设置</div>
           <div
-            class={`setting-item ${colNum.value > 1 ? 'widescreen' : 'narrowscreen'}`}
+            class={`${style['setting-item']} ${style[colNum.value > 1 ? 'widescreen' : 'narrowscreen']}`}
             style={`width:${colNum.value > 1 ? colNum.value * 240 + 'px' : '100%'}`}
-            ref="body"
+            ref={body}
           >
             {
               items.value.map(item => {
-                return <div class="item">
-                  <div class="item-ud-occlude occlude"></div>
-                  <div class="item-lr-occlude occlude"></div>
-                  <div class="item-content" onClick={() => handleOpen(item)}>
-                    <div class="item-content-icon">
-                      <icon-manage icon="item.icon"></icon-manage>
+                return <div class={style["item"]}>
+                  <div class={`${style["item-ud-occlude"]} ${style['occlude']}`}></div>
+                  <div class={`${style["item-lr-occlude"]} ${style['occlude']}`}></div>
+                  <div class={style["item-content"]} onClick={() => handleOpen(item)}>
+                    <div class={style["item-content-icon"]}>
+                      <IconManage icon={item.icon}></IconManage>
                     </div>
-                    <div class="item-content-title">
+                    <div class={style["item-content-title"]}>
                       {item.title}
                     </div>
-                    <div class="item-content-desc">
+                    <div class={style["item-content-desc"]}>
                       { item.desc }
                     </div>
                   </div>
-                  <div class="item-lr-occlude occlude"></div>
-                  <div class="item-ud-occlude occlude"></div>
+                  <div class={`${style["item-lr-occlude"]} ${style['occlude']}`}></div>
+                  <div class={`${style["item-ud-occlude"]} ${style['occlude']}`}></div>
                 </div>
               })
             }
             {
               new Array((colNum.value-(items.value.length%colNum.value))%colNum.value).map(item=>{
-                return <div class="filling"></div>
+                return <div class={style["filling"]}></div>
               })
             }
             <div
-              class="shadow-box"
+              class={style["shadow-box"]}
               style={{ left: data.x + 'px', top: data.y + 'px' }}
             ></div>
           </div>
@@ -81,12 +84,7 @@ export default defineComponent({
     )
   },
   props: {
-    width: {
-      type: Number,
-      default: 500,
-    },
-  },
-  emits: {
-    openSub: (item:unknown) => { return true }
+    width: PropTypes.number(500),
+    onOpenSub:PropTypes.func< (name:string)=>void >((name:string)=>{})
   }
 })

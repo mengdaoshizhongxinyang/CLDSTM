@@ -11,6 +11,7 @@ export default defineComponent({
     RightClickMenu
   },
   setup(props, { emit, slots }) {
+    console.log(slots)
     const data = reactive({
       headerMenu: false,
       contextMenuOffset: {
