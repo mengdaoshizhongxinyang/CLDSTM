@@ -3,8 +3,8 @@ import { ReturnGetters, Store, ActionContext } from '@/types/store';
 const SET_SETTINGS = 'SET_SETTINGS'
 import { SubModuleName } from "@/components/Setting/SubModule";
 import { IconList } from '@/types';
-
-type Settings={[key in SubModuleName]:{name?:string,icon:IconList,desc?:string,component?:SubModuleName,title?:string}[]}
+export type Setting={name?:string,icon:IconList,desc?:string,component?:SubModuleName,title?:string}
+export type Settings={[key in SubModuleName]:Setting[]}
 const state = {
   settings:{
     LanguageSetting:[

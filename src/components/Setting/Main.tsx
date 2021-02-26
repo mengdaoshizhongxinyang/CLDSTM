@@ -36,7 +36,6 @@ export default defineComponent({
       }
     }
     const handleOpen = (item:(typeof items.value)[number]) => {
-      console.log(item.component)
       emit('openSub', item.component!)
     }
     return () => h(

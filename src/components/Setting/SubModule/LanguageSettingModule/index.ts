@@ -1,4 +1,4 @@
-import LanguageModule from "./LanguageModule.vue"
+import LanguageModule from "./LanguageModule"
 import LanguageSetting from "./LanguageSetting.vue"
 export{
   LanguageModule,

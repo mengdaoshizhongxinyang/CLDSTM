@@ -113,7 +113,7 @@ export default defineComponent({
               slots['default']?slots['default']():<div style="background: #fff; height: 32px"></div>
             }
           </div>
-          <div class={style[`${props.widen?'widen-default-title':'default-title'}`]} ref={titleRef}>
+          <div class={props.widen?style['widen-default-title']:style['default-title']} ref={titleRef}>
             {
               slots['title']?slots['title']():<div style="background: #fff; height: 32px"></div>
             }
