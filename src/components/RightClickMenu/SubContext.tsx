@@ -8,9 +8,9 @@ interface typeBasePosition {
   width: number,
   height: number
 }
-type position={
-  left:string
-  top:string
+type position = {
+  left: string
+  top: string
 }
 
 const SubContext = defineComponent({
@@ -18,9 +18,11 @@ const SubContext = defineComponent({
   components: {
     Transition
   },
-  setup(props, { slots,emit }) {
+  setup(props, { slots, emit }) {
     let data = reactive({ menuList: props.menus, style: {} as position })
-
+    watch(()=>props.menus,()=>{
+      data.menuList=props.menus
+    })
     let direction = props.direction
     const handleMouseenter = (menu: typeMenu) => {
       menu.show = true;
@@ -30,11 +32,11 @@ const SubContext = defineComponent({
     }
 
     const clickDocumentHandler = () => {
-        if (props.show) {
-          emit('update',false)
-        } else {
-          emit('update',true)
-        }
+      if (props.show) {
+        emit('update', false)
+      } else {
+        emit('update', true)
+      }
     }
     let root = ref<HTMLDivElement>()
     const setPosition = () => {
@@ -66,7 +68,7 @@ const SubContext = defineComponent({
         top: `${topover}px`,
       };
 
-      emit('setPosition',data.style)
+      emit('setPosition', data.style)
 
     }
     const handleClick = (e: MouseEvent, menu: typeMenu) => {
@@ -75,7 +77,7 @@ const SubContext = defineComponent({
         if (menu.function) {
           menu.function();
         }
-        emit('menuItemClick',e,menu)
+        emit('menuItemClick', e, menu)
       }
     }
     const renderChildren = (menu: typeMenu) => {
@@ -137,7 +139,7 @@ const SubContext = defineComponent({
       </Transition>
     );
   },
-  props:{
+  props: {
     menus: {
       type: Array as PropType<typeMenu[]>,
       default: []
@@ -160,10 +162,10 @@ const SubContext = defineComponent({
       default: "right"
     }
   },
-  emits:{
-    update: (val:boolean)=>{return true},
-    menuItemClick:(e: MouseEvent, menu: typeMenu)=>{return true},
-    setPosition:(e:position)=>{return true}
+  emits: {
+    update: (val: boolean) => { return true },
+    menuItemClick: (e: MouseEvent, menu: typeMenu) => { return true },
+    setPosition: (e: position) => { return true }
   }
 })
 export default SubContext;

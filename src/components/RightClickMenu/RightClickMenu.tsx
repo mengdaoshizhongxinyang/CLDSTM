@@ -26,7 +26,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const data = reactive({ style: {} })
 
-    console.log(getCurrentInstance()?.parent)
+    // console.log(getCurrentInstance()?.parent)
 
     const clickDocumentHandler = () => {
       if (props.show) {
