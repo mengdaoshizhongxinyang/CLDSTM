@@ -51,7 +51,7 @@ export default defineComponent({
           props.widen ? <div class={style["language-left"]}>
             <MenuList widen={props.widen} from="Language"></MenuList>
           </div> : null
-        }s
+        }
         <div class={style["language-right"]} style={`margin-left:${props.widen?240:0}px`}>
           {/* <InfoTitle></InfoTitle> */}
           <div class={style["language-content"]}>

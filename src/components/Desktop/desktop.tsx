@@ -2,7 +2,7 @@
 import { RightClickMenu } from "@/components";
 import { useStore } from "@/store";
 import { FileType } from "@/types/task";
-import { h, onMounted, reactive } from "vue";
+import { h, onMounted, reactive,computed } from "vue";
 import { defineComponent } from "vue";
 import style from "./desktop.module.less"
 type TypeMenu = {
@@ -22,7 +22,7 @@ export default defineComponent({
             },
             list: {},
         })
-        const menus = () => {
+        const menus = computed(() => {
             let language =
                 store.state.core.language.languageSelected.desktop.contextMenu;
 
@@ -48,7 +48,7 @@ export default defineComponent({
                 }
             }
             return menuList;
-        };
+        });
         const createFile = (info: any) => {
             store.dispatch("createFile", info);
         };
@@ -97,7 +97,7 @@ export default defineComponent({
                     <right-click-menu
                         offset={data.contextMenuOffset}
                         v-model={[data.headerMenu, 'show']}
-                        menus={menus()}
+                        menus={menus.value}
                         onMenuItemClick={handleMenuItemClick}
                     >
                     </right-click-menu>
