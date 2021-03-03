@@ -14,12 +14,10 @@ import style from "./LanguageModule.module.less";
 import { Select } from "ant-design-vue";
 const { Option } = Select
 
-const MenuList=defineAsyncComponent<any>(()=>import("../MenuList"))
 export default defineComponent({
   components: {
     SettingBody,
     InfoTitle,
-    MenuList,
     Select,
     Option
   },
@@ -47,11 +45,6 @@ export default defineComponent({
     }
     return () => h(
       <SettingBody {...attrs} widen={props.widen} v-slots={slots}>
-        {
-          props.widen ? <div class={style["language-left"]}>
-            <MenuList widen={props.widen} from="Language"></MenuList>
-          </div> : null
-        }
         <div class={style["language-right"]} style={`margin-left:${props.widen?240:0}px`}>
           {/* <InfoTitle></InfoTitle> */}
           <div class={style["language-content"]}>

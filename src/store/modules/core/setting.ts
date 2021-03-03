@@ -1,23 +1,23 @@
 
 import { ReturnGetters, Store, ActionContext } from '@/types/store';
 const SET_SETTINGS = 'SET_SETTINGS'
-import { SubModuleName } from "@/components/Setting/SubModule";
-import { IconList } from '@/types';
-export type Setting={name?:string,icon:IconList,desc?:string,component?:SubModuleName,title?:string}
-export type Settings={[key in SubModuleName]:Setting[]}
+import { Settings } from "@/types/setting";
 const state = {
   settings:{
-    LanguageSetting:[
+    Language:[
       { name: "语言", icon: "FontColorsOutlined", component: "LanguageModule" }
     ],
     Main:[
-      { icon: "HighlightOutlined", title: "个性化", desc: "颜色，背景",component:'PersonaliseSetting' },
-      { icon: "GlobalOutlined", title: "语言设置", desc: "语言",component:'LanguageSetting' },
-      { icon: "exclamation-circle", title: "待定", desc: "待定" },
-      { icon: "exclamation-circle", title: "待定", desc: "待定" },
-      { icon: "exclamation-circle", title: "待定", desc: "待定" },
-      { icon: "exclamation-circle", title: "待定", desc: "待定" },
-      { icon: "exclamation-circle", title: "待定", desc: "待定" }
+      { icon: "HighlightOutlined", title: "个性化", desc: "颜色，背景",component:'Personalise' },
+      { icon: "GlobalOutlined", title: "语言设置", desc: "语言",component:'Language' },
+      // { icon: "exclamation-circle", title: "待定", desc: "待定" },
+      // { icon: "exclamation-circle", title: "待定", desc: "待定" },
+      // { icon: "exclamation-circle", title: "待定", desc: "待定" },
+      // { icon: "exclamation-circle", title: "待定", desc: "待定" },
+      // { icon: "exclamation-circle", title: "待定", desc: "待定" }
+    ],
+    Personalise:[
+      {icon:"HighlightOutlined",component:"PersonaliseSetting"}
     ]
     
   } as Settings

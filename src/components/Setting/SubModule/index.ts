@@ -3,13 +3,21 @@
  * @Date: 2021-02-24 09:55:05
  * @Description: 
  */
-import * as LanguageModule from "./LanguageSettingModule"
-import * as PersonaliseSettingModule from "./PersonaliseSettingModule"
+import Language from "./LanguageSettingModule"
+import * as LanguageSettingModule from "./LanguageSettingModule/module"
+import Personalise from "./PersonaliseSettingModule"
+import * as PersonaliseSettingModule from "./PersonaliseSettingModule/module"
 
 const SubModule={
-  ...LanguageModule,
-  ...PersonaliseSettingModule
+  Language,
+  Personalise
 }
-// const SubModule=Object.assign({},LanguageModule,PersonaliseSettingModule,{Main:Main})
+
 export default SubModule
-export type SubModuleName=keyof typeof SubModule | 'Main'
+
+type SubModuleName<T extends string,P={}>={[key in T]:{[key in keyof P]:P[key]}}
+
+export type SubModuleNames=
+  SubModuleName<'Main',typeof SubModule>
+  & SubModuleName<'Language',typeof LanguageSettingModule>
+  & SubModuleName<'Personalise',typeof PersonaliseSettingModule>

@@ -7,7 +7,7 @@
 import { Frame as SettingFrame, IconManage } from "@/components";
 import { Transition, defineComponent, reactive, computed, h,watch } from "vue";
 import Main from "./Main";
-import SubModule from "./SubModule";
+import SubModule,{SubModuleNames} from "./SubModule";
 const allModule = {
   ...SubModule,
   Main
@@ -43,13 +43,14 @@ export default defineComponent({
       data.w = w;
       data.h = h;
     }
-    function handleOpenSub(name: ModuleName | undefined) {
-      console.log(name)
+
+    function handleOpenSub(name: ModuleName) {
       if (name) {
         if (name == data.component) {
           return;
         }
         if (data.widen && name.indexOf("Setting") > -1) {
+          // handleOpenSub(settings.value[name][0].component);
           handleOpenSub(settings.value[name][0].component);
         } else {
           data.operated.push(data.component);

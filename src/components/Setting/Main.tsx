@@ -10,7 +10,7 @@ import { defineComponent, reactive, computed, ref,h } from "vue"
 import { useStore } from "@/store";
 import { PropTypes } from "@/utils/proptypes";
 import style from "./Main.module.less";
-import { SubModuleName } from "./SubModule";
+
 export default defineComponent({
   components: {
     SettingBody,

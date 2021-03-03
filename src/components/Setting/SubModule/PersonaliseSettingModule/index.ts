@@ -1,4 +1,2 @@
-import PersonaliseSetting from "./PersonaliseSetting.vue";
-export{
-  PersonaliseSetting
-}
+import Personalise from "./Personalise";
+export default Personalise

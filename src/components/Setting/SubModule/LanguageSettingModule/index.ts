@@ -1,6 +1,2 @@
-import LanguageModule from "./LanguageModule"
-import LanguageSetting from "./LanguageSetting.vue"
-export{
-  LanguageModule,
-  LanguageSetting
-}
+import Language from "./Language";
+export default Language

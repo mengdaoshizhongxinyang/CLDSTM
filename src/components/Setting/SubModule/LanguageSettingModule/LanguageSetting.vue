@@ -13,11 +13,10 @@
 
 <script>
 import SettingBody from "../../SettingBody";
-import MenuList from "../MenuList";
+
 export default {
   components: {
-    SettingBody,
-    MenuList
+    SettingBody
   },
   data() {
     return {
