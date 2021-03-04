@@ -9,4 +9,3 @@ export type Setting<P extends string=string>={name?:string,icon:IconList,desc?:s
 export type Settings={
   [key in keyof SubModuleNames]:Setting<keyof SubModuleNames[key]>[]
 }
-let d:Settings

@@ -21,3 +21,9 @@ export type SubModuleNames=
   SubModuleName<'Main',typeof SubModule>
   & SubModuleName<'Language',typeof LanguageSettingModule>
   & SubModuleName<'Personalise',typeof PersonaliseSettingModule>
+
+type GetSubObjKeys<T>={
+  [p in keyof T]:`${Extract<p,string>}-${Extract<keyof T[p],string>}`
+}[keyof T]
+
+export type SubModuleSubKeys=GetSubObjKeys<SubModuleNames>

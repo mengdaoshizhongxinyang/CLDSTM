@@ -32,7 +32,7 @@ export default defineComponent({
       w: 500,
       h: 500,
       component: props.subComponents,
-      operated: [] as ModuleName[],
+      operated: [] as ModuleName | `${ModuleName}-${keyof SubModuleNames[ModuleName]}`[],
       widen: true,
     })
     const store = useStore()
