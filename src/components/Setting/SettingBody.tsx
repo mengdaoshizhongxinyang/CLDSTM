@@ -16,7 +16,7 @@ export default defineComponent({
     littleTitle: PropTypes.string(),
     height: PropTypes.number(),
     widen: PropTypes.bool(false),
-    list:PropTypes.array<Setting>(),
+    menuList:PropTypes.array<Setting>(),
     showLeft:PropTypes.bool(true)
   },
   emits: {
@@ -120,7 +120,7 @@ export default defineComponent({
         <div class={style["setting-body"]}>
           <div class={style["setting-content"]} ref={contentRef} onScroll={handleScroll}>
             {
-              props.widen ? <div class={style["setting-left"]}>
+              (props.showLeft || props.widen) ? <div class={props.widen?style["setting-left"]:style['setting-all']}>
                 <div class={[style['menu-main'], props.widen ? style['widen-menu'] : style['narrow-menu']]}>
                   <div class={style["menu-title"]}>
                     <div class={style["home-item"]}></div>
@@ -128,7 +128,7 @@ export default defineComponent({
                   </div>
                   <div class={style["menu-list"]}>
                     {
-                      props.list.map(item => {
+                      props.menuList.map(item => {
                         return <div
                           class={style["menu-list-item"]}
                           onClick={() => handleClick(item)}

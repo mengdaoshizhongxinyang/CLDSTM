@@ -5,16 +5,16 @@
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
 import { Frame as SettingFrame, IconManage } from "@/components";
-import { Transition, defineComponent, reactive, computed, h,watch } from "vue";
+import { Transition, defineComponent, reactive, computed, h, watch } from "vue";
 import Main from "./Main";
-import SubModule,{SubModuleNames} from "./SubModule";
+import SubModule, { SubModuleNames, SubModuleSubKeys, SubModuleKeys } from "./SubModule";
 const allModule = {
   ...SubModule,
   Main
 }
 import style from "./Setting.module.less";
 
-type ModuleName = keyof typeof allModule
+type ModuleName = keyof SubModuleNames
 import { useStore } from "@/store"
 import { PropTypes } from "@/utils/proptypes";
 export default defineComponent({
@@ -32,7 +32,8 @@ export default defineComponent({
       w: 500,
       h: 500,
       component: props.subComponents,
-      operated: [] as ModuleName | `${ModuleName}-${keyof SubModuleNames[ModuleName]}`[],
+      subComponent: undefined as SubModuleKeys | undefined,
+      operated: [] as (ModuleName | SubModuleSubKeys)[],
       widen: true,
     })
     const store = useStore()
@@ -44,28 +45,33 @@ export default defineComponent({
       data.h = h;
     }
 
-    function handleOpenSub(name: ModuleName) {
-      if (name) {
-        if (name == data.component) {
-          return;
-        }
-        if (data.widen && name.indexOf("Setting") > -1) {
-          // handleOpenSub(settings.value[name][0].component);
-          handleOpenSub(settings.value[name][0].component);
+    function handleOpenSub(name: ModuleName, subName?: SubModuleKeys) {
+      if (name == data.component) {
+        if (subName) {
+          data.subComponent = subName
         } else {
-          data.operated.push(data.component);
-          data.component = name;
+          if (data.widen && name != 'Main') {
+            data.subComponent = settings.value[name][0].component
+          }
+        }
+      } else {
+        data.operated.push(`${data.component}${data.subComponent ? `-${data.subComponent}` : ''}` as SubModuleSubKeys);
+        data.component = name;
+        if (data.widen && name != 'Main' && !subName) {
+          data.subComponent = settings.value[name][0].component
         }
       }
     }
     function handleBack() {
-      data.component = data.operated.pop()!;
-      if (data.widen && data.component.indexOf("Setting") > -1) {
-        data.component = data.operated.pop()!;
+      const [component, subComponent] = data.operated.pop()!.split('-') as [ModuleName, SubModuleKeys]
+      if (data.widen && subComponent !== undefined && component != 'Main') {
+        handleBack()
       }
+      data.component = component;
+      data.subComponent = subComponent
     }
     const slots = {
-      'header-name-more': ()=><div class={style['left-title']}>
+      'header-name-more': () => <div class={style['left-title']}>
         {
           data.operated.length > 0 ?
             <div
@@ -77,7 +83,7 @@ export default defineComponent({
         }
         <div>设置</div>
       </div>,
-      content: ()=><div class={style['content']}>
+      content: () => <div class={style['content']}>
         <Transition enterActiveClass={style['push-enter-active']} leaveActiveClass={style['push-leave-active']}>
           {
             h(allModule[data.component], {
@@ -85,19 +91,20 @@ export default defineComponent({
               width: data.w,
               height: data.h,
               widen: data.widen,
+              subComponent: data.subComponent,
               onOpenSub: handleOpenSub
             })
           }
         </Transition>
       </div>
     }
-    watch(()=>data.w,(val, oldVal)=>{
+    watch(() => data.w, (val, oldVal) => {
       if (oldVal >= 500 && val < 500) {
         data.widen = false;
       } else if (oldVal < 500 && val >= 500) {
         data.widen = true;
-        if (data.component.indexOf("Setting") > -1) {
-          handleOpenSub(settings.value[data.component][0].component);
+        if (data.subComponent === undefined) {
+          data.subComponent = settings.value[data.component][0].component!
         }
       }
     })

@@ -23,7 +23,10 @@ export type SubModuleNames=
   & SubModuleName<'Personalise',typeof PersonaliseSettingModule>
 
 type GetSubObjKeys<T>={
+  [p in keyof T]:`${Extract<keyof T[p],string>}`
+}[keyof T]
+type GetSubObjConectKeys<T>={
   [p in keyof T]:`${Extract<p,string>}-${Extract<keyof T[p],string>}`
 }[keyof T]
-
-export type SubModuleSubKeys=GetSubObjKeys<SubModuleNames>
+export type SubModuleSubKeys=GetSubObjConectKeys<SubModuleNames>
+export type SubModuleKeys=GetSubObjKeys<SubModuleNames>

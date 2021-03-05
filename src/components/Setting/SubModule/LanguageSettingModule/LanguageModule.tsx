@@ -3,7 +3,7 @@
  * @Date: 2021-02-24 09:52:23
  * @Description: 
  */
-import { defineComponent, computed, reactive, h,defineAsyncComponent } from "vue";
+import { defineComponent, computed, reactive, h, defineAsyncComponent } from "vue";
 import { PropTypes } from "@/utils/proptypes";
 import { useStore } from "@/store";
 import InfoTitle from "../InfoTitle";
@@ -44,22 +44,22 @@ export default defineComponent({
       </div>
     }
     return () => h(
-      <SettingBody {...attrs} widen={props.widen} v-slots={slots}>
-        <div class={style["language-right"]} style={`margin-left:${props.widen?240:0}px`}>
-          {/* <InfoTitle></InfoTitle> */}
-          <div class={style["language-content"]}>
-            <Select value={languageSelected.value.abbreviation} style="width: 100%" onSelect={handleSelect}>
-              {
-                Object.values(languageList.value).map(languageOption => {
-                  return <Option value={languageOption.abbreviation} key={languageOption.abbreviation}>
-                    {languageOption.name}
-                  </Option>
-                })
-              }
-            </Select>
-          </div>
+
+      <div class={style["language-right"]} style={`margin-left:${props.widen ? 240 : 0}px`}>
+        {/* <InfoTitle></InfoTitle> */}
+        <div class={style["language-content"]}>
+          <Select value={languageSelected.value.abbreviation} style="width: 100%" onSelect={handleSelect}>
+            {
+              Object.values(languageList.value).map(languageOption => {
+                return <Option value={languageOption.abbreviation} key={languageOption.abbreviation}>
+                  {languageOption.name}
+                </Option>
+              })
+            }
+          </Select>
         </div>
-      </SettingBody>
+      </div>
+
     )
   }
 })
