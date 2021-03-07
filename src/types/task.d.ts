@@ -27,6 +27,7 @@ declare interface FileType extends App{
   position?: string
   children?: FilesType
   path?:string
+  apps?:string
   [key: string]: any
 }
 interface FilesType {

@@ -2,7 +2,7 @@ import { computed, defineComponent, PropType, reactive, h, onMounted } from "vue
 import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
-import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase.vue";
+import DesktopIconBase from "@/components/DesktopIcon";
 import { FileType, FilesType } from "@/types/task";
 import { IconList } from "@/types";
 import style from "./folder.module.less";

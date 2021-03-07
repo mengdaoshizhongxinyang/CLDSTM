@@ -8,7 +8,8 @@ const baseFileType= {
   'Money': 'Money',
   'folder': 'Folder',
   'vscode': 'vscode',
-  'setting': 'setting'
+  'setting': 'setting',
+  'attribute':'Attribute'
 }
 export {
   baseFileType

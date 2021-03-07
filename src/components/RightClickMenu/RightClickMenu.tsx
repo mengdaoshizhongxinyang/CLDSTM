@@ -1,3 +1,8 @@
+/*
+ * @Author: mengdaoshizhongxinyang
+ * @Date: 2021-03-05 23:46:22
+ * @Description: 
+ */
 
 //{/* <script lang="ts"> */}
 
@@ -64,6 +69,10 @@ export default defineComponent({
   },
   components: {
     SubContext,
+  },
+  emits:{
+    "update:show":(val:boolean)=>{return true},
+    menuItemClick:(menu:typeMenu)=>{return true}
   }
 
 });
