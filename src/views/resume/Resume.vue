@@ -207,16 +207,16 @@ export default {
           color: #fff;
         }
     }
-    /deep/.ant-list-item-meta-title > a{
+    ::v-deep(.ant-list-item-meta-title) > a{
       color:#fff;
     }
-    /deep/.ant-list-item-meta-description{
+    ::v-deep(.ant-list-item-meta-description){
       color:#afafaf;
     }
-    /deep/.ant-list-items{
+    ::v-deep(.ant-list-items){
       color:#afafaf;
     }
-    /deep/.ant-tabs{
+    ::v-deep(.ant-tabs){
       color:#fff;
     }
     .module{

@@ -1,0 +1,48 @@
+@main:~"desktop-icon";
+.@{main}{
+    color: #fff;
+    position: relative;
+    width: 74px;
+    cursor: pointer;
+    text-align: center;
+    &-icon{
+        width:100%;
+        height:54px;
+        &-default{
+          line-height: 1.2em;
+          font-size: 42px;
+          text-align: center;
+        }
+    }
+    &-text{
+      
+      text-align: center;
+      line-height: 1.2em;
+
+      overflow : hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      user-select: none;
+    }
+    &-input{
+      color: #000;
+      background: #fff;
+      min-width: 1px;
+      max-width: 100%;
+      padding:0 4px;
+      width:auto; 
+      display:inline-block;
+      &:focus{
+        outline: none;
+      }
+    }
+    &:hover{
+      background: rgba(230, 242, 255,0.15);
+    }
+    &:focus{
+      background: rgba(204, 229, 255,0.35);
+    }
+}

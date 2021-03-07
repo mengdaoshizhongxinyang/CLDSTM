@@ -1,17 +1,8 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const PrerenderSPAPlugin=require('prerender-spa-plugin')
-const HtmlWebpackPlugin=require("html-webpack-plugin")
-const path = require('path');
-const Renderer=PrerenderSPAPlugin.PuppeteerRenderer
-const vuecli= require('@vue/cli-service')
 const options = {
     publicPath: './',
     configureWebpack: {
-        resolve: {
-            alias: {
-                'vue$': 'vue/dist/vue.esm.js'
-            }
-        },
         plugins: [
             new MonacoWebpackPlugin({
                 // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options

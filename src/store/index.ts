@@ -1,14 +1,12 @@
 import {ActionContext} from "@/types/store";
-import Vuex from "vuex";
-import Vue from "vue";
+import {createStore,Store as VuexStore} from "vuex";
 import modules,{SET_FILELIST,typeModules} from '@/store/modules/index'
-Vue.use(Vuex);
 
 const mutations = {
 }
 
 const actions = {
-  initAll({ dispatch, commit } :ActionContext<State,Getters>){
+  initAll({ dispatch, commit,rootGetters } :ActionContext<State,Getters>){
     commit(SET_FILELIST,configs.getDesktopIcon())
     dispatch('initFolderStatus')
     // commit(MERGE_APPS,)
@@ -17,14 +15,12 @@ const actions = {
 
 const modulesGetters = {
 }
-const storeOptions = new Vuex.Store<State>({
+const storeOptions = {
   modules,
   mutations,
   actions,
   getters:modulesGetters
-});
-
-export default storeOptions
+};
 type State = (
   typeModules['state']
 )
@@ -47,20 +43,23 @@ type DispatchFuncs = (
 )
 
 interface Dispatch {
-  <T extends keyof DispatchFuncs>(type: T, payload?: Parameters<DispatchFuncs[T]>[1]): Promise<any>;
+  <T extends keyof DispatchFuncs>(type: T, payload?: Parameters<DispatchFuncs[T]>[1]): DispatchFuncs[T];
 }
-
+const vuexStore=createStore(storeOptions)
 interface Commit {
   <T extends keyof CommitFuncs>(type: T, payload?: Parameters<CommitFuncs[T]>[1]): void;
 }
-export const { state } = storeOptions;
-export const { getters }: { getters: Getters } = storeOptions;
-export const { commit }: { commit: Commit } = storeOptions;
-export const { dispatch }: { dispatch: Dispatch } = storeOptions;
-
-export interface Store {
+// export const { state } = storeOptions;
+// export const { getters }: { getters: Getters } = storeOptions;
+// export const { commit }: { commit: Commit } = storeOptions;
+// export const { dispatch }: { dispatch: Dispatch } = storeOptions;
+export type Store=Omit<VuexStore<State>,'getters'|'commit'|'dispatch'|'state'>&{
   state: State;
   getters: Getters;
   commit: Commit;
   dispatch: Dispatch;
 }
+export function useStore() {
+  return vuexStore as Store
+}
+export default vuexStore

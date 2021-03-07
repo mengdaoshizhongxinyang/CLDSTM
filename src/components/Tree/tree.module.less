@@ -1,0 +1,26 @@
+.folder-tree-node-item{
+  padding:4px;
+  line-height: 1em;
+  user-select: none;
+}
+.folder-tree-node {
+  &-title {
+    padding: 4px;
+    display: flex;
+    cursor: pointer;
+    line-height: 1em;
+    user-select: none;
+  }
+  &-content {
+    transition: height 0.1s ease-in-out;
+    overflow: hidden;
+  }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: height 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  height: 0;
+}

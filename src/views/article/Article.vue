@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ArticleBase from "@/components/Article/ArticleBase.vue";
+import ArticleBase from "@/components/Article/ArticleBase.tsx";
 import { mapGetters } from 'vuex';
   export default {
     created(){

@@ -38,7 +38,6 @@ const getTemplate=function(_component){
 const getSlots=function(slots,component){
     if(component.children!==undefined){
         component.children.forEach(ele=>{
-            console.log(ele)
             if(ele.attributes.slot.value!==''){
                 slots[ele.attributes.slot.value].push(ele)
             }else{

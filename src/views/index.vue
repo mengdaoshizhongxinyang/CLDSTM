@@ -25,7 +25,7 @@
  * ________##_______####________####______________ 
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-11-09 10:42:31
+ * @LastEditTime: 2020-11-25 16:53:02
  * @LastEditors: Please set LastEditors
  * @Description: index page
  * @FilePath: \CLDSTM\src\views\index.vue
@@ -39,6 +39,7 @@
       :y="Math.floor(index%desktopIconNum)*88"
       :key="desktopIcons[icon].name"
       :iconInfo="desktopIcons[icon]"
+      iconStyle="filled"
       @openApps="handleOpenApps(desktopIcons[icon])"
     ></desktop-icon>
 
@@ -55,12 +56,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   vscode,
   Frame,
   DownMenu,
-  Money,
+  // Money,
   DesktopIcon,
   ArticleMd,
   Folder,
@@ -69,24 +70,20 @@ import {
   Setting
 } from "@/components";
 
+import { defineComponent,computed, nextTick } from "vue"
+
 import moment from "moment";
-import configs from "configs"
-console.log(configs)
+
 import * as THREE from "three";
-const pinyin = require("@/components/PinYin/index");
-import message from "@/components/Message/dialog.jsx";
-import {
-  mapGetters,
-  mapState,
-  mapActions
-} from 'vuex'
+
+import {useStore} from "@/store"
 import Proton from "./proton.js";
 
 let proton, emitter;
 let camera, scene, renderer;
 let three = new THREE.Scene();
 
-export default {
+export default  defineComponent({
   components: {
     Folder,
     Frame,
@@ -94,20 +91,31 @@ export default {
     vscode,
     Desktop,
     DesktopIcon,
-    Money,
+    // Money,
     ArticleMd,
-    message,
     Properties,
     Setting
   },
-  computed:{
-    ...mapGetters(['desktopApps']),
-    ...mapState({
-      /** @returns {Object} */
-      desktopIcons(state){
-        return state.view.desktop.fileList
-      }
+  setup(props){
+    
+    const store=useStore()
+    nextTick(()=>{
+      store.dispatch('initAll')
     })
+    const desktopIcons =computed(()=>{
+        return store.state.view.desktop.fileList
+    })
+    const desktopApps=computed(()=>{
+      // console.log(store.getters.desktopApps)
+      return store.getters.desktopApps
+    })
+    const openApps=(icon:any)=>{
+      store.dispatch('openApps',icon)
+    }
+    const activeApps=(index:any)=>{
+      store.dispatch('activeApps',index)
+    }
+    return {desktopIcons,desktopApps,openApps,activeApps}
   },
   created() {
     this.desktopIconNum=Math.floor(document.body.offsetHeight/88)
@@ -120,12 +128,14 @@ export default {
   },
   methods: {
     moment,
-    handleOpenApps(icon) {
-      this.$store.dispatch("openApps",icon)
+    handleOpenApps(icon:any) {
+      this.openApps(icon);
+      // this.$store.dispatch("openApps",icon)
     },
-    handleActived(item, index) {
-      this.$store.commit("activeApps",index)
-      this.$forceUpdate();
+    handleActived(item:any, index:any) {
+      this.activeApps(index);
+      // this.$store.commit("activeApps",index)
+      // this.$forceUpdate();
     },
     addScene() {
       camera = new THREE.PerspectiveCamera(
@@ -142,7 +152,7 @@ export default {
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id="background"
-      document.body.appendChild(renderer.domElement);
+      document.getElementById('app')!.appendChild(renderer.domElement);
       window.addEventListener("resize", this.onWindowResize, false);
     },
     addProton() {
@@ -214,7 +224,7 @@ export default {
   mounted() {
     this.initBackGround();
   },
-};
+})
 </script>
 <style lang="less" scoped>
 /* For demo */
@@ -223,7 +233,7 @@ export default {
   height: 100%;
 }
 
-/deep/.ant-fullcalendar-content {
+::v-deep(.ant-fullcalendar-content) {
   position: static;
 }
 </style>
