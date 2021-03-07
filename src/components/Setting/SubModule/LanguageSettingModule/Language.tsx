@@ -26,7 +26,7 @@ export default defineComponent({
       return store.state.core.setting.settings.Language
     })
     return ()=>h(
-      <SettingBody widen={props.widen} onOpenSub={handleOpenSub} menuList={list.value} showLeft={!props.subComponent}>
+      <SettingBody widen={props.widen} onOpenSub={handleOpenSub} menuList={list.value}>
         {
           props.subComponent?
           h(module[props.subComponent as keyof typeof module],

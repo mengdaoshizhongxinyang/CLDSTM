@@ -3,12 +3,14 @@
  * @Date: 2021-02-24 09:55:05
  * @Description: 
  */
+import Main from "./MainModule";
 import Language from "./LanguageSettingModule"
 import * as LanguageSettingModule from "./LanguageSettingModule/module"
 import Personalise from "./PersonaliseSettingModule"
 import * as PersonaliseSettingModule from "./PersonaliseSettingModule/module"
 
 const SubModule={
+  Main,
   Language,
   Personalise
 }

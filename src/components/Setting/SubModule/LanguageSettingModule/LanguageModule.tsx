@@ -45,8 +45,7 @@ export default defineComponent({
     }
     return () => h(
 
-      <div class={style["language-right"]} style={`margin-left:${props.widen ? 240 : 0}px`}>
-        {/* <InfoTitle></InfoTitle> */}
+
         <div class={style["language-content"]}>
           <Select value={languageSelected.value.abbreviation} style="width: 100%" onSelect={handleSelect}>
             {
@@ -58,7 +57,7 @@ export default defineComponent({
             }
           </Select>
         </div>
-      </div>
+
 
     )
   }

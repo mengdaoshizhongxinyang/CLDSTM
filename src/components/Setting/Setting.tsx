@@ -6,12 +6,7 @@
  */
 import { Frame as SettingFrame, IconManage } from "@/components";
 import { Transition, defineComponent, reactive, computed, h, watch } from "vue";
-import Main from "./Main";
 import SubModule, { SubModuleNames, SubModuleSubKeys, SubModuleKeys } from "./SubModule";
-const allModule = {
-  ...SubModule,
-  Main
-}
 import style from "./Setting.module.less";
 
 type ModuleName = keyof SubModuleNames
@@ -21,7 +16,7 @@ export default defineComponent({
   components: {
     IconManage,
     Transition,
-    ...allModule,
+    ...SubModule,
     SettingFrame,
   },
   props: {
@@ -86,7 +81,7 @@ export default defineComponent({
       content: () => <div class={style['content']}>
         <Transition enterActiveClass={style['push-enter-active']} leaveActiveClass={style['push-leave-active']}>
           {
-            h(allModule[data.component], {
+            h<any>(SubModule[data.component], {
               class: style["sub-content"],
               width: data.w,
               height: data.h,

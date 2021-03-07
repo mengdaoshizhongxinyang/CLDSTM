@@ -120,7 +120,7 @@ export default defineComponent({
         <div class={style["setting-body"]}>
           <div class={style["setting-content"]} ref={contentRef} onScroll={handleScroll}>
             {
-              (props.showLeft || props.widen) ? <div class={props.widen?style["setting-left"]:style['setting-all']}>
+              (props.showLeft && props.widen) ? <div class={props.widen?style["setting-left"]:style['setting-all']}>
                 <div class={[style['menu-main'], props.widen ? style['widen-menu'] : style['narrow-menu']]}>
                   <div class={style["menu-title"]}>
                     <div class={style["home-item"]}></div>
@@ -145,11 +145,13 @@ export default defineComponent({
                 </div>
               </div> : null
             }
-            {
-              slots['default'] ? slots['default']() : <div style="background: #fff; height: 32px"></div>
-            }
+            <div class={style['setting-right']} style={{marginLeft:(props.widen && props.showLeft)?'240px':'0px'}}>
+              {
+                slots['default'] ? slots['default']() : <div style="background: #fff; height: 32px"></div>
+              }
+            </div>
           </div>
-          <div class={props.widen ? style['widen-default-title'] : style['default-title']} ref={titleRef}>
+          <div class={(props.widen && props.showLeft) ? style['widen-default-title'] : style['default-title']} ref={titleRef}>
             {
               slots['title'] ? slots['title']() : <div style="background: #fff; height: 32px"></div>
             }

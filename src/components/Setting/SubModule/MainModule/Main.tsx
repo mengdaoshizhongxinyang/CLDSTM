@@ -4,7 +4,7 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
-import SettingBody from "./SettingBody";
+import SettingBody from "../../SettingBody";
 import { IconManage } from "@/components";
 import { defineComponent, reactive, computed, ref,h } from "vue"
 import { useStore } from "@/store";
@@ -39,7 +39,7 @@ export default defineComponent({
       emit('openSub', item.component!)
     }
     return () => h(
-      <SettingBody width={props.width} {...attrs}>
+      <SettingBody widen={false} {...attrs} showLeft={false}>
         <div class={style["content"]} onMousemove={handleMousemove}>
           <div class={style["title"]}>设置</div>
           <div
