@@ -21,6 +21,7 @@
     "prerender-spa-plugin": "^3.4.0",
     "text-loader": "^0.0.1",
     "three": "^0.110.0",
+    "three.proton.js": "^0.2.3",
     "ts-loader": "^8.0.4",
     "typescript": "^4.0.3",
     "vue": "^3.0.0",

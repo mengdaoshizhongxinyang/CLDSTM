@@ -146,7 +146,7 @@ export default  defineComponent({
       );
       camera.position.z = 500;
       scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0xffffff, 1, 10000);
+      scene.fog = new THREE.FogExp2(0xffffff, 1);
 
       renderer = new THREE.WebGLRenderer();
       renderer.setPixelRatio(window.devicePixelRatio);
