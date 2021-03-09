@@ -75,12 +75,12 @@ import { defineComponent,computed, nextTick } from "vue"
 import moment from "moment";
 
 import * as THREE from "three";
-
+import {Camera,Scene,Renderer} from "three";
 import {useStore} from "@/store"
 import Proton from "./proton.js";
 
-let proton, emitter;
-let camera, scene, renderer;
+let proton:Proton, emitter:Proton.Emitter;
+let camera:Camera, scene:Scene, renderer:Renderer;
 let three = new THREE.Scene();
 
 export default  defineComponent({
@@ -149,7 +149,7 @@ export default  defineComponent({
       scene.fog = new THREE.FogExp2(0xffffff, 1);
 
       renderer = new THREE.WebGLRenderer();
-      renderer.setPixelRatio(window.devicePixelRatio);
+      // renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id="background"
       document.getElementById('app')!.appendChild(renderer.domElement);
@@ -188,6 +188,7 @@ export default  defineComponent({
       emitter.emit();
 
       proton.addEmitter(emitter);
+
       proton.addRender(new Proton.SpriteRender(scene));
 
       //Proton.Debug.drawZone(proton,scene,new Proton.BoxZone(800, 10, 800));
