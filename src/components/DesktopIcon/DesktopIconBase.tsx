@@ -9,9 +9,10 @@ import { PropTypes } from "@/utils/proptypes";
 import { useStore } from "@/store";
 import { IconList } from "@/types";
 import style from "./DesktopIconBase.module.less";
+import { IconInfo } from "./type";
 export default defineComponent({
     props: {
-        iconInfo: PropTypes.object<{ name?: string, position?: string, icon?: IconList }>({})
+        iconInfo: PropTypes.object<IconInfo>({})
     },
     components: {
         IconManage,
@@ -104,13 +105,13 @@ export default defineComponent({
             <div class={style['desktop-icon']} tabindex={-1}>
                 <div onDblclick={(e) => openApps(e)} onContextmenu={handleIconMenu}>
                     <div class={style["desktop-icon-icon"]}>
-                        <slot>
+
                             <div class={style["desktop-icon-icon-default"]}>
                                 <IconManage
                                     icon={props.iconInfo.icon}
                                 ></IconManage>
                             </div>
-                        </slot>
+
                     </div>
                     {
                         data.type == 'show' ? <div class={style["desktop-icon-text"]}>
@@ -140,5 +141,8 @@ export default defineComponent({
                 ></RightClickMenu>
             </div>
         )
+    },
+    emits:{
+        openApps:()=>{return true}
     }
 })

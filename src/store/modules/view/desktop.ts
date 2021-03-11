@@ -138,7 +138,6 @@ const actions = {
 
 const getters = {
     desktopApps(state: State) {
-        console.log(state.desktopApps)
         return state.desktopApps
     },
     fileList(state: State) {

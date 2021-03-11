@@ -19,7 +19,9 @@ declare interface App{
 declare interface AppTask extends Task{
   mini: boolean
   zindex: number
-  apps: {[key:string]:unknown}
+  apps: string
+  [key:string]:any
+  // icon:string
 }
 
 declare interface FileType extends App{

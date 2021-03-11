@@ -33,7 +33,7 @@ export let asyncRouterMap : Array<RouteRecordRaw>=[
     {
         path: '/',
         name: 'index',
-        component:()=>import ('@/views/index.vue'),
+        component:()=>import ('@/views/index'),
         meta:{title:'首页'},
         children:[
             
