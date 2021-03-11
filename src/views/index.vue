@@ -77,7 +77,7 @@ import moment from "moment";
 import * as THREE from "three";
 import {Camera,Scene,Renderer} from "three";
 import {useStore} from "@/store"
-import Proton from "./proton.js";
+import Proton from "three.proton.js";
 
 let proton:Proton, emitter:Proton.Emitter;
 let camera:Camera, scene:Scene, renderer:Renderer;
