@@ -36,7 +36,8 @@ import {
   Folder,
   Desktop,
   Properties,
-  Setting
+  Setting,
+  SimpleNote
 } from "@/components";
 
 import { defineComponent, computed, nextTick, reactive, onMounted, h } from "vue"
@@ -59,6 +60,7 @@ const components = {
   // Money,
   ArticleMd,
   Properties,
+  SimpleNote,
   Setting
 }
 export default defineComponent({
@@ -212,7 +214,6 @@ export default defineComponent({
         <DownMenu></DownMenu>
         {
           desktopApps.value.apps.map((item, index) => {
-            console.log(Object.keys(item).join(' '))
             return h(
               components[item.apps as keyof typeof components],
               {

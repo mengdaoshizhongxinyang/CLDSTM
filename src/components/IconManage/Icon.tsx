@@ -27,6 +27,7 @@ import {
   HighlightOutlined,
   GlobalOutlined,
   FontColorsOutlined,
+  FileTextOutlined,
   ExclamationCircleOutlined
 } from "@ant-design/icons-vue";
 const components={
@@ -52,6 +53,7 @@ const components={
   FileMarkdownOutlined,
   FileMarkdownFilled,
   SnippetsOutlined,
+  FileTextOutlined,
   vscodeIcon
 }
 import { defineComponent,h,PropType } from "vue";

@@ -78,7 +78,7 @@ export default defineComponent({
     }
     const close = () => {
       store.dispatch("closeApps", props.appsId);
-      emit("close");
+      emit("close",props.appsId);
     }
     const active = () => {
       store.dispatch("activeApps", props.appsId);
@@ -232,6 +232,6 @@ export default defineComponent({
     resizing:(w: number, h: number, x: number, y: number) => { return true },
     minimize: () => { return true },
     dragstop: (x: number, y: number) => { return true },
-    close: () => { return true },
+    close: (id:number) => { return true },
   }
 })

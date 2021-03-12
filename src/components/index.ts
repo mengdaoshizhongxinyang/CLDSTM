@@ -1,7 +1,7 @@
 /*
  * @Author: mengdaoshizhongxinyang
  * @Date: 2020-05-14 09:38:18
- * @LastEditTime: 2020-12-15 14:27:46
+ * @LastEditTime: 2021-03-12 10:13:22
  * @LastEditors: Please set LastEditors
  * @Description: never bug
  * @FilePath: \CLDSTM\src\components\index.js
@@ -48,6 +48,7 @@ import Tree from "@/components/Tree"
 import Icon from "@/components/IconManage"
 import Properties from "@/components/PropertiesWindow";
 import Setting from "@/components/Setting";
+import SimpleNote from "@/components/SimpleNote";
 export{
     Tree,
     ArticleMd,
@@ -64,5 +65,6 @@ export{
     Folder,
     Properties,
     Setting,
+    SimpleNote,
     Icon
 }

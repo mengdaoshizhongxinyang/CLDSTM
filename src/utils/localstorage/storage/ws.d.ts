@@ -5,7 +5,7 @@
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
 export interface WS{
-  get:(name:string,def?:any)=> void,
+  get:<T=any>(name:string,def?:any)=> T | null,
   set:(name:string,value:any,expire?:Date)=> void,
   setOptions:(any)=>void,
   key:(key:string)=>any,

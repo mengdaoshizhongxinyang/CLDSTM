@@ -14,7 +14,7 @@ declare interface Task{
 }
 declare interface App{
   type:keyof typeof baseFileType
-  name:string
+  name?:string
 }
 declare interface AppTask extends Task{
   mini: boolean

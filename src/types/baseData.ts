@@ -9,7 +9,8 @@ const baseFileType= {
   'folder': 'Folder',
   'vscode': 'vscode',
   'setting': 'setting',
-  'attribute':'Attribute'
+  'attribute':'Attribute',
+  'SimpleNote':'SimpleNote'
 }
 export {
   baseFileType

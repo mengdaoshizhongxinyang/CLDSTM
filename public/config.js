@@ -5,14 +5,14 @@ function Config() {
         "static":{
             name:"static",
             type:"folder",
-            icon:"folder",
+            icon:"FolderOutlined",
             position:"",
             children:{
                 
         "project":{
             name:"project",
             type:"folder",
-            icon:"folder",
+            icon:"FolderOutlined",
             position:"/static",
             children:{
                 
@@ -44,7 +44,7 @@ function Config() {
         "分类测试":{
             name:"分类测试",
             type:"folder",
-            icon:"folder",
+            icon:"FolderOutlined",
             position:"/static",
             children:{
                 
@@ -73,6 +73,11 @@ function Config() {
             name:"vscode",
             type:"vscode",
             icon:"vscodeIcon",
+        },
+        SimpleNote:{
+            name:"Note",
+            type:"SimpleNote",
+            icon:"FileTextOutlined",
         },
     }
     this.getFile = function () {

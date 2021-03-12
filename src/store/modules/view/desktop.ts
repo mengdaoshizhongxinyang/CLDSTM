@@ -1,5 +1,6 @@
 
 import { ReturnGetters, ActionContext } from '@/types/store';
+import { ws } from "@/utils/localstorage/index";
 import modal from 'ant-design-vue/lib/modal';
 export const SET_RUNING_APPS = 'SET_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
@@ -10,6 +11,7 @@ export const MERGE_APPS = 'MERGE_APPS'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
 export const UPDATE_FILENAME = 'UPDATE_FILENAME'
+export const SAVE_APPS_STATES = 'SAVE_APPS_STATES'
 import { baseFileType } from "@/types/baseData";
 import { AppTask, FileType, Task } from '@/types/task';
 console.log(baseFileType)
@@ -32,7 +34,7 @@ const mutations = {
         state.fileList = item
     },
     [SET_RUNING_APPS](state: State, item: FileType) {
-        console.log( state.apps)
+        console.log( item)
         state.desktopApps.apps.push({
             apps: state.apps[item.type],
             ...item,
@@ -108,6 +110,21 @@ const mutations = {
             delete temp[info.oldName]
             temp[info.name] = Object.assign(content, { name: info.name });
         }
+    },
+    [SAVE_APPS_STATES](state:State,info:{name:string,id?:number}){
+        let saveApps=ws().get<AppTask[]>('apps')
+        let unUpdateApps:AppTask[]=[]
+        if(saveApps && saveApps.length>0){
+            unUpdateApps=saveApps.filter(item=>{
+                return item.apps!=info.name
+            })
+        }
+        let updateApps=state.desktopApps.apps.filter(item=>{
+            return item.apps=info.name
+        })
+        saveApps=updateApps.concat(unUpdateApps)
+        ws().set('apps',saveApps);
+        console.log(ws().get<AppTask[]>('apps'))
     }
 }
 
@@ -133,6 +150,9 @@ const actions = {
     },
     renameFile({ commit }: actions, { name, path, oldName }: { name: string, path: string, oldName: string }) {
         commit(UPDATE_FILENAME, { name, path, oldName })
+    },
+    saveApps({commit}:actions,info:{name:string,id?:number}){
+        commit(SAVE_APPS_STATES,info)
     }
 }
 
