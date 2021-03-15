@@ -1,6 +1,7 @@
 import {ActionContext} from "@/types/store";
 import {createStore,Store as VuexStore} from "vuex";
-import modules,{SET_FILELIST,typeModules} from '@/store/modules/index'
+import modules,{SET_FILELIST,typeModules,SET_BATCH_RUNING_APPS} from '@/store/modules/index'
+import { ws } from "@/utils/localstorage";
 
 const mutations = {
 }
@@ -8,6 +9,10 @@ const mutations = {
 const actions = {
   initAll({ dispatch, commit,rootGetters } :ActionContext<State,Getters>){
     commit(SET_FILELIST,configs.getDesktopIcon())
+    let initTask=ws().get<AppTask[]>('apps')?.map(item=>{
+      return {type:item.apps,name:item.name,icon:item.icon,contents:item.contents} as AppStart
+    })
+    commit(SET_BATCH_RUNING_APPS,initTask)
     dispatch('initFolderStatus')
     // commit(MERGE_APPS,)
   }

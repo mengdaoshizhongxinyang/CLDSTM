@@ -10,19 +10,20 @@ import style from "./SimpleNote.module.less";
 import { useStore } from "@/store";
 export default defineComponent({
   props:{
-    content:PropTypes.string()
+    content:PropTypes.string(),
+    appsId:PropTypes.number()
   },
   setup(props,{attrs}){
     const store=useStore()
     const data=reactive({
       content:props.content
     })
-    function handleClose(){
-      store.dispatch('saveApps',{name:'SimpleNote'})
+    function handleChange(){
+      store.dispatch('updateAppsContent',{id:props.appsId,contents:{content:data.content}})
     }
     return ()=>h(
-      <AppFrame allowEnlarge={false} {...attrs} onClose={handleClose}>
-        <textarea v-model={[data.content,'value']} class={style['textarea']}></textarea>
+      <AppFrame allowEnlarge={false} {...attrs} appsId={props.appsId}>
+        <textarea v-model={[data.content]} class={style['textarea']} onChange={handleChange}></textarea>
       </AppFrame>
     )
   }
