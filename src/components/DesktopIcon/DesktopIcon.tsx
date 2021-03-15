@@ -7,8 +7,6 @@ import { defineComponent, h, reactive } from "vue";
 import { BaseDraggable } from "@/components";
 import DesktopIconBase from "./DesktopIconBase";
 import { PropTypes } from "@/utils/proptypes";
-import { IconList } from "@/types";
-import { IconInfo } from "./type";
 export default defineComponent({
     components: {
         BaseDraggable,
@@ -17,7 +15,7 @@ export default defineComponent({
     props:{
         x:PropTypes.number(),
         y:PropTypes.number(),
-        iconInfo:PropTypes.object<IconInfo>(),
+        iconInfo:PropTypes.object<FileType>(),
         onOpenApps:PropTypes.func()
     },
     setup(props, { attrs }) {

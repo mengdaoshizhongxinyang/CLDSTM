@@ -221,8 +221,10 @@ export default defineComponent({
                 icon:item.icon,
                 key:item.id,
                 appsId:index,
+                name:item.name,
                 z:item.zindex,
-                style:{display:item.mini?"none":"block"}
+                style:{display:item.mini?"none":"block"},
+                ...item.contents
               }
             )
           })

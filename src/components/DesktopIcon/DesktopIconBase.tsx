@@ -7,12 +7,10 @@ import { IconManage, RightClickMenu } from "@/components";
 import { defineComponent, h, reactive, ref, nextTick } from "vue";
 import { PropTypes } from "@/utils/proptypes";
 import { useStore } from "@/store";
-import { IconList } from "@/types";
 import style from "./DesktopIconBase.module.less";
-import { IconInfo } from "./type";
 export default defineComponent({
     props: {
-        iconInfo: PropTypes.object<IconInfo>({})
+        iconInfo: PropTypes.object<FileType>()
     },
     components: {
         IconManage,
@@ -30,6 +28,7 @@ export default defineComponent({
                 top: 0,
             },
             menuList: [
+                {label:"打开",run:"open"},
                 { label: "重命名", run: "rename" },
                 { label: "属性", run: "attribute" },
             ] as Menu[],
@@ -54,6 +53,17 @@ export default defineComponent({
             }
         }
         const menuFunction = {
+            open() {
+                const { iconInfo } = props;
+                store.dispatch("openApps", {
+                    type: iconInfo.type,
+                    icon: iconInfo.icon!,
+                    name: iconInfo.name,
+                    position: iconInfo.position,
+                    fileName: iconInfo.name,
+                    apps: iconInfo.type
+                });
+            },
             rename() {
                 data.type = "input";
                 nextTick(() => {

@@ -4,23 +4,12 @@
  * @Description: 
  */
 declare namespace configs {
-  interface FileType {
-    [key: string]: {
-      type: string
-      name: string
-      icon: string
-      position?: string
-      children?: FileType
-      [key: string]: any
-    }
-  }
   const init: () => void
-  const getDesktopIcon: () => FileType
+  const getDesktopIcon: () => FileType.FilesType
   const getActionsItem: () => Array<{ name: string, action: string }>
   export {
     init,
     getDesktopIcon,
-    getActionsItem,
-    FileType
+    getActionsItem
   }
 }

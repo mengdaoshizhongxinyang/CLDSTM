@@ -3,26 +3,32 @@ import { ReturnGetters, ActionContext } from '@/types/store';
 import { ws } from "@/utils/localstorage/index";
 import modal from 'ant-design-vue/lib/modal';
 export const SET_RUNING_APPS = 'SET_RUNING_APPS'
+export const SET_BATCH_RUNING_APPS = 'SET_BATCH_RUNING_APPS'
 export const CLOSE_RUNING_APPS = 'CLOSE_RUNING_APPS'
 export const ACTIVE_RUNING_APPS = 'ACTIVE_RUNING_APPS'
 export const SET_FILELIST = 'SET_FILELIST'
 export const CREATE_FILE = 'CREATE_FILE'
-export const MERGE_APPS = 'MERGE_APPS'
+export const UPDATE_APPS_CONTENT = 'UPDATE_APPS_CONTENT'
 export const MINIMIZE_APPS = 'MINIMIZE_APPS'
 export const SET_FILETYPES = 'SET_FILETYPES'
 export const UPDATE_FILENAME = 'UPDATE_FILENAME'
 export const SAVE_APPS_STATES = 'SAVE_APPS_STATES'
-import { baseFileType } from "@/types/baseData";
-import { AppTask, FileType, Task } from '@/types/task';
-console.log(baseFileType)
 const state = {
     desktopApps: {
         apps: [] as Array<AppTask>,
         maxZindex: 0,
         id: 0
     },
-    apps: baseFileType,
-    fileList: {} as FileType,
+    apps: {
+        'article': 'ArticleMd',
+        'Money': 'Money',
+        'folder': 'Folder',
+        'vscode': 'vscode',
+        'setting': 'setting',
+        'attribute': 'Attribute',
+        'SimpleNote': 'SimpleNote'
+    } as BaseFileType,
+    fileList: {} as FilesType,
     fileTypes: {}
 }
 
@@ -30,17 +36,41 @@ type State = typeof state
 
 type actions = ActionContext<State, Getters>
 const mutations = {
-    [SET_FILELIST](state: State, item: FileType) {
+    [SET_FILELIST](state: State, item: FilesType) {
         state.fileList = item
     },
-    [SET_RUNING_APPS](state: State, item: FileType) {
-        console.log( item)
-        state.desktopApps.apps.push({
+    [SET_RUNING_APPS](state: State, item: AppStart) {
+        let task: AppTask = {
+            name: item.name,
             apps: state.apps[item.type],
-            ...item,
             mini: false,
             id: ++state.desktopApps.id,
             zindex: ++state.desktopApps.maxZindex
+        }
+        if (item.icon) {
+            task.icon = item.icon as IconList
+        }
+        if (item.contents) {
+            task.contents = item.contents
+        }
+        state.desktopApps.apps.push(task)
+    },
+    [SET_BATCH_RUNING_APPS](state: State, apps: AppStart[]) {
+        apps.forEach(item => {
+            let task: AppTask = {
+                name: item.name,
+                apps: state.apps[item.type],
+                mini: false,
+                id: ++state.desktopApps.id,
+                zindex: ++state.desktopApps.maxZindex
+            }
+            if (item.icon) {
+                task.icon = item.icon as IconList
+            }
+            if (item.contents) {
+                task.contents = item.contents
+            }
+            state.desktopApps.apps.push(task)
         })
     },
     [CLOSE_RUNING_APPS](state: State, index: number) {
@@ -60,7 +90,7 @@ const mutations = {
         while (nameArray.indexOf(name + tempName) > -1) {
             tempName = (++i).toString()
         }
-        let fileTree: any = state.fileList
+        let fileTree = state.fileList
         let pathArray = path!.split('/')
         pathArray.forEach(item => {
             if (item) {
@@ -71,8 +101,13 @@ const mutations = {
         state.fileList = Object.assign({}, state.fileList)
         state.fileList = JSON.parse(JSON.stringify(state.fileList))
     },
-    [MERGE_APPS](state: State, apps = {}) {
-        // state.apps = Object.assign(state.apps, apps)
+    [UPDATE_APPS_CONTENT](state: State, apps: { id: number, contents: { [key: string]: any } }) {
+        console.log(apps.id)
+        if(!state.desktopApps.apps[apps.id].contents){
+            state.desktopApps.apps[apps.id].contents={}
+        }
+        console.log(state.desktopApps.apps[apps.id].contents,apps.contents)
+        Object.assign(state.desktopApps.apps[apps.id].contents, apps.contents)
     },
     [SET_FILETYPES](state: State, types = {}) {
         state.fileTypes = types
@@ -82,7 +117,7 @@ const mutations = {
         let temp = state.fileList
         info.path.split('/').forEach((name, index) => {
             if (index != 0 && name) {
-                temp = temp[name]['children']
+                temp = temp[name]['children']!
             }
         })
 
@@ -111,19 +146,8 @@ const mutations = {
             temp[info.name] = Object.assign(content, { name: info.name });
         }
     },
-    [SAVE_APPS_STATES](state:State,info:{name:string,id?:number}){
-        let saveApps=ws().get<AppTask[]>('apps')
-        let unUpdateApps:AppTask[]=[]
-        if(saveApps && saveApps.length>0){
-            unUpdateApps=saveApps.filter(item=>{
-                return item.apps!=info.name
-            })
-        }
-        let updateApps=state.desktopApps.apps.filter(item=>{
-            return item.apps=info.name
-        })
-        saveApps=updateApps.concat(unUpdateApps)
-        ws().set('apps',saveApps);
+    [SAVE_APPS_STATES](state: State) {
+        ws().set('apps', state.desktopApps.apps);
         console.log(ws().get<AppTask[]>('apps'))
     }
 }
@@ -131,10 +155,18 @@ const mutations = {
 
 const actions = {
     openApps({ commit }: actions, icon: FileType) {
-        commit(SET_RUNING_APPS, icon)
+        let appStart: AppStart = { name: icon.name, type: icon.type }
+        if (icon.icon) {
+            appStart['icon'] = icon.icon as IconList
+        }
+        if (icon.contents) {
+            appStart['contents'] = icon.contents
+        }
+        commit(SET_RUNING_APPS, appStart)
     },
     closeApps({ commit }: actions, index: any) {
         commit(CLOSE_RUNING_APPS, index)
+        commit(SAVE_APPS_STATES)
     },
     minimizeApps({ commit }: actions, index: number) {
         commit(MINIMIZE_APPS, index)
@@ -151,8 +183,9 @@ const actions = {
     renameFile({ commit }: actions, { name, path, oldName }: { name: string, path: string, oldName: string }) {
         commit(UPDATE_FILENAME, { name, path, oldName })
     },
-    saveApps({commit}:actions,info:{name:string,id?:number}){
-        commit(SAVE_APPS_STATES,info)
+    updateAppsContent({ commit }: actions, apps: { id: number, contents: { [key in string]: any } }) {
+        commit(UPDATE_APPS_CONTENT, apps)
+        commit(SAVE_APPS_STATES)
     }
 }
 
