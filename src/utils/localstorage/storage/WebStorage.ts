@@ -44,7 +44,7 @@ export class WebStorage {
    *
    * @param {Object} options
    */
-  setOptions(options = {}) {
+  setOptions<T extends {}=any>(options:T = ({} as T)) {
     this.options = Object.assign(this.options, options);
   }
 
@@ -71,7 +71,7 @@ export class WebStorage {
    * @param {*} def - default value
    * @returns {*}
    */
-  get(name :string, def = null) {
+  get<T>(name :string, def:T |null = null) {
     const item = this.storage.getItem(this.options.namespace + name);
 
     if (item !== null) {
@@ -79,11 +79,11 @@ export class WebStorage {
         const data = JSON.parse(item);
 
         if (data.expire === null) {
-          return data.value;
+          return data.value as T;
         }
 
         if (data.expire >= new Date().getTime()) {
-          return data.value;
+          return data.value as T;
         }
 
         this.remove(name);
