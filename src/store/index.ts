@@ -52,7 +52,7 @@ interface Dispatch {
 }
 const vuexStore=createStore(storeOptions)
 interface Commit {
-  <T extends keyof CommitFuncs>(type: T, payload?: Parameters<CommitFuncs[T]>[1]): void;
+  <T extends keyof CommitFuncs>(type: T, payload?: Parameters<CommitFuncs[T]>[1]): CommitFuncs[T];
 }
 // export const { state } = storeOptions;
 // export const { getters }: { getters: Getters } = storeOptions;

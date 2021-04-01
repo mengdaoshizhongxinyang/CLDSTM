@@ -42,7 +42,7 @@ import {
 
 import { defineComponent, computed, nextTick, reactive, onMounted, h } from "vue"
 
-
+import md5 from "md5";
 import * as THREE from "three";
 import { Camera, Scene, Renderer } from "three";
 import { useStore } from "@/store"
@@ -72,7 +72,6 @@ export default defineComponent({
       content: ""
     })
     
-
     store.dispatch('initAll')
 
     const desktopIcons = computed(() => {

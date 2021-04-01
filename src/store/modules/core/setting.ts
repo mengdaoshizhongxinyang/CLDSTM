@@ -1,7 +1,6 @@
 
 import { ReturnGetters, Store, ActionContext } from '@/types/store';
 const SET_SETTINGS = 'SET_SETTINGS'
-import { Settings } from "@/types/setting";
 const state = {
   settings:{
     Language:[

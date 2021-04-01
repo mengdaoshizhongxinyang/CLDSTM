@@ -27,6 +27,7 @@
  * @Description: 
  * @GitHub: https://github.com/mengdaoshizhongxinyang
  */
+import { useStore } from '@/store'
 import {  RouteRecordRaw } from 'vue-router'
 
 export let asyncRouterMap : Array<RouteRecordRaw>=[
@@ -35,9 +36,20 @@ export let asyncRouterMap : Array<RouteRecordRaw>=[
         name: 'index',
         component:()=>import ('@/views/index'),
         meta:{title:'首页'},
-        children:[
-            
-        ]
+        beforeEnter:(to,from,next)=>{
+            const store=useStore()
+            if(store.getters['getHandlePassword']==configs.password()){
+                next()
+            }else{
+                next({name:'Login'})
+            }
+        }
+    },
+    { 
+        path: '/login',
+        name: 'Login',
+        component:()=>import ('@/views/login/login'),
+        meta:{title:'login'}
     },
     {
         path: '/resume/:key',

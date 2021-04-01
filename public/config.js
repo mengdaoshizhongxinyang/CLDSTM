@@ -103,5 +103,10 @@ function Config() {
     this.getActionsItem=function(){
         return actionsItem
     }
+
+    this.password=function(){
+        //20ACE99C4630A27A990FA60F410DD0EA
+        return "32C98905554EA76FE74442DDC1909EDD"
+    }
 }
 var configs = new Config()
