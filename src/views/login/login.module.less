@@ -6,16 +6,18 @@
   // background: rgb(50,119,150);
   filter: grayscale(100%);
   transform-style: preserve-3d;
+  perspective: 200cm;
+  perspective-origin: top right;
   user-select: none;
   &-screen{
     position: absolute;
-    left: 0;
-    top: 233px;
+    left: 863px;
+    top: 483px;
     background-color: rgb(50,119,150);
     // height: ;
-    width: 100%;
+    width: 240px;
     height: 160px;
-    transform: rotateX(-50deg);
+    transform: rotateY(50deg) rotateX(-10deg) rotateZ(18deg);
   }
   &-password-input{
     font-size: 18px;
