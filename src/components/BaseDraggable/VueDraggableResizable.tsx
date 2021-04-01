@@ -825,7 +825,7 @@ export default defineComponent({
             return (
               <div
                 key={item}
-                class={`${style[props.classNameHandle]} ${style[props.classNameHandle + '-' + item]}`}
+                class={`${style[props.classNameHandle as unknown as keyof typeof style]} ${style[(props.classNameHandle + '-' + item)as unknown as keyof typeof style]}`}
                 style={{display:data.enabled?"block":"none",}}
                 onMousedown={(e)=>{
                   e.stopPropagation();

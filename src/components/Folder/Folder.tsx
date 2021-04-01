@@ -2,8 +2,8 @@ import { computed, defineComponent, PropType, reactive, h, onMounted } from "vue
 import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
-import DesktopIconBase from "@/components/DesktopIcon";
-import { FileType, FilesType } from "@/types/task";
+import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase";
+// import { FileType, FilesType } from "@/types/task";
 import { IconList } from "@/types";
 import style from "./folder.module.less";
 export default defineComponent({
@@ -107,6 +107,8 @@ export default defineComponent({
         position: `${e}的搜索结果`,
         search: e,
         type: "folder",
+        icon:"FolderOutlined",
+        name:`${e}的搜索结果`
       });
     }
     const handleResize = (w: number, h: number, x: number, y: number) => {
@@ -177,19 +179,18 @@ export default defineComponent({
           </div >
           <div class={style["floder-content"]}>
             <div class={style["floder-content-tree"]}>
-              <tree></tree>
+              <Tree></Tree>
             </div>
             <div class={style["floder-content-list"]}>
               {
                 Object.keys(data.folderList).map(item => {
-                  return <desktop-icon-base
+                  return <DesktopIconBase
                     class={style["icon"]}
-                    tabindex={-1}
                     onOpenApps={() => handleOpenApps(data.folderList[item])}
                     style={{ color: "#000" }}
-                    iconStyle={data.iconStyle}
+                    // iconStyle={data.iconStyle}
                     iconInfo={data.folderList[item]}
-                  ></desktop-icon-base>
+                  ></DesktopIconBase>
                 })
               }
             </div>

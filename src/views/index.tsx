@@ -76,7 +76,6 @@ export default defineComponent({
     store.dispatch('initAll')
 
     const desktopIcons = computed(() => {
-      console.log(store.state.view.desktop.fileList)
       return store.state.view.desktop.fileList
     })
     const desktopApps = computed(() => {

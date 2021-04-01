@@ -102,11 +102,9 @@ const mutations = {
         state.fileList = JSON.parse(JSON.stringify(state.fileList))
     },
     [UPDATE_APPS_CONTENT](state: State, apps: { id: number, contents: { [key: string]: any } }) {
-        console.log(apps.id)
         if(!state.desktopApps.apps[apps.id].contents){
             state.desktopApps.apps[apps.id].contents={}
         }
-        console.log(state.desktopApps.apps[apps.id].contents,apps.contents)
         Object.assign(state.desktopApps.apps[apps.id].contents, apps.contents)
     },
     [SET_FILETYPES](state: State, types = {}) {
@@ -148,19 +146,21 @@ const mutations = {
     },
     [SAVE_APPS_STATES](state: State) {
         ws().set('apps', state.desktopApps.apps);
-        console.log(ws().get<AppTask[]>('apps'))
     }
 }
 
 
 const actions = {
     openApps({ commit }: actions, icon: FileType) {
-        let appStart: AppStart = { name: icon.name, type: icon.type }
+        let appStart: AppStart = { name: icon.name, type: icon.type,contents:{} }
         if (icon.icon) {
             appStart['icon'] = icon.icon as IconList
         }
         if (icon.contents) {
             appStart['contents'] = icon.contents
+        }
+        if(icon.children){
+            appStart['contents']['children']=icon.children
         }
         commit(SET_RUNING_APPS, appStart)
     },

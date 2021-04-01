@@ -16,7 +16,7 @@ declare type BaseFileTypesNames=keyof BaseFileType
 declare interface FileType {
   type: BaseFileTypesNames
   name: string
-  icon: string
+  icon: IconList
   position?: string
   path?:string
   children?: FilesType
