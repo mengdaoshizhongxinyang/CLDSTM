@@ -111,7 +111,7 @@ export default defineComponent({
       // renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id = "background"
-      document.getElementById('app')!.appendChild(renderer.domElement);
+      document.getElementById('nav')!.appendChild(renderer.domElement);
       window.addEventListener("resize", onWindowResize, false);
     }
     function addProton() {

@@ -5,12 +5,14 @@
  */
 import { defineComponent, h, reactive } from "vue";
 import style from "./login.module.less";
+import { BaseDraggable } from "@/components";
 export default defineComponent({
   setup() {
     const data = reactive({
       value: "",
       caretPosition: 0
     })
+    
     function handleInput(e: KeyboardEvent) {
       if (e.key.length == 1) {
 
@@ -20,11 +22,11 @@ export default defineComponent({
     }
     return () => h(
       <div class={style['login']} tabindex={-1} onKeydown={handleInput}>
-        <div class={style['login-screen']}>
+        <BaseDraggable class={style['login-screen']} w={400} h={250}>
           <div class={style['login-password-input']}>
             <div class={[style['login-password-input-caret'], style['login-password-input-text']]}></div>
           </div>
-        </div>
+        </BaseDraggable>
 
       </div>
     )

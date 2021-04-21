@@ -1,17 +1,19 @@
-import { defineComponent, h } from "vue";
+import { defineComponent, h, reactive } from "vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
+import domtoimage from 'dom-to-image';
 import "./App.less";
 export default defineComponent({
   setup(){
-    const handleKeyDown=(e: KeyboardEvent)=>{
-      e.preventDefault();
-    }
-    // document.onkeydown=handleKeyDown
     return ()=>h(
       <a-config-provider locale={zhCN}>
         <div id="nav"onContextmenu={(e)=>{e.preventDefault()}}>
-          <router-view></router-view>
+          <div id="cont">
+            <router-view></router-view>
+          </div>
         </div>
+        {/* <div style={{position:"fixed",left:"0",top:"0"}}>
+          <img src={data.src} />
+        </div> */}
       </a-config-provider>
     )
   }

@@ -36,19 +36,25 @@ export let asyncRouterMap : Array<RouteRecordRaw>=[
         name: 'index',
         component:()=>import ('@/views/index'),
         meta:{title:'首页'},
-        beforeEnter:(to,from,next)=>{
-            const store=useStore()
-            if(store.getters['getHandlePassword']==configs.password()){
-                next()
-            }else{
-                next({name:'Login'})
-            }
-        }
+        // beforeEnter:(to,from,next)=>{
+        //     const store=useStore()
+        //     if(store.getters['getHandlePassword']==configs.password()){
+        //         next()
+        //     }else{
+        //         next({name:'Login'})
+        //     }
+        // }
     },
     { 
         path: '/login',
         name: 'Login',
         component:()=>import ('@/views/login/login'),
+        meta:{title:'login'}
+    },
+    { 
+        path: '/test',
+        name: 'Test',
+        component:()=>import ('@/views/login/t.vue'),
         meta:{title:'login'}
     },
     {
