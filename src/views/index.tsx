@@ -41,7 +41,7 @@ import {
 } from "@/components";
 
 import { defineComponent, computed, nextTick, reactive, onMounted, h } from "vue"
-
+import keyboardMessage from "@/utils/keyboard";
 import md5 from "md5";
 import * as THREE from "three";
 import { Camera, Scene, Renderer } from "three";
@@ -71,7 +71,24 @@ export default defineComponent({
       desktopIconNum: Math.floor(document.body.offsetHeight / 88),
       content: ""
     })
-    
+    const keyboardMessageManage=keyboardMessage()
+    function shot(){
+
+    }
+    // function shotHotKey(){
+    //   let message=keyboardMessageManage.getMessage()
+    //   if(message){
+    //     const {event}=message
+        
+    //     if(event.key=='a' && event.altKey==true){
+    //       console.log('A')
+    //       message.isHandle=true
+    //       event.preventDefault()
+    //     }
+    //   }
+    //   setTimeout(shotHotKey, 10);
+    // }
+    // shotHotKey()
     store.dispatch('initAll')
 
     const desktopIcons = computed(() => {

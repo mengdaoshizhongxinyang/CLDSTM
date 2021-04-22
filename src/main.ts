@@ -12,6 +12,7 @@ let options = {
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
   storage: 'local', // storage name session, local, memory
 };
+import "@/utils/keyboard"
 const Vue=createApp(App).use(Storage,options).use(router);
 
 // Vue.use

@@ -4,6 +4,10 @@ import domtoimage from 'dom-to-image';
 import "./App.less";
 export default defineComponent({
   setup(){
+    
+    document.body.addEventListener('keydown',(e)=>{
+      console.log(+new Date())
+    })
     return ()=>h(
       <a-config-provider locale={zhCN}>
         <div id="nav"onContextmenu={(e)=>{e.preventDefault()}}>
