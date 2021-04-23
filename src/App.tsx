@@ -1,13 +1,9 @@
 import { defineComponent, h, reactive } from "vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
-import domtoimage from 'dom-to-image';
+
 import "./App.less";
 export default defineComponent({
   setup(){
-    
-    document.body.addEventListener('keydown',(e)=>{
-      console.log(+new Date())
-    })
     return ()=>h(
       <a-config-provider locale={zhCN}>
         <div id="nav"onContextmenu={(e)=>{e.preventDefault()}}>
@@ -15,9 +11,6 @@ export default defineComponent({
             <router-view></router-view>
           </div>
         </div>
-        {/* <div style={{position:"fixed",left:"0",top:"0"}}>
-          <img src={data.src} />
-        </div> */}
       </a-config-provider>
     )
   }

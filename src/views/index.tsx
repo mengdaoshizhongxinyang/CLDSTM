@@ -37,6 +37,7 @@ import {
   Desktop,
   Properties,
   Setting,
+  PrintScreen,
   SimpleNote
 } from "@/components";
 
@@ -48,6 +49,7 @@ import { Camera, Scene, Renderer } from "three";
 import { useStore } from "@/store"
 import Proton from "three.proton.js";
 import style from "./index.module.less";
+import domtoimage from 'dom-to-image';
 let proton: Proton, emitter: Proton.Emitter;
 let camera: Camera, scene: Scene, renderer: Renderer;
 const components = {
@@ -69,26 +71,61 @@ export default defineComponent({
     const store = useStore()
     const data = reactive({
       desktopIconNum: Math.floor(document.body.offsetHeight / 88),
-      content: ""
+      content: "",
+      src: ""
     })
-    const keyboardMessageManage=keyboardMessage()
-    function shot(){
+    const keyboardMessageManage = keyboardMessage()
+    async function loadImg(src:string){
+      let img=new Image()
+      img.src=src
+      return new Promise<HTMLImageElement>((resolve,reject)=>{
+        img.onload=()=>{
+          resolve(img)
+        }
+        img.onerror=(e)=>{
+          reject(e)
+        }
+      })
+    }
+    async function shot() {
+      let node = document.getElementById('nav');
+      let background = document.getElementById('background')! as HTMLCanvasElement;
+      let tempCanvas=document.createElement('canvas')
+      tempCanvas.width=background.width
+      tempCanvas.height=background.height
+      let context=tempCanvas.getContext("2d")!
+      context.rect(0,0,tempCanvas.width,tempCanvas.height)
+
+      let dataUrl=await domtoimage.toPng(node)
+      
+      renderer.render(scene, camera);
+      let imgData = renderer.domElement.toDataURL("image/jpeg");
+
+      let backgroundImg=await loadImg(imgData)
+      let contentImg=await loadImg(dataUrl)
+
+      context.drawImage(backgroundImg,0,0,tempCanvas.width,tempCanvas.height)
+      context.drawImage(contentImg,0,0,tempCanvas.width,tempCanvas.height)
+
+      data.src = tempCanvas.toDataURL();
+
 
     }
-    // function shotHotKey(){
-    //   let message=keyboardMessageManage.getMessage()
-    //   if(message){
-    //     const {event}=message
-        
-    //     if(event.key=='a' && event.altKey==true){
-    //       console.log('A')
-    //       message.isHandle=true
-    //       event.preventDefault()
-    //     }
-    //   }
-    //   setTimeout(shotHotKey, 10);
-    // }
-    // shotHotKey()
+    function shotHotKey() {
+      let message = keyboardMessageManage.getMessage()
+      if (message) {
+        const { event } = message
+
+        if (event.key == 'a' && event.altKey == true) {
+          console.log('A')
+          message.isHandle = true
+          shot()
+          event.preventDefault()
+        }
+      }
+      setTimeout(shotHotKey, 10);
+    }
+    shotHotKey()
     store.dispatch('initAll')
 
     const desktopIcons = computed(() => {
@@ -128,7 +165,7 @@ export default defineComponent({
       // renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.domElement.id = "background"
-      document.getElementById('nav')!.appendChild(renderer.domElement);
+      document.getElementById('app')!.appendChild(renderer.domElement);
       window.addEventListener("resize", onWindowResize, false);
     }
     function addProton() {
@@ -200,7 +237,7 @@ export default defineComponent({
     onMounted(() => {
       initBackGround()
     })
-    desktopApps.value.apps.map(item=>{
+    desktopApps.value.apps.map(item => {
       item.apps
     })
     return () => h(
@@ -216,16 +253,6 @@ export default defineComponent({
             ></DesktopIcon>
           })
         }
-        {/* <desktop-icon
-      v-for="(icon,index) in Object.keys(desktopIcons)"
-      :x="Math.floor(index/desktopIconNum)*70"
-      :y="Math.floor(index%desktopIconNum)*88"
-      :key="desktopIcons[icon].name"
-      :iconInfo="desktopIcons[icon]"
-      iconStyle="filled"
-      @openApps="handleOpenApps(desktopIcons[icon])"
-    ></desktop-icon> */}
-
         <DownMenu></DownMenu>
         {
           desktopApps.value.apps.map((item, index) => {
@@ -233,27 +260,18 @@ export default defineComponent({
               components[item.apps as keyof typeof components],
               {
                 // z:item.id,
-                icon:item.icon,
-                key:item.id,
-                appsId:index,
-                name:item.name,
-                z:item.zindex,
-                style:{display:item.mini?"none":"block"},
+                icon: item.icon,
+                key: item.id,
+                appsId: index,
+                name: item.name,
+                z: item.zindex,
+                style: { display: item.mini ? "none" : "block" },
                 ...item.contents
               }
             )
           })
-          // h(desktopApps.value.apps[])
         }
-        {/* <component
-      :is="item.apps"
-      v-bind="item"
-      :z="item.zindex"
-      v-for="(item, index) in desktopApps.apps"
-      :key="item.id"
-      :appsId="index"
-      v-show="!item.mini"
-    ></component> */}
+        <PrintScreen src={data.src}></PrintScreen>
       </div>
     )
   }
