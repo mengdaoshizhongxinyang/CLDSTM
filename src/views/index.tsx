@@ -96,7 +96,7 @@ export default defineComponent({
       let context=tempCanvas.getContext("2d")!
       context.rect(0,0,tempCanvas.width,tempCanvas.height)
 
-      let dataUrl=await domtoimage.toPng(node)
+      let dataUrl=await domtoimage.toPng(node!)
       
       renderer.render(scene, camera);
       let imgData = renderer.domElement.toDataURL("image/jpeg");
