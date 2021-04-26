@@ -14,9 +14,7 @@ export default defineComponent({
         {
           props.src?<div class={style['cropper-mask']}></div>:null
         }
-        <div>
-
-        </div>
+        <div></div>
       </div>
     )
   }
