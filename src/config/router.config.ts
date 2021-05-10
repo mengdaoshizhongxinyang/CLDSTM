@@ -57,6 +57,12 @@ export let asyncRouterMap : Array<RouteRecordRaw>=[
         component:()=>import ('@/views/login/t.vue'),
         meta:{title:'login'}
     },
+    { 
+        path: '/doubleColorBall',
+        name: 'DoubleColorBall',
+        component:()=>import ('@/views/letmerich/doubleColorBall'),
+        meta:{title:'login'}
+    },
     {
         path: '/resume/:key',
         name: 'Resume',
