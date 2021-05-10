@@ -45,13 +45,13 @@ import { defineComponent, computed, nextTick, reactive, onMounted, h } from "vue
 import keyboardMessage from "@/utils/keyboard";
 import md5 from "md5";
 import * as THREE from "three";
-import { Camera, Scene, Renderer } from "three";
+import { Camera, Scene, Renderer,WebGLRenderer } from "three";
 import { useStore } from "@/store"
 import Proton from "three.proton.js";
 import style from "./index.module.less";
 import domtoimage from 'dom-to-image';
 let proton: Proton, emitter: Proton.Emitter;
-let camera: Camera, scene: Scene, renderer: Renderer;
+let camera: Camera, scene: Scene, renderer: WebGLRenderer;
 const components = {
   Folder,
   Frame,
@@ -160,10 +160,11 @@ export default defineComponent({
       camera.position.z = 500;
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(0xffffff, 1);
-
-      renderer = new THREE.WebGLRenderer();
+      // scene.background=new THREE.Color('rgba(0,0,0,0.01)')
+      renderer = new THREE.WebGLRenderer({alpha:true});
       // renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0xffffff,0);
       renderer.domElement.id = "background"
       document.getElementById('app')!.appendChild(renderer.domElement);
       window.addEventListener("resize", onWindowResize, false);

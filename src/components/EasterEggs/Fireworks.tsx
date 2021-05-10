@@ -4,6 +4,17 @@
  * @Description: 
  */
 import { defineComponent } from "vue";
+type Particle={
+  radians:number
+  x :number
+  y :number
+  speed:number
+  radius :number
+  size :number
+  hue :number
+  brightness :number
+  alpha:number
+}
 export default defineComponent({
   setup(){
     let canvas = document.getElementById('myCanvas')! as HTMLCanvasElement;
@@ -22,14 +33,14 @@ export default defineComponent({
       context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    function mouseDownHandler(e) {
-      var x = e.clientX;
-      var y = e.clientY;
+    function mouseDownHandler(e:MouseEvent) {
+      let x = e.clientX;
+      let y = e.clientY;
       fire(x, y);
     }
     let rid:number;
 
-    function fire(x, y) {
+    function fire(x:number, y:number) {
       createFireworks(x, y);
 
       function tick() {
@@ -43,35 +54,37 @@ export default defineComponent({
       cancelAnimationFrame(rid);
       tick();
     }
-    var particles = [];
+    let particles:Particle[] = [];
 
-    function createFireworks(sx, sy) {
+    function createFireworks(sx:number, sy:number) {
       particles = [];
-      var hue = Math.floor(Math.random() * 51) + 150;
-      var hueVariance = 30;
-      var count = 100;
-      for (var i = 0; i < count; i++) {
-        var p = {};
-        var angle = Math.floor(Math.random() * 360);
-        p.radians = angle * Math.PI / 180;
-        p.x = sx;
-        p.y = sy;
-        p.speed = (Math.random() * 5) + .4;
-        p.radius = p.speed;
-        p.size = Math.floor(Math.random() * 3) + 1;
-        p.hue = Math.floor(Math.random() * ((hue + hueVariance) - (hue - hueVariance))) + (hue - hueVariance);
-        p.brightness = Math.floor(Math.random() * 31) + 50;
-        p.alpha = (Math.floor(Math.random() * 61) + 40) / 100;
+      let hue = Math.floor(Math.random() * 51) + 150;
+      let hueVariance = 30;
+      let count = 100;
+      for (let i = 0; i < count; i++) {
+        let angle = Math.floor(Math.random() * 360);
+        let speed=(Math.random() * 5) + .4
+        let p:Particle = {
+          radians:angle * Math.PI / 180,
+          x:sx,
+          y:sy,
+          speed:speed,
+          radius:speed,
+          size:Math.floor(Math.random() * 3) + 1,
+          hue: Math.floor(Math.random() * ((hue + hueVariance) - (hue - hueVariance))) + (hue - hueVariance),
+          brightness : Math.floor(Math.random() * 31) + 50,
+          alpha : (Math.floor(Math.random() * 61) + 40) / 100
+        };
         particles.push(p);
       }
     }
 
     function drawFireworks() {
       clearCanvas();
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        var vx = Math.cos(p.radians) * p.radius;
-        var vy = Math.sin(p.radians) * p.radius + 0.4;
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        let vx = Math.cos(p.radians) * p.radius;
+        let vy = Math.sin(p.radians) * p.radius + 0.4;
         p.x += vx;
         p.y += vy;
         p.radius *= 1 - p.speed / 100;
