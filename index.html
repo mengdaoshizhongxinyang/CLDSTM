@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .loading-back {
+      width: 100%;
+      height: 100%;
+      background: rgb(0, 120, 215);
+      display: inline;
+      position: fixed;
+    }
+
+    .loading-back .user-icon {
+      margin-top: 200px;
+      margin-left: 50%;
+      transform: translate(-50%, 0);
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-back .user-head {
+      transform: translate(-50%, 0);
+      top: 10%;
+      width: 40%;
+      height: 40%;
+      left: 50%;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      position: absolute;
+
+    }
+
+    .loading-back .user-body {
+      transform: translate(-50%, 0);
+      top: calc(50% + 4px);
+      width: 60%;
+      height: 60%;
+      left: 50%;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      position: absolute;
+    }
+
+    .loading-back .loading {
+      margin-top: 30px;
+      margin-left: 50%;
+      transform: translate(-50%, 0);
+      width: 60px;
+      height: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-back .loading .loading-content {
+      animation: spin 3s linear infinite;
+      height: 60px;
+      position: relative;
+      
+    }
+    .loading-back .loading .loading-content .e1{
+      background-color: rgba(255,255,255,0.8);
+      position: absolute;
+      left: 24px;
+      top: 0px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .loading-back .loading .loading-content .e2{
+      background-color: rgba(255,255,255,0.7);
+      position: absolute;
+      left: 3.2px;
+      top: 12px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .loading-back .loading .loading-content .e3{
+      background-color: rgba(255,255,255,0.6);
+      position: absolute;
+      left: 3.2px;
+      bottom: 12px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .loading-back .loading .loading-content .e4{
+      background-color: rgba(255,255,255,0.5);
+      position: absolute;
+      left: 24px;
+      bottom: 0px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .loading-back .loading .loading-content .e5{
+      background-color: rgba(255,255,255,0.4);
+      position: absolute;
+      right: 3.2px;
+      bottom: 12px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .loading-back .loading .loading-content .e6{
+      background-color: rgba(255,255,255,0.3);
+      position: absolute;
+      right: 3.2px;
+      top: 12px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app" class="loading-back">
+    <div class="user-icon">
+      <div class="user-head"></div>
+      <div class="user-body"></div>
+    </div>
+    <div class="loading">
+      <div class="loading-content">
+        <div class="e1"></div>
+        <div class="e2"></div>
+        <div class="e3"></div>
+        <div class="e4"></div>
+        <div class="e5"></div>
+        <div class="e6"></div>
+      </div>
+    </div>
+  </div>
+  <!-- <canvas id="live2dcanvas" width="300" height="400" style="position: absolute;right:0;bottom: 0"></canvas> -->
+  <script src="./config.js"></script>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

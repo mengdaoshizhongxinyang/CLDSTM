@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "vite",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build-dev": "vue-cli-service build --mode development",
@@ -10,6 +11,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@rollup/plugin-babel": "^5.3.0",
     "ant-design-vue": "^2.0.0",
     "babel-runtime": "^6.26.0",
     "core-js": "^3.6.5",
@@ -22,7 +24,7 @@
     "postprocessing": "^6.8.8",
     "prerender-spa-plugin": "^3.4.0",
     "text-loader": "^0.0.1",
-    "three": "0.124.0",
+    "three": "^0.128.0",
     "three.proton.js": "^0.2.3",
     "ts-loader": "^8.0.4",
     "typescript": "^4.0.3",
@@ -34,10 +36,13 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^19.0.0",
     "@types/dom-to-image": "^2.6.2",
     "@types/md5": "^2.3.0",
     "@types/vue-markdown": "^2.2.1",
     "@types/webpack-env": "^1.15.3",
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vitejs/plugin-vue-jsx": "^1.1.4",
     "@vue/babel-plugin-jsx": "^1.0.0-rc.3",
     "@vue/cli-plugin-babel": "^4.5.8",
     "@vue/cli-plugin-router": "^4.5.8",
@@ -53,6 +58,8 @@
     "monaco-editor-webpack-plugin": "^1.9.0",
     "typescript-plugin-css-modules": "^3.2.0",
     "typings-for-css-modules-loader": "^1.7.0",
+    "vite": "^2.3.2",
+    "vite-plugin-imp": "^2.0.7",
     "vue-markdown-loader": "^2.4.1"
   }
 }

@@ -3,24 +3,23 @@ import Tree from "../Tree";
 import { DesktopIcon, AppFrame, IconManage } from "@/components";
 import { useStore } from "@/store";
 import DesktopIconBase from "@/components/DesktopIcon/DesktopIconBase";
-// import { FileType, FilesType } from "@/types/task";
 import { IconList } from "@/types";
 import style from "./folder.module.less";
+import { Button,Input } from "ant-design-vue";
+const { Search } = Input;
+import {PropTypes} from "@/utils/proptypes";
+const props={
+  children:PropTypes.object<FilesType>({}),
+  position:PropTypes.string(''),
+  icon:PropTypes.strings<IconList>('FileUnknownOutlined')
+}
+type Stack={
+  folderList:FilesType
+  path:string
+  search:string
+};
 export default defineComponent({
-  props: {
-    children: {
-      type: Object as PropType<FilesType>,
-      default: {},
-    },
-    position: {
-      type: String,
-      default: "",
-    },
-    icon: {
-      type: String as PropType<IconList>,
-      default: "FileUnknown",
-    }
-  },
+  props,
   components: {
     DesktopIconBase,
     DesktopIcon,
@@ -33,15 +32,16 @@ export default defineComponent({
     const folderStatus = computed(() => {
       return store.state.view.folder.folderStatus
     })
+    
     const data = reactive({
       folderList: {} as FilesType,
-      backStack: [] as {}[],
-      nextStack: [] as {}[],
+      backStack:[] as Stack[],
+      nextStack:[] as Stack[],
       path: props.position,
       search: "",
       cacheSearch: "",
       iconStyle: "filled",
-    })
+    });
 
     const handleOpenApps = (icon: FileType) => {
       let { folderList, backStack, path, cacheSearch } = data;
@@ -140,42 +140,42 @@ export default defineComponent({
         <div class={style["floder"]}>
           <div class={style["floder-menu"]}></div>
           <div class={style["floder-address"]}>
-            <a-button
+            <Button
               size="small"
               class={style["floder-address-button"]}
               disabled={data.backStack.length == 0}
               onClick={handleBack}
             >
               <IconManage icon="ArrowLeftOutlined"></IconManage>
-            </a-button>
-            <a-button
+            </Button>
+            <Button
               size="small"
               class={style["floder-address-button"]}
               disabled={data.nextStack.length == 0}
               onClick={handleNext}
             >
               <IconManage icon="ArrowRightOutlined"></IconManage>
-            </a-button>
-            <a-button size="small" class={style["floder-address-button"]} disabled>
+            </Button>
+            <Button size="small" class={style["floder-address-button"]} disabled>
               <IconManage icon="DownOutlined"></IconManage>
-            </a-button>
-            <a-button size="small" class={style["floder-address-button"]} disabled>
+            </Button>
+            <Button size="small" class={style["floder-address-button"]} disabled>
               <IconManage icon="ArrowUpOutlined"></IconManage>
-            </a-button>
-            <a-input size="small" class={style["floder-address-input"]} v-model={[data.path, 'value']} v-slots={{ prefix: () => <IconManage icon={props.icon} /> }}>
-            </a-input>
-            <a-button
+            </Button>
+            <Input size="small" class={style["floder-address-input"]} v-model={[data.path, 'value']} v-slots={{ prefix: () => <IconManage icon={props.icon} /> }}>
+            </Input>
+            <Button
               size="small"
               class={[style["floder-address-button"], style["floder-address-input-suffix"]]}
             >
               <IconManage icon="RedoOutlined"></IconManage>
-            </a-button>
-            <a-input-search
+            </Button>
+            <Search
               size="small"
               style="width:112px"
               onSearch={handleSearch}
               v-model={[data.search, 'value']}
-            ></a-input-search>
+            ></Search>
           </div >
           <div class={style["floder-content"]}>
             <div class={style["floder-content-tree"]}>

@@ -44,8 +44,7 @@ import {
 import { defineComponent, computed, nextTick, reactive, onMounted, h } from "vue"
 import keyboardMessage from "@/utils/keyboard";
 import md5 from "md5";
-import * as THREE from "three";
-import { Camera, Scene, Renderer,WebGLRenderer } from "three";
+import { Camera, Scene, Renderer,WebGLRenderer,PerspectiveCamera,FogExp2,TextureLoader,SpriteMaterial,Sprite } from "three";
 import { useStore } from "@/store"
 import Proton from "three.proton.js";
 import style from "./index.module.less";
@@ -151,17 +150,17 @@ export default defineComponent({
       // this.$forceUpdate();
     }
     function addScene() {
-      camera = new THREE.PerspectiveCamera(
+      camera = new PerspectiveCamera(
         70,
         window.innerWidth / window.innerHeight,
         1,
         3000
       );
       camera.position.z = 500;
-      scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0xffffff, 1);
+      scene = new Scene();
+      scene.fog = new FogExp2(0xffffff, 1);
       // scene.background=new THREE.Color('rgba(0,0,0,0.01)')
-      renderer = new THREE.WebGLRenderer({alpha:true});
+      renderer = new WebGLRenderer({alpha:true});
       // renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setClearColor(0xffffff,0);
@@ -208,14 +207,14 @@ export default defineComponent({
       //Proton.Debug.drawZone(proton,scene,new Proton.BoxZone(800, 10, 800));
     }
     function createSnow() {
-      var map = new THREE.TextureLoader().load("./img/snow.png");
-      var material = new THREE.SpriteMaterial({
+      var map = new TextureLoader().load("./img/snow.png");
+      var material = new SpriteMaterial({
         map: map,
         transparent: true,
         opacity: 0.5,
         color: 0xffffff,
       });
-      return new THREE.Sprite(material);
+      return new Sprite(material);
     }
     function animate() {
       requestAnimationFrame(animate);
