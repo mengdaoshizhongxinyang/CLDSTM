@@ -3,44 +3,49 @@
  * @Date: 2021-05-08 17:27:32
  * @Description: 
  */
-import { defineComponent } from "vue";
-type Particle={
-  radians:number
-  x :number
-  y :number
-  speed:number
-  radius :number
-  size :number
-  hue :number
-  brightness :number
-  alpha:number
+import { defineComponent, onMounted, Teleport } from "vue";
+type Particle = {
+  radians: number
+  x: number
+  y: number
+  speed: number
+  radius: number
+  size: number
+  hue: number
+  brightness: number
+  alpha: number
 }
 export default defineComponent({
-  setup(){
-    let canvas = document.getElementById('myCanvas')! as HTMLCanvasElement;
-    let context = canvas.getContext('2d')!;
+  setup() {
+    let canvas : HTMLCanvasElement;
+    let context:CanvasRenderingContext2D ;
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas, false);
-    resizeCanvas();
-    clearCanvas();
+    onMounted(()=>{
+      canvas= document.getElementById('myCanvas')! as HTMLCanvasElement
+      context= canvas.getContext('2d')!
+      resizeCanvas();
+      clearCanvas();
+      document.addEventListener('mousedown', mouseDownHandler, false);
+    })
 
     function clearCanvas() {
       context.fillStyle = '#000000';
       context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    function mouseDownHandler(e:MouseEvent) {
+    function mouseDownHandler(e: MouseEvent) {
       let x = e.clientX;
       let y = e.clientY;
       fire(x, y);
     }
-    let rid:number;
+    let rid: number;
 
-    function fire(x:number, y:number) {
+    function fire(x: number, y: number) {
       createFireworks(x, y);
 
       function tick() {
@@ -54,26 +59,25 @@ export default defineComponent({
       cancelAnimationFrame(rid);
       tick();
     }
-    let particles:Particle[] = [];
+    let particles: Particle[] = [];
 
-    function createFireworks(sx:number, sy:number) {
-      particles = [];
+    function createFireworks(sx: number, sy: number) {
       let hue = Math.floor(Math.random() * 51) + 150;
       let hueVariance = 30;
       let count = 100;
       for (let i = 0; i < count; i++) {
         let angle = Math.floor(Math.random() * 360);
-        let speed=(Math.random() * 5) + .4
-        let p:Particle = {
-          radians:angle * Math.PI / 180,
-          x:sx,
-          y:sy,
-          speed:speed,
-          radius:speed,
-          size:Math.floor(Math.random() * 3) + 1,
+        let speed = (Math.random() * 5) + .4
+        let p: Particle = {
+          radians: angle * Math.PI / 180,
+          x: sx,
+          y: sy,
+          speed: speed,
+          radius: speed,
+          size: Math.floor(Math.random() * 3) + 1,
           hue: Math.floor(Math.random() * ((hue + hueVariance) - (hue - hueVariance))) + (hue - hueVariance),
-          brightness : Math.floor(Math.random() * 31) + 50,
-          alpha : (Math.floor(Math.random() * 61) + 40) / 100
+          brightness: Math.floor(Math.random() * 31) + 50,
+          alpha: (Math.floor(Math.random() * 61) + 40) / 100
         };
         particles.push(p);
       }
@@ -96,7 +100,7 @@ export default defineComponent({
         context.fill();
       }
     }
-    document.addEventListener('mousedown', mouseDownHandler, false);
-    return ()=><canvas style={{width:"100%",height:"100%"}} id="myCanvas"></canvas>
+    
+    return () => <canvas style={{ width: "100%", height: "100%",position:"fixed",zIndex:-1 }} id="myCanvas"></canvas>
   }
 })

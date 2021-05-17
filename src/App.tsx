@@ -8,11 +8,11 @@ export default defineComponent({
     return ()=>h(
       <ConfigProvider locale={zhCN}>
         <div id="nav"onContextmenu={(e)=>{e.preventDefault()}}>
-          <EasterEggs></EasterEggs>
           <div id="cont">
             <router-view></router-view>
           </div>
         </div>
+        <EasterEggs></EasterEggs>
       </ConfigProvider>
     )
   }

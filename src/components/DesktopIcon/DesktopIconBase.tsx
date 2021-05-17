@@ -28,7 +28,7 @@ export default defineComponent({
                 top: 0,
             },
             menuList: [
-                {label:"打开",run:"open"},
+                { label: "打开", run: "open" },
                 { label: "重命名", run: "rename" },
                 { label: "属性", run: "attribute" },
             ] as Menu[],
@@ -116,11 +116,11 @@ export default defineComponent({
                 <div onDblclick={(e) => openApps(e)} onContextmenu={handleIconMenu}>
                     <div class={style["desktop-icon-icon"]}>
 
-                            <div class={style["desktop-icon-icon-default"]}>
-                                <IconManage
-                                    icon={props.iconInfo.icon}
-                                ></IconManage>
-                            </div>
+                        <div class={style["desktop-icon-icon-default"]}>
+                            <IconManage
+                                icon={props.iconInfo.icon}
+                            ></IconManage>
+                        </div>
 
                     </div>
                     {
@@ -132,7 +132,7 @@ export default defineComponent({
                 </div >
                 <div
                     class={style["desktop-icon-input"]}
-                    style={{display:data.type=='input'?'block':'none'}}
+                    style={{ display: data.type == 'input' ? 'block' : 'none' }}
                     ref={inputRef}
                     tabindex={1}
                     contenteditable="true"
@@ -152,7 +152,7 @@ export default defineComponent({
             </div>
         )
     },
-    emits:{
-        openApps:()=>{return true}
+    emits: {
+        openApps: () => { return true }
     }
 })

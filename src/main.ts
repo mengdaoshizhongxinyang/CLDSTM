@@ -3,7 +3,7 @@ import App from './App'
 // import Icon from '@ant-design/icons-vue';
 import router from './router'
 
-import 'ant-design-vue/dist/antd.css' 
+
 import Directives from '@/utils/Directives';
 import Storage from '@/utils/localstorage';
 import { Store } from "@/types/store";
