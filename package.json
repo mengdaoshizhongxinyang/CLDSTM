@@ -39,6 +39,7 @@
     "@rollup/plugin-commonjs": "^19.0.0",
     "@types/dom-to-image": "^2.6.2",
     "@types/md5": "^2.3.0",
+    "@types/three": "^0.128.0",
     "@types/vue-markdown": "^2.2.1",
     "@types/webpack-env": "^1.15.3",
     "@vitejs/plugin-vue": "^1.2.2",

@@ -3,7 +3,7 @@
  * @Date: 2021-05-08 17:27:32
  * @Description: 
  */
-import { defineComponent, onMounted, Teleport } from "vue";
+import { defineComponent, onMounted, ref, Teleport } from "vue";
 type Particle = {
   radians: number
   x: number
@@ -19,18 +19,18 @@ export default defineComponent({
   setup() {
     let canvas : HTMLCanvasElement;
     let context:CanvasRenderingContext2D ;
-
+    const canvasRef=ref<HTMLCanvasElement>()
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas, false);
     onMounted(()=>{
-      canvas= document.getElementById('myCanvas')! as HTMLCanvasElement
+      canvas= canvasRef.value!
       context= canvas.getContext('2d')!
       resizeCanvas();
       clearCanvas();
-      document.addEventListener('mousedown', mouseDownHandler, false);
+      document.addEventListener('click', mouseDownHandler, false);
     })
 
     function clearCanvas() {
@@ -62,6 +62,7 @@ export default defineComponent({
     let particles: Particle[] = [];
 
     function createFireworks(sx: number, sy: number) {
+      console.log(particles)
       let hue = Math.floor(Math.random() * 51) + 150;
       let hueVariance = 30;
       let count = 100;
@@ -85,6 +86,9 @@ export default defineComponent({
 
     function drawFireworks() {
       clearCanvas();
+      while(particles.length && particles[0].alpha<=-1){
+        particles.splice(0,99)
+      }
       for (let i = 0; i < particles.length; i++) {
         let p = particles[i];
         let vx = Math.cos(p.radians) * p.radius;
@@ -101,6 +105,6 @@ export default defineComponent({
       }
     }
     
-    return () => <canvas style={{ width: "100%", height: "100%",position:"fixed",zIndex:-1 }} id="myCanvas"></canvas>
+    return () => <canvas style={{ width: "100%", height: "100%",position:"fixed",zIndex:-1 }} ref={canvasRef}></canvas>
   }
 })

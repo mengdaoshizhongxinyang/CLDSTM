@@ -126,7 +126,7 @@ export default defineComponent({
     }
     shotHotKey()
     store.dispatch('initAll')
-
+    
     const desktopIcons = computed(() => {
       return store.state.view.desktop.fileList
     })
